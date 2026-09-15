@@ -27,7 +27,7 @@ const dmMono = DM_Mono({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://foayenix.com'),
+  metadataBase: new URL('https://felixayeni.vercel.app'),
   title: {
     default: `${SITE.name} — ${SITE.role}`,
     template: `%s — ${SITE.name}`,
