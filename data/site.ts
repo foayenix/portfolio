@@ -4,7 +4,7 @@
 
 export const SITE = {
   name: 'Felix Ayeni',
-  role: 'Full-stack and mobile developer',
+  role: 'AI Engineer · Full-stack Developer',
   location: 'United Kingdom',
 
   // The claim the rest of the site has to back up. Keep it literal.
