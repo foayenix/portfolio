@@ -5,7 +5,7 @@ export default function NotFound() {
     <section className="mx-auto max-w-[1440px] px-5 py-24 md:px-10 md:py-32">
       <h1 className="display text-[length:var(--text-h1)]">Nothing is printed here.</h1>
       <p className="prose-body mt-5 text-[length:var(--text-lede)] text-[var(--ink-2)]">
-        That page does not exist. The full catalogue does.
+        That page does not exist. Try the catalogue.
       </p>
       <Link
         href="/"

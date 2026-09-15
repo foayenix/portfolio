@@ -5,8 +5,8 @@
 
    The site is set like a risograph print: one navy ink, one fluorescent pink,
    and the paper showing through between them. Pink is the ink an offset press
-   cannot simulate, so it is reserved for the things the site actually asserts
-   — never decoration, never body text.
+   cannot simulate, so it is reserved for what the site asserts. Never
+   decoration, never body text.
 
    Everything below lives in `base` or `components` on purpose. Unlayered CSS
    outranks all of Tailwind's layered utilities, so a bare `*` or `.display`
@@ -124,7 +124,7 @@
 /* ── Components ───────────────────────────────────────────────────────────── */
 
 @layer components {
-  /* The paper. A faint fibre grain — legible as texture, never as a shape. */
+  /* The paper. A faint fibre grain: legible as texture, never as a shape. */
   .grain::before {
     content: '';
     position: fixed;
@@ -179,7 +179,7 @@
     margin-top: 1.1em;
   }
 
-  /* Misregistration is the tell of a two-ink press — the second pass never
+  /* Misregistration is the tell of a two-ink press: the second pass never
      lands perfectly on the first. Shown only on the entry under the pointer
      or the keyboard focus, so it reads as "this one is printing now". */
   .reg {
@@ -218,7 +218,7 @@
     }
   }
 
-  /* The one orchestrated moment: an entry setting itself into the plate. */
+  /* The one moment of motion: an entry setting itself into the plate. */
   .ink-in {
     animation: ink-in 520ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
   }
@@ -248,7 +248,7 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  /* The offset still has to land — it is information, not decoration. */
+  /* The offset still has to land: it is information, not decoration. */
   @media (min-width: 1024px) {
     .reg-on .reg::after {
       opacity: 1;

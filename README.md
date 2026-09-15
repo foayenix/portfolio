@@ -1,7 +1,7 @@
 # Felix Ayeni — portfolio
 
-A catalogue of 30 finished builds, and a CV by implication. Next.js 15 (App
-Router) + React 19 + TypeScript + Tailwind v4. No database, no CMS, no images —
+A catalogue of 30 finished builds, which is also the CV. Next.js 15 (App
+Router) + React 19 + TypeScript + Tailwind v4. No database, no CMS, no images:
 every page renders from two data files and ships as static HTML.
 
 ## Run it
@@ -13,7 +13,7 @@ npm run build    # 36 static pages into .next
 npm start        # serve the production build
 ```
 
-Deploy to Vercel by importing the repo — no environment variables, no settings
+Deploy to Vercel by importing the repo: no environment variables, no settings
 to change.
 
 > Do not run `npm run build` while `npm run dev` is running. They share
@@ -23,9 +23,9 @@ to change.
 
 The site is set like a risograph print: one navy ink, one fluorescent pink, and
 the paper showing between them. Pink is the ink an offset press cannot
-simulate, so it is reserved for the things the page actually asserts — the
-signature paragraph on a build, the active filter, the entry currently being
-read — and never used as decoration or for body text.
+simulate, so it is reserved for what the page asserts: the signature paragraph
+on a build, the active filter, the entry currently being read. It is never used
+as decoration or for body text.
 
 Type is **Archivo** for display, **Newsreader** for body, and **DM Mono** on
 real identifiers only (stack names, nothing else). Serif body copy is the
@@ -36,7 +36,7 @@ Two details worth knowing before you edit:
 - **Ink comes in two densities.** `--flo` is the bright plate, used for rules,
   marks and display type, where 3:1 contrast is enough. `--flo-deep` is the
   same ink laid heavier, and is the only one allowed under small text or as a
-  fill behind text — bright pink on the stone ground is 3.45:1 and fails AA.
+  fill behind text: bright pink on the stone ground is 3.45:1 and fails AA.
 - **Misregistration is a pointer affordance.** The offset pink ghost on the
   index (`.reg`) only exists at `lg` and above. Without a hover state it just
   looks like a printing fault on whichever entry happens to be first.
@@ -52,28 +52,28 @@ Edit these two files; never edit layout to change copy.
 
 | File | What it holds |
 |---|---|
-| `data/projects.ts` | All 30 builds — one-liner, signature detail, stack, tags, year, `featured`, and optional `live` / `source` URLs. |
+| `data/projects.ts` | All 30 builds: one-liner, signature detail, stack, tags, year, `featured`, and optional `live` / `source` URLs. |
 | `data/site.ts` | Name, role, location, bio, email, phone, GitHub. |
 
 **Links are only present where the URL was checked and returned 200.** A build
-with no `live` renders no live button rather than a guess; of the 30, four have
-a live deployment and 25 have public source. Copy for the twenty oldest entries
-is carried over verbatim from `foayenix/cv-site`; every later entry is written
-from the repository itself.
+with no `live` renders no live button; of the 30, four have a live deployment
+and 25 have public source. Every claim in the catalogue comes from
+`foayenix/cv-site` (the twenty oldest entries) or from the repository itself
+(every later one).
 
-Two rules the data file enforces and it is easy to break by accident:
+Two rules that are easy to break by accident:
 
-- **Read the branch with the work on it, not the default branch.** Several
-  builds keep their newest state on a `claude/*` branch and never merged it —
-  Shelf's App Store and index-recovery work is one of them. A README on `main`
-  can be months behind the code.
+- **Read the branch the work is on, not the default branch.** Several builds
+  keep their newest state on a `claude/*` branch that was never merged. Shelf's
+  App Store and index-recovery work is one of them, so a README on `main` can
+  be months behind the code.
 - **A private build gets no `source`, and never a link to a nearby public
-  repository standing in for it.** Sanko's public repo is the first Flask MVP,
-  not the agent the entry describes, so the entry links nothing and says why in
-  its `stackNote`. Football Frenzy's near-namesake public repo is a different
-  game entirely.
+  repository standing in for it.** Sanko's public repo holds the first Flask
+  MVP and not the agent the entry describes, so that entry links nothing and
+  says why in its `stackNote`. Football Frenzy's near-namesake public repo is a
+  different game.
 
-Adding a build is one object in `data/projects.ts` — the index, the filters,
+Adding a build is one object in `data/projects.ts`; the index, the filters,
 the tag counts, the related-builds section, the static routes and the footer
 count all derive from it.
 
@@ -81,7 +81,7 @@ count all derive from it.
 
 ```
 app/
-  page.tsx            the index — every build in one list
+  page.tsx            the index, every build in one list
   work/page.tsx       the same catalogue, filterable by kind
   work/[slug]/        one page per build (generateStaticParams)
   profile/page.tsx    bio and the three arguments the builds keep making

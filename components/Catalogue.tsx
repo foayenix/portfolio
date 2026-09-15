@@ -7,10 +7,10 @@ import { PROJECTS } from '@/data/projects'
 /**
  * The index of everything, listed at once.
  *
- * Moving through the list inks the entry into the panel beside it — the only
- * motion on the page that is not answering a click. Below `lg` there is no
- * panel: each entry carries its own summary, because a hover state a phone
- * cannot produce is not a design.
+ * Moving through the list inks the entry into the panel beside it. That is the
+ * only motion on the page not answering a click. Below `lg` there is no panel:
+ * each entry carries its own summary, because a phone has no hover state to
+ * drive one.
  */
 export default function Catalogue() {
   const [activeSlug, setActiveSlug] = useState(PROJECTS[0].slug)
