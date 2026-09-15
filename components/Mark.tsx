@@ -1,7 +1,7 @@
 /**
- * The registration target — two plates, one navy, one fluorescent, offset by
- * the amount a real press would miss by. It is the site's whole argument in
- * nine pixels, so it appears exactly once per page, in the wordmark.
+ * The registration target: two plates, one navy, one fluorescent, offset by
+ * the amount a real press would miss by. It appears exactly once per page, in
+ * the wordmark.
  */
 export default function Mark({ className = '' }: { className?: string }) {
   return (

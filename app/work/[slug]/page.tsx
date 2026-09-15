@@ -25,8 +25,8 @@ export default async function ProjectPage({ params }: Params) {
   const prev = PROJECTS[i - 1]
   const next = PROJECTS[i + 1]
 
-  // Builds that share the most ground with this one — a reader who liked the
-  // local-first argument should be one click from the rest of it.
+  // Builds that share the most ground with this one, so a reader who liked the
+  // local-first argument is one click from the rest of it.
   const related = PROJECTS.filter((x) => x.slug !== p.slug)
     .map((x) => ({ p: x, overlap: x.tags.filter((t) => p.tags.includes(t)).length }))
     .filter((x) => x.overlap > 0)
@@ -65,7 +65,7 @@ export default async function ProjectPage({ params }: Params) {
       <div className="mx-auto max-w-[1440px] px-5 md:px-10">
         <div className="grid gap-10 py-12 lg:grid-cols-[1.35fr_1fr] lg:gap-16">
           {/* The assertion. The second plate marks it, because this paragraph
-              is the part of the page that is actually making a claim. */}
+              is the part of the page making a claim. */}
           <section className="self-start border-l-[3px] border-[var(--flo)] pl-6 md:pl-8">
             <h2 className="ui text-[length:var(--text-micro)] text-[var(--ink-2)]">
               What makes it worth reading

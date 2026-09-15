@@ -12,17 +12,17 @@ export const metadata: Metadata = {
 const PRINCIPLES = [
   {
     heading: 'A record you can check',
-    body: 'A log that flatters you is worth nothing. SETT ships with no streaks, badges or confetti and shows its reasoning for every suggested set. tbot throws out a strategy that peeked at tomorrow. Bob leaves every unverified regulation value blank rather than printing a plausible one.',
+    body: 'A log that flatters you is not much use. SETT ships with no streaks, badges or confetti, and shows its reasoning for every suggested set. tbot throws out a strategy that peeked at tomorrow. Bob prints a regulation value only once someone has verified it.',
     cites: ['sett', 'tbot', 'bob'],
   },
   {
     heading: 'It works with the network off',
-    body: 'Most of what I build runs on your own machine with your own keys, and keeps running when the connection does not. Quire is a full thesis canvas with no login and no cloud. The Deposit Ledger is one SQLite file. Shelf stores notes as plain Markdown so the library outlives the app that made it.',
+    body: 'Most of what I build runs on your own machine with your own keys, and keeps running when the connection drops. Quire is a full thesis canvas with no login and no cloud. The Deposit Ledger is one SQLite file. Shelf stores notes as plain Markdown so the library outlives the app that made it.',
     cites: ['quire', 'the-deposit-ledger', 'shelf'],
   },
   {
     heading: 'Enforced, not implied',
-    body: 'A rule that lives only in the interface is a suggestion. Plave hides gift reservations from the list owner in the database with row-level security, not in the UI. Football Frenzy re-simulates every match server-side from a seed and a decision log, so fair play is structural rather than trusted.',
+    body: 'A rule that lives only in the interface is a suggestion. Plave hides gift reservations from the list owner with a row-level security policy in the database. Football Frenzy re-simulates every match server-side from a seed and a decision log, so nobody has to take the client’s word for the result.',
     cites: ['plave', 'football-frenzy'],
   },
 ]

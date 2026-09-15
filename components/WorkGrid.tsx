@@ -47,8 +47,8 @@ export default function WorkGrid() {
               key={p.slug}
               className="group relative border-b border-[var(--rule)] md:[&:nth-child(2n+1)]:border-r xl:[&:nth-child(2n+1)]:border-r-0 xl:[&:not(:nth-child(3n))]:border-r"
             >
-              {/* The ink bar — a swatch of the second plate, only while this
-                  entry is the one being read. */}
+              {/* The ink bar: a swatch of the second plate, shown only while
+                  this entry is the one being read. */}
               <span
                 aria-hidden
                 className="absolute left-0 top-0 h-full w-[3px] origin-top scale-y-0 bg-[var(--flo)] transition-transform duration-300 group-hover:scale-y-100 group-focus-within:scale-y-100"

@@ -18,8 +18,8 @@ export default function WorkPage() {
             sorted by kind.
           </h1>
           <p className="max-w-[46ch] text-[length:var(--text-lede)] leading-[1.5] lg:pt-2">
-            Filter down to what you came for. Every entry names the stack it actually
-            uses and links to the source where the source is public.
+            Filter down to what you came for. Every entry names its stack and links
+            to the source where that source is public.
           </p>
         </div>
       </section>
