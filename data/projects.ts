@@ -1,9 +1,12 @@
 // Single source of truth for the catalogue.
 //
-// Copy for the first twenty entries is carried over verbatim from
-// foayenix/cv-site; the six later entries are written from each repo's own
-// README. `live` and `source` are only set where the URL was checked and
-// returned 200 — a missing link means no link is rendered, never a guess.
+// Copy for the twenty oldest entries is carried over verbatim from
+// foayenix/cv-site; every later entry is written from the repository itself —
+// its README on whichever branch carries the newest work, which for several
+// builds is not the default branch. `live` and `source` are only set where the
+// URL was checked and returned 200 — a missing link means no link is rendered,
+// never a guess. A build whose code is in a private repository gets no
+// `source`, and never a link to a related public repository standing in for it.
 
 export type Project = {
   slug: string
@@ -24,6 +27,29 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
+    slug: 'proper',
+    name: 'Proper',
+    year: 2026,
+    featured: true,
+    oneLiner:
+      'A reader for software built with AI: point it at a repository and it returns project intelligence you can inspect — a health score that opens down to the individual checks behind it, evidence-linked findings, and a map of how the files actually connect.',
+    signature:
+      'The scanner is deterministic and offline — Node standard library only, no model, no API key, no network call — and it never writes to the repository it reads. The optional local explanation layer sits on top of those facts and is structurally unable to change a finding or a score. On the project map a solid line was read from the import graph and a dashed one is only the scanner’s own grouping of file paths, because a line on a diagram is a claim and should never look more certain than its evidence. Comprehension is not scored at all: every area reads “No evidence yet” until you answer for it, rather than a percentage invented to fill the space.',
+    stack: ['Next.js 16', 'React 19', 'TypeScript', 'Node', 'Ollama'],
+    tags: ['Web', 'Tool', 'AI', 'Local-first'],
+  },
+  {
+    slug: 'pact',
+    name: 'Pact',
+    year: 2026,
+    oneLiner:
+      'A responsive prototype for turning the agreements people actually make in conversation into structured, living records — plain language through negotiation and signature to obligations, amendments and evidence.',
+    signature:
+      'The Agreement Spine — Draft, Review, Signed, Active, Complete — runs through every screen, so the state of an agreement is legible without reading a document. A counterparty change arrives as an explicit, attributable diff rather than a silent edit; an amendment is added without modifying the signed version; and Agreement Check raises completeness and clarity warnings while never implying legal validity. A counterparty reviews, negotiates and signs from a private link with nothing installed.',
+    stack: ['Next.js 16', 'React 19', 'TypeScript'],
+    tags: ['Web', 'Prototype'],
+  },
+  {
     slug: 'quire',
     name: 'Quire',
     year: 2026,
@@ -43,13 +69,13 @@ export const PROJECTS: Project[] = [
     year: 2026,
     featured: true,
     oneLiner:
-      'A WhatsApp bot that lets African traditional-medicine practitioners document herbal formulations and track patient outcomes by voice and photo — no app, no typing, just WhatsApp.',
+      'A WhatsApp agent that lets African traditional-medicine practitioners document herbal formulations and track the patients they treat — by text, voice note or photograph, in English, Yorùbá, Igbo, Hausa or Pidgin.',
     signature:
-      'Speak naturally, Whisper transcribes, Claude structures the result, and local plant names in Yoruba or Pidgin map to botanical Latin through a 152-entry lookup before anything is stored under row-level security. It reads handwritten notebook pages from a photograph. Webhook signatures are verified, 105 of 105 tests pass, and a public institutional dashboard sits on top.',
+      'There are no keywords and no fixed conversation steps. An inbound message becomes content blocks and enters a Claude tool-calling loop with eleven tools, and every executor resolves records by short code scoped to the calling practitioner — so a hallucinated FM-00042 returns “not found” rather than another practitioner’s patient. Conversation memory is replayed for 24 hours, so the agent picks up mid-thought across restarts and redeploys, and rapid-fire messages are debounced into a single turn. Local plant names map to botanical Latin through a 152-entry Nigerian lookup, and the evaluation set refuses to make a single model call unless at least a hundred cases have been approved by a practitioner — an admin review, a correction row or a synthetic paraphrase does not count. With the pilot blocked on a Meta production number, a simulator serves the same agent loop in a browser, every tool call and its result shown beside the reply, so you can confirm a formulation reached the vault instead of the agent merely saying so.',
     stack: ['Node.js 20', 'Express', 'Supabase', 'Whisper', 'Claude', 'Railway'],
-    stackNote: 'Evolved from an earlier Python/Flask + Twilio + Airtable MVP.',
+    stackNote:
+      'The agent replaced this build’s own six keyword-driven flows; before those, an MVP on Python, Flask, Twilio and Airtable. The current code is private, so no source link — the public repository is that first MVP and is not what is described here.',
     tags: ['WhatsApp', 'AI', 'Health', 'Social impact'],
-    source: 'https://github.com/foayenix/sanko',
   },
   {
     slug: 'tbot',
@@ -74,6 +100,8 @@ export const PROJECTS: Project[] = [
     signature:
       'A deterministic, replayable match engine: every match is a snapshot pair, a seed and a decision log, and it re-simulates server-side from an identical prefix — so mid-match card plays are PvP-fair by construction rather than by trust. Anonymous cookie-keyed worlds with recovery codes, friends’ leagues and cups via share codes, and a full economy with wages, aging and retirement.',
     stack: ['Next.js 14', 'TypeScript', 'Tailwind', 'PostgreSQL', 'HTML Canvas'],
+    stackNote:
+      'A 2025 build of the same idea took a different shape — a fantasy draft game on Express, Socket.IO and React — and is a separate codebase, not an earlier commit of this one.',
     tags: ['Web', 'Game'],
   },
   {
@@ -83,7 +111,7 @@ export const PROJECTS: Project[] = [
     oneLiner:
       'A personal reading library for saved Claude responses — keep what is worth keeping and read it later like a book, entirely offline.',
     signature:
-      'Notes are plain Markdown files plus a single index.json, readable by any tool, with no database anywhere in the design — so the library outlives the app that made it. Storage and capture live in a Swift package with a platform-independent test suite; the Xcode project is generated from project.yml rather than committed, because a .pbxproj is not reviewable.',
+      'Notes are plain Markdown files plus a single index.json, readable by any tool, with no database anywhere in the design — so the library outlives the app that made it. The Markdown is the source of truth, not the index: an index that cannot be read is set aside under a timestamped name and rebuilt from the files, so nothing is overwritten on the way to recovery. Storage and capture live in a Swift package with a platform-independent test suite; the Xcode project is generated from project.yml rather than committed, because a .pbxproj is not reviewable. The App Store requirements — icon, both privacy manifests, and versions that the app and its extension can never disagree on — are checked by CI on every build. The optional iCloud mirror is file-based, newest file wins, with no CloudKit schema to outlive.',
     stack: ['Swift', 'SwiftUI', 'iOS 17+', 'XcodeGen', 'Share Extension'],
     tags: ['Mobile', 'Local-first', 'AI'],
     source: 'https://github.com/foayenix/shelf',
@@ -121,8 +149,8 @@ export const PROJECTS: Project[] = [
     oneLiner:
       'An offline-first desktop application for logging daily research work and building a medicinal-plant materia medica corpus — one SQLite file on one Mac.',
     signature:
-      'Records form a single graph: a daily entry points at the monograph written that day, which carries sourced claims citing references, which feed the outputs published. The connectedness is the point — one query answers which plants you have written about that have no human-trial evidence and that you have never published on. No server, no account, no sync, no second user.',
-    stack: ['SQLite', 'Desktop', 'local-only'],
+      'Records form a single graph: a daily entry points at the monograph written that day, which carries sourced claims citing references, which feed the outputs published. The connectedness is the point — one query answers which plants you have written about that have no human-trial evidence and that you have never published on. The migrations belong to the Python side and the Rust core never migrates; the frontend is vanilla DOM and hand-written CSS against a set of artboards that are the final authority whenever the build contract and the design disagree. No server, no account, no sync, no second user.',
+    stack: ['Tauri 2', 'Rust', 'rusqlite', 'TypeScript', 'Python 3.12', 'SQLite'],
     tags: ['Tool', 'Local-first', 'Research'],
     source: 'https://github.com/foayenix/tdl',
   },
@@ -133,7 +161,7 @@ export const PROJECTS: Project[] = [
     oneLiner: 'Time budgets, placed — and the truth about whether they happened.',
     signature:
       'Six targets across app, widgets, Live Activity, Dynamic Island and watch, with project.yml as the source of truth and the .xcodeproj generated rather than committed — every target-membership decision is a real, reviewable one about which files the widget can see, which the watch can, and where each App Group attaches. The engine’s test suite runs without a simulator.',
-    stack: ['Swift', 'SwiftUI', 'WidgetKit', 'watchOS', 'XcodeGen'],
+    stack: ['Swift', 'SwiftUI', 'WidgetKit', 'watchOS', 'Screen Time', 'XcodeGen'],
     tags: ['Mobile', 'Productivity'],
     source: 'https://github.com/foayenix/margin',
   },
@@ -299,6 +327,7 @@ export const PROJECTS: Project[] = [
       'Automated weekly bin-rota rotation with swaps and reminders, photo-based maintenance reporting with status tracking, property-scoped group chat and visitor logging — with genuinely separate experiences for landlords and tenants rather than one screen with things hidden.',
     stack: ['Flutter', 'Riverpod', 'Firebase', 'Hive', 'go_router'],
     tags: ['Mobile', 'Consumer'],
+    source: 'https://github.com/foayenix/tbx-binap',
   },
   {
     slug: 'pal',
@@ -309,6 +338,7 @@ export const PROJECTS: Project[] = [
       'The recognition service sits behind a clean interface so a mock can be swapped for a hosted model or on-device TFLite without touching the app. Fifteen equipment types, each with step-by-step form, target muscles, safety notes and the mistakes people actually make.',
     stack: ['Flutter', 'Riverpod', 'go_router', 'Firebase'],
     tags: ['Mobile', 'AI'],
+    source: 'https://github.com/foayenix/pal-t1',
   },
   {
     slug: 'edo',
@@ -320,6 +350,7 @@ export const PROJECTS: Project[] = [
       'It simulates a visitor clicking every page, form and button to surface broken flows, audits Core Web Vitals, accessibility and SEO, then scores each page on its likelihood of appearing in AI overviews and hands back a step-by-step upgrade plan rather than a score alone.',
     stack: ['Next.js 14', 'TypeScript', 'Tailwind', 'Zustand', 'Zod'],
     tags: ['Web', 'AI', 'Tool'],
+    source: 'https://github.com/foayenix/s',
   },
   {
     slug: 'uspace',
@@ -331,13 +362,39 @@ export const PROJECTS: Project[] = [
       'You send the message you were thinking of sending, choose Pause, Explain, Apologise or Boundary, and get three calmer options. It never messages the other person — you stay in control of sending. A keyword safety classifier routes self-harm, threat and abuse language to helplines, phone numbers are SHA-256 hashed, and /delete wipes everything.',
     stack: ['Node.js', 'TypeScript', 'Express', 'WhatsApp Cloud API', 'Prisma', 'Zod'],
     tags: ['WhatsApp', 'AI', 'Health'],
+    source: 'https://github.com/foayenix/ema_c',
+  },
+  {
+    slug: 'sana',
+    name: 'SANA',
+    year: 2025,
+    oneLiner:
+      'A dual-sided wellness platform connecting people with credible complementary-medicine practitioners, and measuring whether the treatment actually worked.',
+    signature:
+      'Ten named models carry the product rather than one recommendation endpoint: credential vetting that checks a practitioner’s qualification against the awarding institution, safety triage that detects a crisis before a match is ever made, and an outcome-uplift model using Thompson sampling to learn which interventions genuinely help. Outcomes are recorded on instruments a clinician already recognises — WHO-5, DASS-21, VAS — rather than a satisfaction star. Around that sit practice management and scheduling, marketplace discovery, Stripe payments and payouts, wearable integrations, an embeddable booking widget, and an enterprise tier with FHIR and multi-tenancy.',
+    stack: ['FastAPI', 'SQLAlchemy', 'PostgreSQL', 'pgvector', 'Flutter', 'Stripe'],
+    stackNote: 'An earlier MVP of the same platform was built on NestJS, Prisma and Flutter.',
+    tags: ['Web', 'Mobile', 'AI', 'Health'],
+    source: 'https://github.com/foayenix/sana-abc3',
+  },
+  {
+    slug: 'five-days',
+    name: 'Five Days',
+    year: 2026,
+    oneLiner:
+      'A private five-day itinerary page, compiled from a design canvas file rather than maintained as markup.',
+    signature:
+      'The canvas file is the source of truth and cannot be served — it depends on an editor runtime that exists only inside the editor — so a build script lifts its helmet into the head, its canvas markup into the body, and shims the one logic component to run in an ordinary browser. The plan is edited where it was designed, and the site is a build artefact. Query-string switches render the page as though it were any given date, so the whole thing can be checked without waiting for the calendar, and a missing photograph degrades to a gradient panel rather than a broken image. No framework and no dependencies.',
+    stack: ['Node', 'static HTML', 'Vercel'],
+    tags: ['Web', 'Tool'],
+    source: 'https://github.com/foayenix/30-sec-wknd',
   },
 ]
 
 export const TAG_ORDER = [
   'Web', 'Mobile', 'AI', 'Local-first', 'Tool', 'Game', 'Client',
   'WhatsApp', 'Health', 'Research', 'Productivity', 'Consumer',
-  'PWA', 'Community', 'Finance', 'Social impact',
+  'PWA', 'Community', 'Finance', 'Social impact', 'Prototype',
 ]
 
 export const ALL_TAGS = TAG_ORDER.filter((t) => PROJECTS.some((p) => p.tags.includes(t)))

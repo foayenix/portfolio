@@ -12,8 +12,8 @@ export const metadata: Metadata = {
 const PRINCIPLES = [
   {
     heading: 'A record you can check',
-    body: 'A log that flatters you is worth nothing. SETT ships with no streaks, badges or confetti and shows its reasoning for every suggested set. tbot throws out a strategy that peeked at tomorrow. Bob leaves every unverified regulation value blank rather than printing a plausible one.',
-    cites: ['sett', 'tbot', 'bob'],
+    body: 'A log that flatters you is worth nothing. SETT ships with no streaks, badges or confetti and shows its reasoning for every suggested set. tbot throws out a strategy that peeked at tomorrow. Bob leaves every unverified regulation value blank rather than printing a plausible one. Proper scores a codebase from a deterministic scan and puts the explanation layer where it cannot reach the finding underneath it.',
+    cites: ['sett', 'tbot', 'bob', 'proper'],
   },
   {
     heading: 'It works with the network off',

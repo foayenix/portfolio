@@ -1,6 +1,6 @@
 # Felix Ayeni — portfolio
 
-A catalogue of 26 finished builds, and a CV by implication. Next.js 15 (App
+A catalogue of 30 finished builds, and a CV by implication. Next.js 15 (App
 Router) + React 19 + TypeScript + Tailwind v4. No database, no CMS, no images —
 every page renders from two data files and ships as static HTML.
 
@@ -9,7 +9,7 @@ every page renders from two data files and ships as static HTML.
 ```bash
 npm install
 npm run dev      # http://localhost:3000
-npm run build    # 32 static pages into .next
+npm run build    # 36 static pages into .next
 npm start        # serve the production build
 ```
 
@@ -52,14 +52,26 @@ Edit these two files; never edit layout to change copy.
 
 | File | What it holds |
 |---|---|
-| `data/projects.ts` | All 26 builds — one-liner, signature detail, stack, tags, year, `featured`, and optional `live` / `source` URLs. |
+| `data/projects.ts` | All 30 builds — one-liner, signature detail, stack, tags, year, `featured`, and optional `live` / `source` URLs. |
 | `data/site.ts` | Name, role, location, bio, email, phone, GitHub. |
 
 **Links are only present where the URL was checked and returned 200.** A build
-with no `live` renders no live button rather than a guess; of the 26, four have
-a live deployment and 20 have public source. Copy for the first twenty entries
-is carried over verbatim from `foayenix/cv-site`; the six later entries are
-written from each repo's own README.
+with no `live` renders no live button rather than a guess; of the 30, four have
+a live deployment and 25 have public source. Copy for the twenty oldest entries
+is carried over verbatim from `foayenix/cv-site`; every later entry is written
+from the repository itself.
+
+Two rules the data file enforces and it is easy to break by accident:
+
+- **Read the branch with the work on it, not the default branch.** Several
+  builds keep their newest state on a `claude/*` branch and never merged it —
+  Shelf's App Store and index-recovery work is one of them. A README on `main`
+  can be months behind the code.
+- **A private build gets no `source`, and never a link to a nearby public
+  repository standing in for it.** Sanko's public repo is the first Flask MVP,
+  not the agent the entry describes, so the entry links nothing and says why in
+  its `stackNote`. Football Frenzy's near-namesake public repo is a different
+  game entirely.
 
 Adding a build is one object in `data/projects.ts` — the index, the filters,
 the tag counts, the related-builds section, the static routes and the footer
