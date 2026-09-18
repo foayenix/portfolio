@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { SITE } from '@/data/site'
-import { PROJECTS } from '@/data/projects'
+import { COUNTS } from '@/data/projects'
 
 export default function Footer() {
   return (
@@ -9,10 +9,11 @@ export default function Footer() {
         <div className="grid gap-10 border-b border-[var(--rule)] py-14 md:grid-cols-[1.4fr_1fr_1fr] md:gap-8">
           <div>
             <p className="display text-[length:var(--text-h3)] md:text-[2rem]">
-              Available for client work.
+              {SITE.hiring.headline}
             </p>
             <p className="prose-body mt-3 text-[var(--ink-2)]">
-              Tell me what needs building and roughly when you need it. I reply within a day.
+              {SITE.hiring.roles.join(' · ')}. Tell me what you need built and roughly
+              when you need it. I reply within a day.
             </p>
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <a
@@ -55,6 +56,20 @@ export default function Footer() {
                   GitHub
                 </a>
               </li>
+              {SITE.linkedin && (
+                <li>
+                  <a href={SITE.linkedin} className="text-[var(--ink-2)] hover:text-[var(--flo-deep)]">
+                    LinkedIn
+                  </a>
+                </li>
+              )}
+              {SITE.cv && (
+                <li>
+                  <a href={SITE.cv} className="text-[var(--ink-2)] hover:text-[var(--flo-deep)]">
+                    CV
+                  </a>
+                </li>
+              )}
               <li>
                 <a href={`mailto:${SITE.email}`} className="text-[var(--ink-2)] hover:text-[var(--flo-deep)]">
                   Email
@@ -66,7 +81,7 @@ export default function Footer() {
 
         <div className="flex flex-wrap items-center justify-between gap-2 py-6">
           <p className="mono text-[length:var(--text-micro)] text-[var(--ink-2)]">
-            {PROJECTS.length} builds catalogued, {SITE.location}
+            {COUNTS.builds} builds catalogued, {COUNTS.source} with public source, {SITE.location}
           </p>
           <p className="mono text-[length:var(--text-micro)] text-[var(--ink-2)]">
             © {new Date().getFullYear()} {SITE.name}
