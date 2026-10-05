@@ -129,7 +129,7 @@ export default function ProfilePage() {
             What the labels mean
           </h2>
           <p className="max-w-[44ch] text-[0.9375rem] leading-[1.6] text-[var(--ink-2)]">
-            Every build carries one of these. Nothing here has been released to users,
+            Every build carries one of these. None of them has usage figures I can show you,
             so no entry claims usage, revenue or measured outcomes.
           </p>
         </div>
