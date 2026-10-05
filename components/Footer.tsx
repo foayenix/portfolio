@@ -13,7 +13,7 @@ export default function Footer() {
             </p>
             <p className="prose-body mt-3 text-[var(--ink-2)]">
               {SITE.hiring.roles.join(' · ')}. Tell me what you need built and roughly
-              when you need it. I reply within a day.
+              when you need it. I reply within a few days.
             </p>
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <a
