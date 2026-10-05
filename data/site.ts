@@ -30,7 +30,7 @@ export const SITE = {
   hiring: {
     headline: 'Open to employment and to client work.',
     roles: ['AI Engineer', 'Full-stack Engineer', 'Software Engineer'],
-    body: 'I’m looking for a role building AI systems or full-stack products, and I take on client work alongside it. Tell me what you need built and roughly when, and I’ll reply within a day.',
+    body: 'I’m looking for a role building AI systems or full-stack products, and I take on client work alongside it. Tell me what you need built and roughly when, and I’ll reply within a few days.',
   },
 
   email: 'foayenix@gmail.com',
