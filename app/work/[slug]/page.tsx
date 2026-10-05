@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { PROJECTS, getProject } from '@/data/projects'
+import { PROJECTS, STATUS, getProject } from '@/data/projects'
+import StatusTag from '@/components/StatusTag'
 
 type Params = { params: Promise<{ slug: string }> }
 
@@ -13,7 +14,10 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params
   const p = getProject(slug)
   if (!p) return {}
-  return { title: p.name, description: p.oneLiner }
+  return {
+    title: p.name,
+    description: `${STATUS[p.status].label}. ${p.oneLiner}`,
+  }
 }
 
 export default async function ProjectPage({ params }: Params) {
@@ -24,6 +28,7 @@ export default async function ProjectPage({ params }: Params) {
   const i = PROJECTS.findIndex((x) => x.slug === p.slug)
   const prev = PROJECTS[i - 1]
   const next = PROJECTS[i + 1]
+  const cs = p.caseStudy
 
   // Builds that share the most ground with this one, so a reader who liked the
   // local-first argument is one click from the rest of it.
@@ -46,16 +51,17 @@ export default async function ProjectPage({ params }: Params) {
         <div className="mt-8 grid gap-8 border-b border-[var(--rule)] pb-10 lg:grid-cols-[1.35fr_1fr] lg:gap-16">
           <div>
             <h1 className="display text-[length:var(--text-h1)]">{p.name}</h1>
-            <ul className="mt-5 flex flex-wrap gap-1.5">
+            <div className="mt-5 flex flex-wrap items-center gap-1.5">
+              <StatusTag status={p.status} size="md" />
               {p.tags.map((t) => (
-                <li
+                <span
                   key={t}
                   className="ui border border-[var(--rule)] px-2 py-0.5 text-[0.75rem] text-[var(--ink-2)]"
                 >
                   {t}
-                </li>
+                </span>
               ))}
-            </ul>
+            </div>
           </div>
 
           <p className="text-[length:var(--text-lede)] leading-[1.5] lg:pt-3">{p.oneLiner}</p>
@@ -74,6 +80,23 @@ export default async function ProjectPage({ params }: Params) {
           </section>
 
           <aside className="space-y-8 lg:pt-1">
+            {/* Where the build actually got to, above the stack, because it is
+                the first thing a reader needs and the easiest thing to fudge. */}
+            <section>
+              <h2 className="ui text-[length:var(--text-micro)] text-[var(--ink-2)]">
+                Where it got to
+              </h2>
+              <p className="mt-2.5 text-[0.9375rem] leading-[1.6]">{STATUS[p.status].blurb}</p>
+              {p.statusNote && (
+                <p className="mt-2.5 text-[0.9375rem] leading-[1.6] text-[var(--ink-2)]">
+                  {p.statusNote}
+                </p>
+              )}
+              <p className="mono mt-3 text-[length:var(--text-micro)] text-[var(--ink-2)]">
+                Built {p.year}
+              </p>
+            </section>
+
             <section>
               <h2 className="ui text-[length:var(--text-micro)] text-[var(--ink-2)]">Built with</h2>
               <ul className="mt-3 border-t border-[var(--rule)]">
@@ -91,11 +114,6 @@ export default async function ProjectPage({ params }: Params) {
                   {p.stackNote}
                 </p>
               )}
-            </section>
-
-            <section>
-              <h2 className="ui text-[length:var(--text-micro)] text-[var(--ink-2)]">Shipped</h2>
-              <p className="mono mt-2 text-[0.8125rem]">{p.year}</p>
             </section>
 
             {(p.live || p.source) && (
@@ -125,8 +143,50 @@ export default async function ProjectPage({ params }: Params) {
         </div>
       </div>
 
+      {/* The case study: the questions a reviewer would otherwise have to ask,
+          answered in the order they would ask them. Only the builds that can
+          answer all of them carry one. */}
+      {cs && (
+        <section
+          aria-labelledby="case-study"
+          className="mx-auto max-w-[1440px] px-5 md:px-10"
+        >
+          <h2
+            id="case-study"
+            className="display border-t border-[var(--rule)] pt-10 text-[length:var(--text-h2)]"
+          >
+            The case study
+          </h2>
+
+          <div className="mt-8 grid gap-x-16 gap-y-10 lg:grid-cols-2">
+            <Answer q="Who needed this?" a={cs.problem} />
+            <Answer q="What did I build?" a={cs.role} />
+            <Answer q="What was hard?" a={cs.hard} />
+            <Answer q="Why this architecture, and what did it cost?" a={cs.decision} />
+
+            <section>
+              <h3 className="ui border-t-[3px] border-[var(--flo)] pt-4 text-[1.0625rem]">
+                How to check it
+              </h3>
+              <ol className="prose-body mt-3 space-y-2.5">
+                {cs.verify.map((step, n) => (
+                  <li key={step} className="flex gap-3 text-[1.0625rem] leading-[1.6]">
+                    <span className="mono shrink-0 pt-[0.3em] text-[length:var(--text-micro)] text-[var(--ink-2)]">
+                      {String(n + 1).padStart(2, '0')}
+                    </span>
+                    <span>{step}</span>
+                  </li>
+                ))}
+              </ol>
+            </section>
+
+            <Answer q="What is not there?" a={cs.limits} />
+          </div>
+        </section>
+      )}
+
       {related.length > 0 && (
-        <section className="mx-auto max-w-[1440px] px-5 md:px-10">
+        <section className="mx-auto max-w-[1440px] px-5 pt-16 md:px-10">
           <h2 className="display border-t border-[var(--rule)] pt-10 text-[1.5rem]">
             Shares ground with
           </h2>
@@ -137,9 +197,12 @@ export default async function ProjectPage({ params }: Params) {
                 href={`/work/${r.slug}`}
                 className="group border-t-[3px] border-[var(--rule)] py-5 transition-colors hover:border-[var(--flo)] md:mr-8"
               >
-                <h3 className="display text-[1.2rem] transition-colors group-hover:text-[var(--flo-deep)]">
-                  {r.name}
-                </h3>
+                <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
+                  <h3 className="display text-[1.2rem] transition-colors group-hover:text-[var(--flo-deep)]">
+                    {r.name}
+                  </h3>
+                  <StatusTag status={r.status} />
+                </div>
                 <p className="mt-2 text-[0.9375rem] leading-[1.6] text-[var(--ink-2)]">
                   {r.oneLiner}
                 </p>
@@ -182,5 +245,15 @@ export default async function ProjectPage({ params }: Params) {
         )}
       </nav>
     </article>
+  )
+}
+
+/** One question a reviewer would ask, and the answer, in that order. */
+function Answer({ q, a }: { q: string; a: string }) {
+  return (
+    <section>
+      <h3 className="ui border-t-[3px] border-[var(--rule)] pt-4 text-[1.0625rem]">{q}</h3>
+      <p className="prose-body mt-3 text-[1.0625rem] leading-[1.68]">{a}</p>
+    </section>
   )
 }

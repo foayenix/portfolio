@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import { ALL_TAGS, PROJECTS } from '@/data/projects'
+import StatusTag from './StatusTag'
 
 export default function WorkGrid() {
   const [tag, setTag] = useState<string | null>(null)
@@ -60,6 +61,10 @@ export default function WorkGrid() {
                   <span className="mono shrink-0 text-[length:var(--text-micro)] text-[var(--ink-2)]">
                     {p.year}
                   </span>
+                </div>
+
+                <div className="mt-2.5">
+                  <StatusTag status={p.status} />
                 </div>
 
                 <p className="mt-2.5 text-[0.9375rem] leading-[1.6] text-[var(--ink-2)]">

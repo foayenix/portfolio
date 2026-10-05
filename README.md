@@ -1,8 +1,13 @@
 # Felix Ayeni — portfolio
 
-A catalogue of 30 finished builds, which is also the CV. Next.js 15 (App
-Router) + React 19 + TypeScript + Tailwind v4. No database, no CMS, no images:
-every page renders from two data files and ships as static HTML.
+A catalogue of 30 builds, which is also the CV. Next.js 15 (App Router) +
+React 19 + TypeScript + Tailwind v4. No database, no CMS, no images: every page
+renders from two data files and ships as static HTML.
+
+The homepage leads with the role, then three flagship case studies, then the
+full catalogue. Every build carries a `status`, because the site used to claim
+in prose that everything was finished end to end while the catalogue itself
+listed a prototype and an experiment.
 
 ## Run it
 
@@ -52,8 +57,40 @@ Edit these two files; never edit layout to change copy.
 
 | File | What it holds |
 |---|---|
-| `data/projects.ts` | All 30 builds: one-liner, signature detail, stack, tags, year, `featured`, and optional `live` / `source` URLs. |
-| `data/site.ts` | Name, role, location, bio, email, phone, GitHub. |
+| `data/projects.ts` | All 30 builds: one-liner, signature detail, stack, tags, year, `status`, `featured`, `flagship`, an optional `caseStudy`, and optional `live` / `source` URLs. |
+| `data/site.ts` | Name, role, specialism, location, bio, hiring block, email, phone, GitHub, and empty `cv` / `linkedin` slots. |
+
+### Status is the field that must not flatter
+
+Every build has one of five: `live`, `client`, `built`, `prototype`,
+`experiment`. The labels and their definitions live in `STATUS` in
+`data/projects.ts` and are printed in full on the profile page, so a label on a
+card always resolves to a definition a reader can find.
+
+`built` is the honest majority: finished, running, never released. Twenty-three
+builds sit there, and the way to move one out is to deploy it, not to reword
+it. Where a build is held up by something outside the code, `statusNote` says
+what — a blocked pilot, a private repository, a site only the owner runs.
+
+### Case studies
+
+`caseStudy` answers the questions a reviewer would otherwise have to ask: who
+needed it, what I built, what was hard, what the architecture cost, how to
+check the claims, and what is missing. Three builds carry one and the homepage
+leads with them, ranked by `flagship`.
+
+There is deliberately no field for outcomes or usage. Nothing here has been
+released to users, so an outcomes section would either be empty on every page
+or be invented. Every sentence in a case study restates something the build
+already establishes elsewhere in its own entry.
+
+### CV and LinkedIn
+
+`SITE.cv` and `SITE.linkedin` are empty strings. Fill either one and its button
+appears on the profile page and in the footer; leave it empty and nothing
+renders. No placeholder URL goes in these, for the same reason no build gets a
+`source` pointing at a nearby repository: a dead link costs more than a missing
+one.
 
 **Links are only present where the URL was checked and returned 200.** A build
 with no `live` renders no live button; of the 30, four have a live deployment
@@ -81,13 +118,15 @@ count all derive from it.
 
 ```
 app/
-  page.tsx            the index, every build in one list
+  page.tsx            the index: role, three flagships, then every build
   work/page.tsx       the same catalogue, filterable by kind
   work/[slug]/        one page per build (generateStaticParams)
-  profile/page.tsx    bio and the three arguments the builds keep making
+  profile/page.tsx    bio, the hiring route, the status key, and the three
+                      arguments the builds keep making
   globals.css         tokens, both presses, and the component layer
 components/
   Catalogue.tsx       the index list and its inking panel
+  StatusTag.tsx       the status label, inked only for `live`
   WorkGrid.tsx        the filterable grid
   Nav / Footer / Mark / ThemeToggle
 ```

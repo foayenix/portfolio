@@ -2,7 +2,8 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { PROJECTS } from '@/data/projects'
+import { PROJECTS, STATUS } from '@/data/projects'
+import StatusTag from './StatusTag'
 
 /**
  * The index of everything, listed at once.
@@ -60,9 +61,14 @@ export default function Catalogue() {
                 </div>
 
                 {/* Phones and tablets get the summary inline. */}
-                <p className="mt-1.5 max-w-[52ch] text-[0.9375rem] leading-[1.55] text-[var(--ink-2)] lg:hidden">
-                  {p.oneLiner}
-                </p>
+                <div className="lg:hidden">
+                  <p className="mt-1.5 max-w-[52ch] text-[0.9375rem] leading-[1.55] text-[var(--ink-2)]">
+                    {p.oneLiner}
+                  </p>
+                  <span className="mt-2.5 inline-block">
+                    <StatusTag status={p.status} />
+                  </span>
+                </div>
               </Link>
             </li>
           )
@@ -80,18 +86,23 @@ export default function Catalogue() {
               </span>
             </div>
 
-            <ul className="mt-3 flex flex-wrap gap-1.5">
+            <div className="mt-3 flex flex-wrap items-center gap-1.5">
+              <StatusTag status={active.status} />
               {active.tags.map((t) => (
-                <li
+                <span
                   key={t}
                   className="ui border border-[var(--rule)] px-1.5 py-0.5 text-[0.6875rem] text-[var(--ink-2)]"
                 >
                   {t}
-                </li>
+                </span>
               ))}
-            </ul>
+            </div>
 
             <p className="mt-5 text-[1.0625rem] leading-[1.6]">{active.oneLiner}</p>
+
+            <p className="mt-3 text-[0.875rem] leading-[1.6] text-[var(--ink-2)]">
+              {STATUS[active.status].blurb}
+            </p>
 
             <p className="mt-4 border-t border-[var(--rule)] pt-4 text-[0.9375rem] leading-[1.65] text-[var(--ink-2)]">
               {active.signature}
