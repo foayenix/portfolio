@@ -1,3 +1,5 @@
+import type { IconName } from '@/components/Icon'
+
 // Single source of truth for the catalogue.
 //
 // Every claim here comes from foayenix/cv-site (the twenty oldest entries) or
@@ -72,6 +74,28 @@ export type CaseStudy = {
   limits: string
 }
 
+/**
+ * The same build told as a picture, for a reader who will never open the
+ * source. Plain words only: no stack names, no acronyms, nothing a
+ * non-developer would have to look up. Every line restates something the
+ * rest of the entry already establishes; none of it is new claim.
+ */
+export type Story = {
+  /** Who it is for, in two to five words. */
+  forWho: string
+  /** Life before this build, in one short sentence. */
+  before?: string
+  /** Life with it, in one short sentence. */
+  after?: string
+  /** How it works, three or four steps, in the order a user meets them. */
+  steps: { icon: IconName; title: string; text: string }[]
+  /** What it promises, each a few words. */
+  promises?: { icon: IconName; text: string }[]
+}
+
+/** A screenshot in public/work/<slug>/. Alt text says what the screen shows. */
+export type Shot = { src: string; alt: string; caption?: string }
+
 export type Project = {
   slug: string
   name: string
@@ -90,6 +114,8 @@ export type Project = {
   /** 1, 2, 3: the three builds the homepage leads with, in order. */
   flagship?: number
   caseStudy?: CaseStudy
+  story?: Story
+  shots?: Shot[]
   stackNote?: string
   live?: string
   source?: string
@@ -111,6 +137,22 @@ export const PROJECTS: Project[] = [
       'The scanner is deterministic and offline. It uses the Node standard library and nothing else, makes no network call, and never writes to the repository it reads. The optional local explanation layer sits on top of those facts and cannot change a finding or a score. On the project map a solid line was read from the import graph and a dashed one is only the scanner’s own grouping of file paths, so a line never looks more certain than the evidence behind it. Comprehension is left unscored: each area reads “No evidence yet” until you answer for it.',
     stack: ['Next.js 16', 'React 19', 'TypeScript', 'Node', 'Ollama'],
     tags: ['Web', 'Tool', 'AI', 'Local-first'],
+    story: {
+      forWho: 'anyone taking over someone else’s code',
+      before: 'Code arrives faster than anyone can read it, and the quick answers come from an AI you cannot check.',
+      after: 'A report built from evidence. Every finding points to the exact line that caused it.',
+      steps: [
+        { icon: 'folder', title: 'Point it at a project', text: 'Choose a folder of code on your own machine.' },
+        { icon: 'search', title: 'It reads every file', text: 'Offline, and without changing anything.' },
+        { icon: 'map', title: 'See the whole picture', text: 'A health score and a map of how the files connect.' },
+        { icon: 'target', title: 'Follow the evidence', text: 'Open any finding and land on the line behind it.' },
+      ],
+      promises: [
+        { icon: 'offline', text: 'Never goes online' },
+        { icon: 'lock', text: 'Never changes your code' },
+        { icon: 'repeat', text: 'Same result every time' },
+      ],
+    },
     caseStudy: {
       problem:
         'Code now arrives faster than anyone can read it. Someone taking on an unfamiliar repository wants to know what it does, where the risk sits, and what the evidence is for each — and the tools that answer that quickly answer it by asking a model, which is the one kind of answer you cannot check.',
@@ -155,6 +197,22 @@ export const PROJECTS: Project[] = [
       'Dragging a thread from a source, or from a highlight inside it, onto a sentence is the citation, and it produces an inline footnote. Exports a properly cited .docx, LaTeX or PDF. Fully offline, no login, no cloud.',
     stack: ['React 19', 'TypeScript', 'Vite', 'React Flow', 'pdf.js', 'IndexedDB', 'Ollama'],
     tags: ['Web', 'Local-first', 'Research', 'AI'],
+    story: {
+      forWho: 'PhD researchers writing a thesis',
+      before: 'Papers open in one window, the draft in another, and the link between them kept in your head until it gets lost.',
+      after: 'Papers and writing on one canvas. Draw a line from a highlight to a sentence and the citation is done.',
+      steps: [
+        { icon: 'paper', title: 'Drop in your papers', text: 'PDFs sit on one big canvas beside your draft.' },
+        { icon: 'highlight', title: 'Highlight what matters', text: 'Mark the passage you want to use.' },
+        { icon: 'thread', title: 'Draw a thread', text: 'Drag from the highlight to your sentence. A footnote appears.' },
+        { icon: 'download', title: 'Export', text: 'Out to Word, LaTeX or PDF with the citations in place.' },
+      ],
+      promises: [
+        { icon: 'lock', text: 'No sign-up' },
+        { icon: 'offline', text: 'Works with the internet off' },
+        { icon: 'shield', text: 'Your thesis stays on your computer' },
+      ],
+    },
     caseStudy: {
       problem:
         'A PhD researcher writes with the sources open in one window and the draft in another. The link between a highlighted passage and the sentence it supports lives in the writer’s head until it is typed out as a citation, which is the point at which it gets lost or gets wrong.',
@@ -194,6 +252,22 @@ export const PROJECTS: Project[] = [
     stackNote:
       'The agent replaced this build’s own six keyword-driven flows; before those, an MVP on Python, Flask, Twilio and Airtable. The current code is private, so there is no source link: the public repository holds that first MVP, and not what is described here.',
     tags: ['WhatsApp', 'AI', 'Health', 'Social impact'],
+    story: {
+      forWho: 'African traditional-medicine practitioners',
+      before: 'Remedies and patient histories kept on paper, in a language no form accepts, and lost when the paper is.',
+      after: 'Kept safe by sending a WhatsApp message, in the practitioner’s own language.',
+      steps: [
+        { icon: 'chat', title: 'Send a message', text: 'Text, a voice note or a photo, on WhatsApp. No new app to learn.' },
+        { icon: 'spark', title: 'The assistant understands', text: 'It reads the message and asks what it still needs.' },
+        { icon: 'archive', title: 'It files the record', text: 'The remedy or the patient visit goes into the practitioner’s records.' },
+        { icon: 'shield', title: 'Only theirs', text: 'Each practitioner can only ever reach their own records.' },
+      ],
+      promises: [
+        { icon: 'language', text: 'English, Yorùbá, Igbo, Hausa, Pidgin' },
+        { icon: 'mic', text: 'Voice notes understood' },
+        { icon: 'globe', text: '152 local plant names translated' },
+      ],
+    },
     caseStudy: {
       problem:
         'A practitioner keeps formulations and patient histories on paper, in a language and a plant vocabulary a structured form will not accept. The record is the practice, and it is the part that does not survive.',
@@ -270,6 +344,18 @@ export const PROJECTS: Project[] = [
       'All seven phases are built: compliance checker, building model, quantity takeoff, cost estimate, layout generation, drawing output and the combined report. Every regulation value and measurement convention is left blank pending verification, so no unverified number ever reaches the output. Scope is fixed and stated: England only, two-storey detached masonry, cavity wall, concrete strip foundation.',
     stack: ['Python', 'CLI-first', 'read-only web surface'],
     tags: ['Tool', 'AI', 'Client'],
+    story: {
+      forWho: 'house-building in England (an experiment)',
+      steps: [
+        { icon: 'house', title: 'Describe the house', text: 'Two-storey, detached, brick and block, in England.' },
+        { icon: 'shield', title: 'Check the rules', text: 'The design goes through the building-regulation checks. Each rule value stays blank until it is verified.' },
+        { icon: 'coin', title: 'Count and cost it', text: 'Materials measured, then priced.' },
+        { icon: 'ruler', title: 'Draw and report', text: 'Layouts, drawings and one combined report.' },
+      ],
+      promises: [
+        { icon: 'blank', text: 'Leaves a number blank rather than guess it' },
+      ],
+    },
     live: 'https://bob-mu-livid.vercel.app',
     source: 'https://github.com/foayenix/Bob',
   },
@@ -284,6 +370,20 @@ export const PROJECTS: Project[] = [
       'No streaks, badges, confetti or red dots. Start a lift you have done before and SETT ghosts the next set from your own history using one progression rule it can always show you: add 2.5 kg if you hit every rep last time, otherwise repeat. One transition dims the room as you enter the live set; everything else stays quiet.',
     stack: ['React', 'IndexedDB'],
     tags: ['Web', 'Local-first', 'Health'],
+    story: {
+      forWho: 'people who lift weights',
+      before: 'Fitness apps chase you with streaks, badges, confetti and red dots.',
+      after: 'A quiet log that tells you what to lift next, and shows you why.',
+      steps: [
+        { icon: 'weight', title: 'Start a lift', text: 'Pick an exercise you have done before.' },
+        { icon: 'history', title: 'Get your next set', text: 'Hit every rep last time? Add 2.5 kg. If not, repeat it.' },
+        { icon: 'check', title: 'Log it', text: 'The room dims while you lift. Everything else stays quiet.' },
+      ],
+      promises: [
+        { icon: 'bell', text: 'No streaks, badges or nagging' },
+        { icon: 'offline', text: 'Works with the internet off' },
+      ],
+    },
     live: 'https://sett-swart.vercel.app',
     source: 'https://github.com/foayenix/sett',
   },
