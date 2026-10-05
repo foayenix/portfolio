@@ -19,8 +19,8 @@
  * `prototype`  Screens and flows are built. It is not a product.
  * `experiment` Built to answer a question, not to ship.
  *
- * Nothing in the catalogue has been released to users, so no entry claims
- * usage, revenue or measured outcomes. Where a build is waiting on something
+ * No build has usage figures that can be shown, so no entry claims usage,
+ * revenue or measured outcomes, the live and client builds included. Where a build is waiting on something
  * outside the code, `statusNote` says what.
  */
 export type Status = 'live' | 'client' | 'built' | 'prototype' | 'experiment'
@@ -54,7 +54,7 @@ export const STATUS: Record<Status, { label: string; blurb: string }> = {
  * take the signature paragraph on trust.
  *
  * Every field restates something the build itself establishes. `usage` is
- * deliberately absent everywhere: nothing here has been released to users, and
+ * deliberately absent everywhere: no build has usage figures to show, and
  * an invented outcome would cost more than an empty section.
  */
 export type CaseStudy = {

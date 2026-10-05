@@ -22,7 +22,7 @@ export const SITE = {
 
   bio: [
     'I’m an AI engineer and full-stack developer. I work across web, iOS and Flutter, on agents, games and developer tooling.',
-    'Every build in the catalogue carries its own status, so you can tell what is deployed from what is finished but unreleased, and both from a prototype or an experiment. Nothing here has been released to users, and no entry claims usage or measured outcomes it cannot show you.',
+    'Every build in the catalogue carries its own status, so you can tell what is deployed from what is finished but unreleased, and both from a prototype or an experiment. No entry claims usage or measured outcomes it cannot show you.',
     'The same argument keeps showing up in the work. The training log has no streaks and no confetti, because a record you trust is worth more than one that flatters you. The backtester carries an explicit lookahead guard, so a strategy that peeked at tomorrow gets thrown out. The compliance engine leaves a regulation value blank until someone has verified it. The repository scanner keeps its explanation layer where it cannot reach the finding underneath. The evaluation set makes no model call until a practitioner has approved the cases. The gift list hides reservations from its owner in the database, one layer below the interface.',
   ],
 

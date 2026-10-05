@@ -79,8 +79,8 @@ needed it, what I built, what was hard, what the architecture cost, how to
 check the claims, and what is missing. Three builds carry one and the homepage
 leads with them, ranked by `flagship`.
 
-There is deliberately no field for outcomes or usage. Nothing here has been
-released to users, so an outcomes section would either be empty on every page
+There is deliberately no field for outcomes or usage. No build has usage
+figures that can be shown, so an outcomes section would either be empty on every page
 or be invented. Every sentence in a case study restates something the build
 already establishes elsewhere in its own entry.
 
