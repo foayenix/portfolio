@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { PROJECTS, STATUS, getProject } from '@/data/projects'
+import { PROJECTS, STATUS, getProject, type CaseStudy } from '@/data/projects'
 import StatusTag from '@/components/StatusTag'
+import LivePreview from '@/components/LivePreview'
+import StoryVisual from '@/components/StoryVisual'
 
 type Params = { params: Promise<{ slug: string }> }
 
@@ -68,13 +70,50 @@ export default async function ProjectPage({ params }: Params) {
         </div>
       </header>
 
+      {/* Show before tell: the running build first, then the build as a
+          picture, and only then the paragraphs. */}
+      {p.live && <LivePreview name={p.name} url={p.live} />}
+      {p.story && <StoryVisual name={p.name} story={p.story} />}
+
+      {p.shots && p.shots.length > 0 && (
+        <section aria-labelledby="screens" className="mx-auto max-w-[1440px] px-5 md:px-10">
+          <div className="border-t border-[var(--rule)] pt-10">
+            <h2 id="screens" className="display text-[length:var(--text-h2)]">
+              What it looks like
+            </h2>
+            <div className="mt-6 grid gap-6 md:grid-cols-2">
+              {p.shots.map((shot) => (
+                <figure key={shot.src}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={shot.src}
+                    alt={shot.alt}
+                    loading="lazy"
+                    className="w-full border border-[var(--rule)]"
+                  />
+                  {shot.caption && (
+                    <figcaption className="mt-2 text-[0.9375rem] text-[var(--ink-2)]">
+                      {shot.caption}
+                    </figcaption>
+                  )}
+                </figure>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       <div className="mx-auto max-w-[1440px] px-5 md:px-10">
-        <div className="grid gap-10 py-12 lg:grid-cols-[1.35fr_1fr] lg:gap-16">
+        <div
+          className={`grid gap-10 py-12 lg:grid-cols-[1.35fr_1fr] lg:gap-16 ${
+            p.live || p.story || p.shots?.length ? 'mt-12 border-t border-[var(--rule)]' : ''
+          }`}
+        >
           {/* The assertion. The second plate marks it, because this paragraph
               is the part of the page making a claim. */}
           <section className="self-start border-l-[3px] border-[var(--flo)] pl-6 md:pl-8">
             <h2 className="ui text-[length:var(--text-micro)] text-[var(--ink-2)]">
-              What makes it worth reading
+              {p.story ? 'In more detail' : 'What makes it worth reading'}
             </h2>
             <p className="prose-body mt-3 text-[1.1875rem] leading-[1.62]">{p.signature}</p>
           </section>
@@ -151,37 +190,37 @@ export default async function ProjectPage({ params }: Params) {
           aria-labelledby="case-study"
           className="mx-auto max-w-[1440px] px-5 md:px-10"
         >
-          <h2
-            id="case-study"
-            className="display border-t border-[var(--rule)] pt-10 text-[length:var(--text-h2)]"
-          >
-            The case study
-          </h2>
-
-          <div className="mt-8 grid gap-x-16 gap-y-10 lg:grid-cols-2">
-            <Answer q="Who needed this?" a={cs.problem} />
-            <Answer q="What did I build?" a={cs.role} />
-            <Answer q="What was hard?" a={cs.hard} />
-            <Answer q="Why this architecture, and what did it cost?" a={cs.decision} />
-
-            <section>
-              <h3 className="ui border-t-[3px] border-[var(--flo)] pt-4 text-[1.0625rem]">
-                How to check it
-              </h3>
-              <ol className="prose-body mt-3 space-y-2.5">
-                {cs.verify.map((step, n) => (
-                  <li key={step} className="flex gap-3 text-[1.0625rem] leading-[1.6]">
-                    <span className="mono shrink-0 pt-[0.3em] text-[length:var(--text-micro)] text-[var(--ink-2)]">
-                      {String(n + 1).padStart(2, '0')}
-                    </span>
-                    <span>{step}</span>
-                  </li>
-                ))}
-              </ol>
-            </section>
-
-            <Answer q="What is not there?" a={cs.limits} />
-          </div>
+          {p.story ? (
+            <details className="group border-t border-[var(--rule)] pt-10">
+              <summary className="flex cursor-pointer list-none items-baseline justify-between gap-4 [&::-webkit-details-marker]:hidden">
+                <div>
+                  <h2 id="case-study" className="display text-[length:var(--text-h2)]">
+                    The technical story
+                  </h2>
+                  <span className="mt-2 block text-[1rem] text-[var(--ink-2)]">
+                    For developers and hiring panels: what was hard, what it cost, how to check it.
+                  </span>
+                </div>
+                <span className="ui shrink-0 border border-[var(--ink)] px-3 py-1.5 text-[0.8125rem] group-open:hidden">
+                  Read it
+                </span>
+                <span className="ui hidden shrink-0 border border-[var(--ink)] px-3 py-1.5 text-[0.8125rem] group-open:inline">
+                  Close
+                </span>
+              </summary>
+              <CaseStudyBody cs={cs} />
+            </details>
+          ) : (
+            <>
+              <h2
+                id="case-study"
+                className="display border-t border-[var(--rule)] pt-10 text-[length:var(--text-h2)]"
+              >
+                The case study
+              </h2>
+              <CaseStudyBody cs={cs} />
+            </>
+          )}
         </section>
       )}
 
@@ -245,6 +284,36 @@ export default async function ProjectPage({ params }: Params) {
         )}
       </nav>
     </article>
+  )
+}
+
+/** The six answers, in the order a reviewer would ask the questions. */
+function CaseStudyBody({ cs }: { cs: CaseStudy }) {
+  return (
+    <div className="mt-8 grid gap-x-16 gap-y-10 lg:grid-cols-2">
+      <Answer q="Who needed this?" a={cs.problem} />
+      <Answer q="What did I build?" a={cs.role} />
+      <Answer q="What was hard?" a={cs.hard} />
+      <Answer q="Why this architecture, and what did it cost?" a={cs.decision} />
+
+      <section>
+        <h3 className="ui border-t-[3px] border-[var(--flo)] pt-4 text-[1.0625rem]">
+          How to check it
+        </h3>
+        <ol className="prose-body mt-3 space-y-2.5">
+          {cs.verify.map((step, n) => (
+            <li key={step} className="flex gap-3 text-[1.0625rem] leading-[1.6]">
+              <span className="mono shrink-0 pt-[0.3em] text-[length:var(--text-micro)] text-[var(--ink-2)]">
+                {String(n + 1).padStart(2, '0')}
+              </span>
+              <span>{step}</span>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <Answer q="What is not there?" a={cs.limits} />
+    </div>
   )
 }
 
