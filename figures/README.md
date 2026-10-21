@@ -47,3 +47,30 @@ recorder wired through every helper, and these three draw their thread, chains
 and rods as lines rather than as `tube.mjs` routes, which is what the audit
 exists to prove. The line check and the screenshots are what stands behind
 them instead.
+
+---
+
+## Diagrams, and why they are a different thing
+
+`diagrams/` holds architecture diagrams, which answer a different question from
+the figures above and are built with a different tool.
+
+An Anatomy figure explains **the one argument a build turns on** — the gesture
+that is the citation, the fence the pen cannot pass, the hole that is either
+cut or not. It invents a machine, and boxes and arrows would ruin it.
+
+An architecture diagram answers **"what did you actually build"**, which is the
+question a reader has for the twenty-six catalogue entries with no link. They
+cannot open Proper or YBS or Pank, and a case study tells them about it in
+paragraphs. A diagram shows the shape in one screen.
+
+`diagrams/ybs-architecture.html` is the first, built on the conventions in
+[diagram-design](https://github.com/cathrynlavery/diagram-design) (MIT):
+orthogonal connectors only, zones drawn before arrows and arrows before nodes,
+at most two focal nodes, and a target density around four out of ten. It is
+skinned to this site's own tokens — the same `paper`, `ink`, `rule` and accent
+values as `app/globals.css`, in both themes — so a diagram inside the site does
+not read as a visitor from another design system.
+
+Two tools, two jobs. Adding a third visual idiom would cost more in coherence
+than it bought.

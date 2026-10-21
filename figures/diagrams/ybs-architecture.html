@@ -1,0 +1,187 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yemkem branch stock and sales — architecture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;620&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* The portfolio's own tokens, so a diagram inside the site is not a
+     visitor from another design system. Names match app/globals.css. */
+  :root {
+    --paper: #e6e5df;
+    --paper-hi: #f2f1ec;
+    --ink: #12233d;
+    --ink-2: #4e5c72;
+    --rule: #c6c5bb;
+    --flo: #e0316b;
+    --flo-deep: #c0184f;
+    --accent-tint: rgba(224, 49, 107, 0.09);
+    --zone: rgba(18, 35, 61, 0.025);
+    --zone-rule: rgba(18, 35, 61, 0.12);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) {
+      --paper: #0e1b2e; --paper-hi: #16273f; --ink: #e8e7e0; --ink-2: #93a2b8;
+      --rule: #27394f; --flo: #ff5c8a; --flo-deep: #ff7ba1;
+      --accent-tint: rgba(255, 92, 138, 0.12);
+      --zone: rgba(232, 231, 224, 0.03);
+      --zone-rule: rgba(232, 231, 224, 0.12);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme='dark'] {
+    --paper: #0e1b2e; --paper-hi: #16273f; --ink: #e8e7e0; --ink-2: #93a2b8;
+    --rule: #27394f; --flo: #ff5c8a; --flo-deep: #ff7ba1;
+    --accent-tint: rgba(255, 92, 138, 0.12);
+    --zone: rgba(232, 231, 224, 0.03);
+    --zone-rule: rgba(232, 231, 224, 0.12);
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--paper); }
+  body {
+    font-family: 'Archivo', system-ui, sans-serif;
+    color: var(--ink);
+    padding: 20px 16px 24px;
+  }
+  figure { margin: 0 auto; max-width: 1000px; }
+  svg { display: block; width: 100%; height: auto; }
+  .eyebrow {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--ink-2); margin: 0 0 6px;
+  }
+  h1 { font-size: 19px; font-weight: 620; letter-spacing: -0.01em; margin: 0 0 14px; }
+  figcaption {
+    margin-top: 14px; max-width: 76ch; font-size: 13px; line-height: 1.62; color: var(--ink-2);
+    border-top: 1px solid var(--rule); padding-top: 10px;
+  }
+  figcaption b { color: var(--ink); font-weight: 500; }
+  /* Type ramp, as class hooks so every label is set in one place. */
+  .n  { font-size: 13px; font-weight: 620; fill: var(--ink); }
+  .s  { font-family: 'DM Mono', ui-monospace, monospace; font-size: 10.5px; fill: var(--ink-2); }
+  .z  { font-family: 'DM Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: 0.08em;
+        text-transform: uppercase; fill: var(--ink-2); }
+  .a  { font-family: 'DM Mono', ui-monospace, monospace; font-size: 10px; fill: var(--ink-2); }
+  .focal .n { fill: var(--ink); }
+</style>
+
+<figure>
+  <p class="eyebrow">Fig 4 · Yemkem branch stock and sales</p>
+  <h1>SQL is the authority. The phone holds a copy it is only allowed to preview with.</h1>
+
+  <svg viewBox="0 0 960 600" role="img"
+       aria-label="An architecture diagram. A Cloudflare Worker serves the app to a phone that works with no signal; the phone carries a TypeScript copy of the rules used only for offline previews. The phone signs in through a Supabase edge function, pushes locked declarations into an append-only ledger, and the rules in SQL compute the differences. Row-level read access decides what returns to the phone, and it never returns stock on hand. WhatsApp receipts are queued and not sent.">
+    <defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M0,1 L9,5 L0,9 z" fill="var(--ink-2)"/>
+      </marker>
+      <marker id="arrow-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M0,1 L9,5 L0,9 z" fill="var(--flo-deep)"/>
+      </marker>
+    </defs>
+
+    <!-- z-order: zones, then arrows, then nodes -->
+    <g>
+      <rect x="40" y="64" width="260" height="112" rx="8" fill="var(--zone)" stroke="var(--zone-rule)" stroke-width="0.8"/>
+      <rect x="52" y="58" width="86" height="12" fill="var(--paper)"/>
+      <text class="z" x="58" y="68">Cloudflare</text>
+
+      <rect x="40" y="216" width="260" height="264" rx="8" fill="var(--zone)" stroke="var(--zone-rule)" stroke-width="0.8"/>
+      <rect x="52" y="210" width="222" height="12" fill="var(--paper)"/>
+      <text class="z" x="58" y="220">On the phone · no signal needed</text>
+
+      <rect x="544" y="64" width="376" height="416" rx="8" fill="var(--zone)" stroke="var(--zone-rule)" stroke-width="0.8"/>
+      <rect x="556" y="58" width="150" height="12" fill="var(--paper)"/>
+      <text class="z" x="562" y="68">Supabase · Postgres</text>
+    </g>
+
+    <g fill="none" stroke="var(--ink-2)" stroke-width="1.2">
+      <!-- Cloudflare serves the app down to the phone -->
+      <line x1="170" y1="152" x2="170" y2="248" marker-end="url(#arrow)"/>
+      <!-- phone signs in -->
+      <path d="M276,272 H484 Q492,272 492,280 V120 Q492,112 500,112 H572" marker-end="url(#arrow)"/>
+      <!-- phone pushes locked declarations -->
+      <path d="M276,296 H436 Q444,296 444,304 V216 Q444,208 452,208 H572" marker-end="url(#arrow)"/>
+      <!-- inside the database -->
+      <line x1="732" y1="260" x2="732" y2="288" marker-end="url(#arrow)"/>
+      <line x1="732" y1="356" x2="732" y2="388" marker-end="url(#arrow)"/>
+      <!-- and what comes back -->
+      <path d="M576,424 H328 Q320,424 320,416 V328 Q320,320 312,320 H280" marker-end="url(#arrow)"/>
+    </g>
+
+    <!-- queued, not sent: the one connection that does not carry anything yet -->
+    <path d="M576,236 H488 Q480,236 480,244 V416 a 8,8 0 0,0 0,16 V504"
+          fill="none" stroke="var(--ink-2)" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+
+    <g>
+      <text class="a" x="300" y="266" text-anchor="start">phone + PIN + phone signature</text>
+      <text class="a" x="300" y="290" text-anchor="start">locked declarations</text>
+      <text class="a" x="332" y="340" text-anchor="start">differences, read-only</text>
+      <text class="a" x="492" y="330" text-anchor="start">queued</text>
+      <text class="a" x="186" y="196" text-anchor="start">serves the app</text>
+    </g>
+
+    <g>
+      <!-- Cloudflare -->
+      <rect x="64" y="96" width="212" height="56" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="80" y="120">Workers static assets</text>
+      <text class="s" x="80" y="138">apps/web/dist · wrangler.jsonc</text>
+
+      <!-- the phone, and its copy of the rules -->
+      <rect x="64" y="248" width="212" height="84" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="80" y="272">Branch, store, factory</text>
+      <text class="s" x="80" y="290">PWA · 360 × 760</text>
+      <text class="s" x="80" y="306">never sent stock on hand</text>
+      <text class="s" x="80" y="322">or an expected cash figure</text>
+
+      <rect x="64" y="372" width="212" height="84" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1" stroke-dasharray="4,3"/>
+      <text class="n" x="80" y="396">packages/domain</text>
+      <text class="s" x="80" y="414">a TypeScript copy of the rules,</text>
+      <text class="s" x="80" y="430">for offline previews only —</text>
+      <text class="s" x="80" y="446">same vectors as the SQL</text>
+
+      <!-- the database -->
+      <rect x="572" y="84" width="320" height="56" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="588" y="108">login · admin-users</text>
+      <text class="s" x="588" y="126">edge functions · a new phone must be approved</text>
+
+      <g class="focal">
+        <rect x="572" y="172" width="320" height="88" rx="6" fill="var(--accent-tint)" stroke="var(--flo-deep)" stroke-width="1.4"/>
+        <text class="n" x="588" y="198">Append-only ledger</text>
+        <text class="s" x="588" y="216">enforced in SQL. A correction is a new</text>
+        <text class="s" x="588" y="232">signed row with a reason and an approver,</text>
+        <text class="s" x="588" y="248">never an edit over the old one</text>
+      </g>
+
+      <rect x="572" y="288" width="320" height="68" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="588" y="312">Rules in SQL — the authority</text>
+      <text class="s" x="588" y="330">differences computed only after the</text>
+      <text class="s" x="588" y="346">declaration is locked</text>
+
+      <g class="focal">
+        <rect x="572" y="388" width="320" height="68" rx="6" fill="var(--accent-tint)" stroke="var(--flo-deep)" stroke-width="1.4"/>
+        <text class="n" x="588" y="412">Row-level read access</text>
+        <text class="s" x="588" y="430">decides what a phone may see. This is why</text>
+        <text class="s" x="588" y="446">a count cannot be made to agree</text>
+      </g>
+
+      <!-- not yet -->
+      <rect x="340" y="504" width="280" height="60" rx="6" fill="none" stroke="var(--rule)" stroke-width="1" stroke-dasharray="4,3"/>
+      <text class="n" x="356" y="528" fill="var(--ink-2)">WhatsApp receipts</text>
+      <text class="s" x="356" y="546">milestone 10 · waiting on Meta.</text>
+      <text class="s" x="356" y="560">The copy says “queued”, never “sent”</text>
+    </g>
+  </svg>
+
+  <figcaption>
+    Eighteen migrations carry the schema, the rules, row-level read access and the sync handlers.
+    The two outlined boxes are the whole argument: the ledger <b>cannot be edited</b>, and read access
+    decides what a phone is allowed to know. A branch phone is never sent stock on hand or an expected
+    cash figure, so somebody counting a till has nothing to reconcile towards and <b>a count cannot be
+    quietly made to agree</b>. The TypeScript copy of the rules exists only so a phone can preview one
+    offline; both it and the SQL are held to the same test vectors.
+  </figcaption>
+</figure>
