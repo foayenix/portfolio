@@ -93,6 +93,21 @@ export type Story = {
   promises?: { icon: IconName; text: string }[]
 }
 
+/**
+ * An isometric figure in public/figures/, drawn with the Anatomy skill.
+ *
+ * A figure is not decoration and not a diagram of boxes and arrows: it invents
+ * a real machine whose working is the idea, so the reader understands the
+ * argument by recognising the mechanism. Three builds carry one, because three
+ * is what could be drawn to this standard rather than an arbitrary cut.
+ */
+export type Figure = {
+  /** The basename in public/figures, without the -light suffix. */
+  name: string
+  /** What the figure shows, for anyone who cannot see it. */
+  alt: string
+}
+
 /** A screenshot in public/work/<slug>/. Alt text says what the screen shows. */
 export type Shot = { src: string; alt: string; caption?: string }
 
@@ -115,6 +130,7 @@ export type Project = {
   flagship?: number
   caseStudy?: CaseStudy
   story?: Story
+  figure?: Figure
   shots?: Shot[]
   stackNote?: string
   live?: string
@@ -170,6 +186,10 @@ export const PROJECTS: Project[] = [
       ],
       limits:
         'Comprehension is deliberately unscored: each area reads “No evidence yet” until you answer for it. The real gap is the source, which is not public, so the determinism has to be taken on a walkthrough rather than read.',
+    },
+    figure: {
+      name: 'proper',
+      alt: 'A profile bench. One rail carries two carriages with a stop bolted across it and braced to the base. The left carriage reads a workpiece of seven segments and drops a token into a numbered well for each one; rigid tie-rods join some segments and slack dashed chains hang between others. The right carriage carries a pen over a ruled card and runs into the stop, so it can never reach a well.',
     },
   },
   {
@@ -245,6 +265,10 @@ export const PROJECTS: Project[] = [
       limits:
         'One machine, one browser profile, one person: no sync, no sharing, no collaborative editing. No thesis has been taken through it end to end, and nobody other than me has written in it.',
     },
+    figure: {
+      name: 'quire',
+      alt: 'A bookbinder’s sewing frame. A needle carriage rides a rail over a stack of source leaves marked with three highlighted columns and a ruled draft leaf. Where the needle stops over a column it descends and leaves a thread running from that column to a marked sentence in the draft, and a dial on the right post counts the threads sewn.',
+    },
     live: 'https://quire-three.vercel.app',
     source: 'https://github.com/foayenix/Quire',
   },
@@ -299,6 +323,10 @@ export const PROJECTS: Project[] = [
       ],
       limits:
         'No practitioner is using it; the pilot is blocked on a Meta production number. The evaluation set has not reached the hundred practitioner-approved cases it needs before it makes a single model call. The plant lookup is 152 Nigerian entries, so anything outside it gets no botanical mapping. The simulator is password-protected, because it writes to the live database and spends credits, so the source is what an outside reader can actually check.',
+    },
+    figure: {
+      name: 'sanko',
+      alt: 'A sorting gate. A hopper takes a letter slot, a microphone and a lens into one throat; an index wheel of twenty-two toothed stations sits on the left post. A lid over a cabinet of three drawers is cut through above each drawer and solid and hatched above a fourth station. A card on a carriage drops through a hole into its drawer, and at the fourth station it cannot pass and slides down a stepped chute into a tray.',
     },
     source: 'https://github.com/foayenix/sanko-core',
   },

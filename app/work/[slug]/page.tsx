@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { PROJECTS, STATUS, getProject, type CaseStudy } from '@/data/projects'
 import StatusTag from '@/components/StatusTag'
+import Figure from '@/components/Figure'
 import LivePreview from '@/components/LivePreview'
 import StoryVisual from '@/components/StoryVisual'
 
@@ -70,8 +71,14 @@ export default async function ProjectPage({ params }: Params) {
         </div>
       </header>
 
-      {/* Show before tell: the running build first, then the build as a
-          picture, and only then the paragraphs. */}
+      {/* Show before tell: the mechanism first, as a machine you can work,
+          then the running build, then the build as a picture, and only then
+          the paragraphs. */}
+      {p.figure && (
+        <section aria-label={`${p.name}: the mechanism`} className="mx-auto max-w-[1440px] px-5 pt-10 md:px-10">
+          <Figure name={p.figure.name} alt={p.figure.alt} />
+        </section>
+      )}
       {p.live && <LivePreview name={p.name} url={p.live} />}
       {p.story && <StoryVisual name={p.name} story={p.story} />}
 
