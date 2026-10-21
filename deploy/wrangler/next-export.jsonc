@@ -1,0 +1,18 @@
+// A Next.js app whose routes are all prerendered, exported with
+// `output: 'export'`. This is the config already committed at the root of the
+// portfolio repo; it is here so the same shape can be copied to another one.
+//
+//   STATIC_EXPORT=1 npm run build && npx wrangler deploy
+//
+// If a route ever needs a server — a route handler, a dynamic render, an image
+// at request time — the export fails loudly at build time, and that is the
+// point at which @opennextjs/cloudflare becomes the right answer instead.
+{
+  "name": "CHANGE-ME",
+  "compatibility_date": "2025-09-01",
+  "assets": {
+    "directory": "./out",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}

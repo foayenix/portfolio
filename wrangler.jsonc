@@ -1,0 +1,16 @@
+// Cloudflare Workers, serving this site as static assets.
+//
+// Every route is prerendered, so there is no server to run: `STATIC_EXPORT=1
+// npm run build` writes plain files into ./out and this uploads them. See
+// deploy/README.md.
+{
+  "name": "felix-ayeni-portfolio",
+  "compatibility_date": "2025-09-01",
+  "assets": {
+    "directory": "./out",
+    // Next's export writes /work/quire.html, and a visitor asks for /work/quire.
+    "html_handling": "auto-trailing-slash",
+    // Anything with no file behind it is a 404, and 404.html is the page for it.
+    "not_found_handling": "404-page"
+  }
+}

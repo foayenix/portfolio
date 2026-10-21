@@ -1,0 +1,16 @@
+// A Vite single-page app: Quire, SETT, swab, cv-site.
+//
+//   cp this to <repo>/wrangler.jsonc, set "name",
+//   then: npm ci && npm run build && npx wrangler deploy
+//
+// single-page-application serves index.html for any path with no file behind
+// it, which is what a client-side router needs. Do not use it for a multi-page
+// site: it turns every genuine 404 into the app's own shell.
+{
+  "name": "CHANGE-ME",
+  "compatibility_date": "2025-09-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  }
+}
