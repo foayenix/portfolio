@@ -62,6 +62,31 @@ Edit these two files; never edit layout to change copy.
 | `data/site.ts` | Name, role, specialism, location, bio, hiring block, email, phone, GitHub, and empty `cv` / `linkedin` slots. |
 | `data/ledger.ts` | Every repository on the account, each labelled `build`, `lineage`, `imported` or `empty`. A `build` row must name a slug that exists in `data/projects.ts`, and that is asserted at build time, so an entry cannot quietly fall out of the ledger. |
 
+### The hero is computed, not written
+
+`data/portrait.ts` holds what the homepage says about me, and every number in
+it is counted from `data/projects.ts` when the site builds. Nothing in the hero
+is typed in, because a figure above the catalogue that disagrees with the
+catalogue is the exact failure this site exists to avoid.
+
+`DECISIONS` is the argument: twelve builds with nothing else in common, each
+one named with the decision it takes, each linking to the entry that backs it.
+They are mechanisms the entries' own `signature` fields already describe — a
+lookahead guard, a blank left blank, a fence, a predicate — not themes read
+into the work afterwards. A slug that does not exist throws at module load.
+
+`BUILT_WITH` matches **whole stack entries, never substrings**. The first
+version matched substrings and reported two hardware builds, because one
+invitation is served by Caddy and "Caddy" contains "CAD"; it also counted a
+curriculum as graphics work, because "design canvas" contains "Canvas". Every
+marker is now checked at module load against the stack vocabulary the
+catalogue actually uses, so a typo fails the build instead of inventing a
+platform. The counts are floors: a build is counted only where it named the
+thing itself.
+
+The job title is still on the page, as a label above the headline. It is how
+somebody searches, and it is a poor opening sentence.
+
 ### Status is the field that must not flatter
 
 Every build has one of five: `live`, `client`, `built`, `prototype`,

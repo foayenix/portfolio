@@ -1,25 +1,40 @@
 import Link from 'next/link'
 import { SITE } from '@/data/site'
 import { COUNTS, FLAGSHIPS } from '@/data/projects'
+import { DECIDED, PORTRAIT, SURFACES, inWords } from '@/data/portrait'
 import Catalogue from '@/components/Catalogue'
 import StatusTag from '@/components/StatusTag'
 
 export default function Home() {
   return (
     <>
-      {/* What I do, before what I have made. The catalogue is the evidence for
-          this paragraph and no longer the first thing the page says. */}
+      {/* The hero used to open with a job title, which is a claim a reader
+          has to take or leave, sitting above a catalogue perfectly able to
+          make the argument itself. It opens instead with the one thing the
+          builds have in common, and every line of it links to the build it
+          was found in. The title stays, demoted to a label, because it is
+          still how somebody searches. */}
       <section className="mx-auto max-w-[1440px] px-5 pb-12 pt-14 md:px-10 md:pb-16 md:pt-20">
         <div className="grid gap-8 lg:grid-cols-[1.35fr_1fr] lg:gap-16">
-          <h1 className="display text-[length:var(--text-h1)]">
-            AI engineer and
-            <br />
-            full-stack developer.
-          </h1>
+          <div>
+            <p className="ui text-[length:var(--text-micro)] text-[var(--ink-2)]">{SITE.role}</p>
+            <h1 className="display mt-4 text-[length:var(--text-h1)]">
+              The same decision,
+              <br />
+              taken {inWords(PORTRAIT.decisions)} times.
+            </h1>
+          </div>
 
           <div className="lg:pt-2">
-            <p className="text-[length:var(--text-lede)] leading-[1.5]">{SITE.specialism}</p>
-            <p className="mt-4 max-w-[46ch] leading-[1.6] text-[var(--ink-2)]">{SITE.lede}</p>
+            <p className="text-[length:var(--text-lede)] leading-[1.5]">
+              Across {PORTRAIT.builds} builds and {PORTRAIT.technologies} named technologies &mdash;
+              web, iOS, Flutter, a Rust desktop app, a WhatsApp agent, a bedside clock &mdash; the
+              same decision keeps getting taken: the software declines to tell its user what they
+              would rather hear.
+            </p>
+            <p className="mt-4 max-w-[46ch] leading-[1.6] text-[var(--ink-2)]">
+              {SITE.lede}
+            </p>
 
             <dl className="mt-8 grid max-w-md grid-cols-3 border-t border-[var(--rule)] pt-4">
               {[
@@ -50,6 +65,58 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* The evidence for the sentence above it. Every row names the build the
+          decision was taken in and links to it, because a pattern asserted is
+          worth nothing and a pattern you can check is the whole argument. */}
+      <section aria-labelledby="pattern" className="mx-auto max-w-[1440px] px-5 md:px-10">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 border-t border-[var(--rule)] pt-10">
+          <h2 id="pattern" className="display text-[length:var(--text-h2)]">
+            Where that shows up.
+          </h2>
+          <p className="max-w-[44ch] text-[0.9375rem] leading-[1.6] text-[var(--ink-2)]">
+            {PORTRAIT.decisions} builds with nothing else in common &mdash; a training log, a
+            backtester, a stock system, a bedside clock. Each line is a mechanism in that build,
+            not a theme read into it afterwards. Open any of them and check.
+          </p>
+        </div>
+
+        <ul className="mt-8 grid border-t border-[var(--rule)] md:grid-cols-2 md:gap-x-12">
+          {DECIDED.map(({ slug, decision, project }) => (
+            <li key={slug} className="border-b border-[var(--rule)]">
+              <Link href={`/work/${slug}`} className="group flex gap-4 py-4">
+                <span className="mono w-[7.5rem] shrink-0 text-[length:var(--text-micro)] leading-[1.7] text-[var(--ink-2)] transition-colors group-hover:text-[var(--flo-deep)]">
+                  {project.name}
+                </span>
+                <span className="text-[0.9375rem] leading-[1.65]">{decision}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-4">
+          {[
+            { k: 'Builds', v: String(PORTRAIT.builds) },
+            { k: 'Technologies', v: String(PORTRAIT.technologies) },
+            { k: 'Kinds of work', v: String(PORTRAIT.domains) },
+            { k: 'Years', v: `${PORTRAIT.from}\u2013${PORTRAIT.to}` },
+          ].map((s) => (
+            <div key={s.k}>
+              <dt className="ui text-[length:var(--text-micro)] text-[var(--ink-2)]">{s.k}</dt>
+              <dd className="display mt-1 text-[1.5rem]">{s.v}</dd>
+            </div>
+          ))}
+        </dl>
+
+        <p className="mono mt-6 text-[length:var(--text-micro)] leading-[1.9] text-[var(--ink-2)]">
+          {SURFACES.map((s) => `${s.surface} ${s.builds}`).join('  /  ')}
+        </p>
+        <p className="mt-2 max-w-[62ch] text-[0.8125rem] leading-[1.6] text-[var(--ink-2)]">
+          Every figure on this page is counted from the catalogue when the site is built, never
+          typed in. The line above counts a build only where it named the thing in its own stack,
+          so each number is a floor rather than a census.
+        </p>
       </section>
 
       {/* Three to read first, so nobody has to guess which of thirty is worth
