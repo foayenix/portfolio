@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import { ALL_TAGS, PROJECTS } from '@/data/projects'
 import StatusTag from './StatusTag'
+import WithheldTag from './WithheldTag'
 
 export default function WorkGrid() {
   const [tag, setTag] = useState<string | null>(null)
@@ -65,6 +66,7 @@ export default function WorkGrid() {
 
                 <div className="mt-2.5">
                   <StatusTag status={p.status} />
+                  {p.withheld && <WithheldTag />}
                 </div>
 
                 <p className="mt-2.5 text-[0.9375rem] leading-[1.6] text-[var(--ink-2)]">

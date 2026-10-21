@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { LEDGER, LEDGER_COUNTS, LEDGER_KINDS, LEDGER_ORDER } from '@/data/ledger'
-import { COUNTS, getProject } from '@/data/projects'
+import { COUNTS, WITHHELD, getProject } from '@/data/projects'
 import StatusTag from '@/components/StatusTag'
+import WithheldTag from '@/components/WithheldTag'
 
 export const metadata: Metadata = {
   title: 'Ledger',
@@ -74,6 +75,10 @@ export default function LedgerPage() {
             <ul className="mt-4 border-t border-[var(--rule)]">
               {rows.map((row) => {
                 const project = row.slug ? getProject(row.slug) : undefined
+                // A repository is named here whatever it holds, because that is
+                // what a complete ledger is. It is only linked where opening it
+                // publishes nothing that belongs to anybody else.
+                const open = !row.private && !project?.withheld
 
                 return (
                   <li
@@ -81,7 +86,7 @@ export default function LedgerPage() {
                     className="grid grid-cols-1 gap-x-6 gap-y-1.5 border-b border-[var(--rule)] py-3.5 md:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] md:items-baseline"
                   >
                     <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
-                      {row.private ? (
+                      {!open ? (
                         <span className="ui text-[0.9375rem]">{row.repo}</span>
                       ) : (
                         <a
@@ -97,6 +102,7 @@ export default function LedgerPage() {
                           private
                         </span>
                       )}
+                      {!row.private && project?.withheld && <WithheldTag />}
                     </div>
 
                     <div className="min-w-0">
@@ -113,6 +119,7 @@ export default function LedgerPage() {
                             {project.name}
                           </Link>
                           <StatusTag status={project.status} />
+                          {project.withheld && <WithheldTag />}
                         </p>
                       )}
                     </div>
@@ -125,11 +132,19 @@ export default function LedgerPage() {
       })}
 
       <section className="mx-auto max-w-[1440px] px-5 pb-20 md:px-10">
-        <p className="max-w-[62ch] border-t border-[var(--rule)] pt-4 text-[0.9375rem] leading-[1.7] text-[var(--ink-2)]">
-          A private repository is named here but not linked, because the link would
-          only return a 404 for you. Where a build is private, its catalogue entry
-          says what cannot be checked from outside and offers a walkthrough instead.
-        </p>
+        <div className="max-w-[62ch] space-y-3 border-t border-[var(--rule)] pt-4 text-[0.9375rem] leading-[1.7] text-[var(--ink-2)]">
+          <p>
+            A private repository is named here but not linked, because the link would
+            only return a 404 for you. Where a build is private, its catalogue entry
+            says what cannot be checked from outside and offers a walkthrough instead.
+          </p>
+          <p>
+            {COUNTS.withheld} public repositories are named and not linked either, which is a
+            different thing. {WITHHELD.blurb} They are invitations and an itinerary: real
+            names, a venue, a guest list, five dated days. Listing them is a record of what
+            I built. Linking them would hand you somebody else&rsquo;s evening.
+          </p>
+        </div>
       </section>
     </>
   )

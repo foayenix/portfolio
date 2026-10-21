@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { PROJECTS, STATUS, getProject, type CaseStudy } from '@/data/projects'
+import { WITHHELD, PROJECTS, STATUS, getProject, type CaseStudy } from '@/data/projects'
 import StatusTag from '@/components/StatusTag'
 import Figure from '@/components/Figure'
+import WithheldTag from '@/components/WithheldTag'
 import LivePreview from '@/components/LivePreview'
 import StoryVisual from '@/components/StoryVisual'
 
@@ -56,6 +57,7 @@ export default async function ProjectPage({ params }: Params) {
             <h1 className="display text-[length:var(--text-h1)]">{p.name}</h1>
             <div className="mt-5 flex flex-wrap items-center gap-1.5">
               <StatusTag status={p.status} size="md" />
+              {p.withheld && <WithheldTag size="md" />}
               {p.tags.map((t) => (
                 <span
                   key={t}
@@ -70,6 +72,28 @@ export default async function ProjectPage({ params }: Params) {
           <p className="text-[length:var(--text-lede)] leading-[1.5] lg:pt-3">{p.oneLiner}</p>
         </div>
       </header>
+
+      {/* Where a build is withheld, the reason stands where its link would
+          have been, rather than being left for a reader to notice as an
+          absence and read as evasion. */}
+      {p.withheld && (
+        <section aria-labelledby="withheld" className="mx-auto max-w-[1440px] px-5 pt-10 md:px-10">
+          <div className="border-l-[3px] border-dashed border-[var(--rule)] pl-6 md:pl-8">
+            <h2 id="withheld" className="ui text-[length:var(--text-micro)] text-[var(--ink-2)]">
+              {WITHHELD.label}
+            </h2>
+            <p className="prose-body mt-3 max-w-[62ch] text-[1.0625rem] leading-[1.62]">
+              {p.withheld}
+            </p>
+            <p className="mt-3 max-w-[62ch] text-[0.9375rem] leading-[1.6] text-[var(--ink-2)]">
+              The source is not linked either. A link to the file is the publication, so
+              withholding the deployment and linking the repository that holds the same page
+              would be a gesture rather than a decision. If you need to see this build, ask
+              and I will walk you through it.
+            </p>
+          </div>
+        </section>
+      )}
 
       {/* Show before tell: the mechanism first, as a machine you can work,
           then the running build, then the build as a picture, and only then
@@ -248,6 +272,7 @@ export default async function ProjectPage({ params }: Params) {
                     {r.name}
                   </h3>
                   <StatusTag status={r.status} />
+                  {r.withheld && <WithheldTag />}
                 </div>
                 <p className="mt-2 text-[0.9375rem] leading-[1.6] text-[var(--ink-2)]">
                   {r.oneLiner}

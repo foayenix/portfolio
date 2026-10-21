@@ -27,6 +27,26 @@ import type { IconName } from '@/components/Icon'
  */
 export type Status = 'live' | 'client' | 'built' | 'prototype' | 'experiment'
 
+/**
+ * Why a finished build has no link, where the reason is somebody else.
+ *
+ * This is a separate axis from `status`, deliberately. Status says how far a
+ * build got; these builds got all the way. What stops them being openable is
+ * not the state of the code, it is that the page carries a real person’s name,
+ * address or plans — an invitation, a guest list, an itinerary — and that is
+ * theirs to release rather than mine.
+ *
+ * Where this is set, no `live` and no `source` is rendered, because a link to
+ * the file is the publication. Withholding the deployment while linking the
+ * repository that holds the same HTML would be a gesture rather than a
+ * decision.
+ */
+export const WITHHELD = {
+  label: 'Link withheld',
+  blurb:
+    'Finished, and deliberately not published. The page carries someone else’s name, address or plans, and releasing that is theirs rather than mine. The source is not linked either: a link to the file is the publication.',
+}
+
 export const STATUS: Record<Status, { label: string; blurb: string }> = {
   live: {
     label: 'Live',
@@ -131,6 +151,11 @@ export type Project = {
   caseStudy?: CaseStudy
   story?: Story
   figure?: Figure
+  /**
+   * Whose privacy costs this entry its link, in one line. Set this and no
+   * `live` and no `source` is rendered for the build, whatever they hold.
+   */
+  withheld?: string
   shots?: Shot[]
   stackNote?: string
   live?: string
@@ -1173,8 +1198,8 @@ export const PROJECTS: Project[] = [
     name: 'Five Days',
     year: 2026,
     status: 'built',
-    statusNote:
-      'A private page, so there is no live link and no way to open it from here.',
+    withheld:
+      'Five dated days: where someone is staying, what is booked and when. An itinerary is a record of where a person will be, which is the last thing to put at a public address.',
     oneLiner:
       'A private five-day itinerary page, compiled from a design canvas file instead of maintained as markup.',
     signature:
@@ -1192,7 +1217,6 @@ export const PROJECTS: Project[] = [
         { icon: 'shield', text: 'A missing photo shows a colour panel, not a broken image' },
       ],
     },
-    source: 'https://github.com/foayenix/30-sec-wknd',
   },
   {
     slug: 'cork-podcast-studio',
@@ -1374,8 +1398,8 @@ export const PROJECTS: Project[] = [
     name: 'Becoming Her',
     year: 2026,
     status: 'built',
-    statusNote:
-      'A private graduation invitation. There is no public link.',
+    withheld:
+      'The page is built around one graduate’s name, her own words to her guests, and the menu for the evening. None of that is mine to put on a public address.',
     oneLiner:
       'A graduation party invitation and RSVP page, with the menu attached and a Caddy configuration to serve it.',
     signature:
@@ -1390,14 +1414,14 @@ export const PROJECTS: Project[] = [
         { icon: 'check', title: 'RSVP', text: 'On the same page.' },
       ],
     },
-    source: 'https://github.com/foayenix/DnT',
   },
   {
     slug: 'thirty',
     name: 'Thirty',
     year: 2026,
     status: 'built',
-    statusNote: 'A private birthday invitation. There is no public link.',
+    withheld:
+      'The invitation carries the guest of honour’s full name, the date and the venue, set as the cover of a magazine. Publishing it would publish all three.',
     oneLiner:
       'A thirtieth-birthday invitation laid out as a fashion magazine: a cover, an issue number, a scrolling marquee and an RSVP.',
     signature:
@@ -1412,14 +1436,14 @@ export const PROJECTS: Project[] = [
         { icon: 'check', title: 'RSVP', text: 'At the end of the issue.' },
       ],
     },
-    source: 'https://github.com/foayenix/amu30',
   },
   {
     slug: 'twenty-one-not-twenty-six',
     name: '21not26',
     year: 2026,
     status: 'built',
-    statusNote: 'A private birthday-weekend invitation. There is no public link.',
+    withheld:
+      'The page holds a weekend’s plan and the people it was written for. A link to it is a link to where they were going to be.',
     oneLiner: 'A single-page invitation and itinerary for a birthday weekend.',
     signature:
       'One page holding a whole weekend: the invitation, the plan and the response, so a guest never has to find a second link. No framework and no build step.',
@@ -1432,14 +1456,14 @@ export const PROJECTS: Project[] = [
         { icon: 'calendar', title: 'The weekend’s plan', text: 'On the same page.' },
       ],
     },
-    source: 'https://github.com/foayenix/21not26',
   },
   {
     slug: 'dans-birthday',
     name: 'Dan’s 24th',
     year: 2026,
     status: 'built',
-    statusNote: 'A private birthday-dinner invitation. There is no public link.',
+    withheld:
+      'The page is one person’s name, their birthday and the restaurant. There is nothing in it that is mine to release.',
     oneLiner: 'An RSVP page for a twenty-fourth birthday dinner.',
     signature:
       'The smallest thing in this catalogue, and it is here because the catalogue lists what was built rather than what flatters: one page, one guest list, one response.',
@@ -1452,14 +1476,14 @@ export const PROJECTS: Project[] = [
         { icon: 'check', title: 'RSVP', text: 'On it.' },
       ],
     },
-    source: 'https://github.com/foayenix/dans-birthday',
   },
   {
     slug: 'valentine',
     name: 'Will You Be My Valentine',
     year: 2026,
     status: 'built',
-    statusNote: 'A private page made for one person. There is no public link.',
+    withheld:
+      'Written for one person, on one day. It is listed because it was built, and it is not published because it was never addressed to anybody else.',
     oneLiner: 'A one-page Valentine’s proposal built to be opened on a phone, once.',
     signature:
       'Built in an afternoon for an audience of one, which is the only requirement it had. It is listed because leaving it out would make this catalogue a curated highlight reel rather than a record.',
@@ -1471,7 +1495,6 @@ export const PROJECTS: Project[] = [
         { icon: 'heart', title: 'Open it on a phone', text: 'That is the whole thing.' },
       ],
     },
-    source: 'https://github.com/foayenix/sandbox2',
   },
   {
     slug: 'cv-site',
@@ -1566,6 +1589,21 @@ export const COUNTS = {
   builds: PROJECTS.length,
   source: PROJECTS.filter((p) => p.source).length,
   live: PROJECTS.filter((p) => p.live).length,
+  withheld: PROJECTS.filter((p) => p.withheld).length,
+}
+
+/** Finished builds whose link is withheld because the page is somebody else’s. */
+export const WITHHELD_BUILDS = PROJECTS.filter((p) => p.withheld)
+
+// A withheld build must not carry a link, or the rule above is decoration.
+// Checked here so a `live` or `source` added later fails the build instead of
+// quietly publishing a guest list.
+for (const project of WITHHELD_BUILDS) {
+  if (project.live || project.source) {
+    throw new Error(
+      `data/projects.ts: "${project.slug}" is withheld and still carries a link`,
+    )
+  }
 }
 
 export function getProject(slug: string) {

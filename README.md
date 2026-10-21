@@ -74,6 +74,32 @@ builds sit there, and the way to move one out is to deploy it, not to reword
 it. Where a build is held up by something outside the code, `statusNote` says
 what — a blocked pilot, a private repository, a site only the owner runs.
 
+### `withheld` is the field that costs something
+
+Six finished builds carry `withheld` instead of a link: five invitations and a
+five-day itinerary. Each page is built around a real person's name, and one of
+them records where somebody is staying and when. They are in the catalogue
+because they were built. They have **no `live` and no `source`**, and that is
+enforced rather than remembered — `data/projects.ts` throws at module load if a
+withheld build carries either, so the build fails instead of quietly publishing
+a guest list.
+
+The `source` links were there until October 2026 and have been removed. Those
+repositories are public, so linking one handed a reader the same HTML the
+deployment would have: withholding the deployment while linking the file is a
+gesture, not a decision. The ledger names the repositories and does not link
+them, for the same reason.
+
+This is a separate axis from `status`, deliberately. Status is how far a build
+got, and these got all the way; `withheld` is why you still cannot open one.
+`WithheldTag` renders beside the status tag wherever a build is named, the
+reason stands on the build's own page where its link would have been, and
+`WITHHELD` is defined in full on the profile page beside the status labels.
+
+**This only holds while those repositories are private.** The rule is about not
+handing somebody else's evening to a stranger, and a public repository does
+that whatever this site links.
+
 ### Case studies
 
 `caseStudy` answers the questions a reviewer would otherwise have to ask: who
