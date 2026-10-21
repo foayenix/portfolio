@@ -1,6 +1,7 @@
 # Felix Ayeni — portfolio
 
-A catalogue of 30 builds, which is also the CV. Next.js 15 (App Router) +
+A catalogue of 49 builds, which is also the CV, plus a ledger of all 74
+repositories on the account. Next.js 15 (App Router) +
 React 19 + TypeScript + Tailwind v4. No database, no CMS, no images: every page
 renders from two data files and ships as static HTML.
 
@@ -57,8 +58,9 @@ Edit these two files; never edit layout to change copy.
 
 | File | What it holds |
 |---|---|
-| `data/projects.ts` | All 30 builds: one-liner, signature detail, stack, tags, year, `status`, `featured`, `flagship`, an optional `caseStudy`, and optional `live` / `source` URLs. |
+| `data/projects.ts` | All 49 builds: one-liner, signature detail, stack, tags, year, `status`, `featured`, `flagship`, an optional `caseStudy`, and optional `live` / `source` URLs. |
 | `data/site.ts` | Name, role, specialism, location, bio, hiring block, email, phone, GitHub, and empty `cv` / `linkedin` slots. |
+| `data/ledger.ts` | Every repository on the account, each labelled `build`, `lineage`, `imported` or `empty`. A `build` row must name a slug that exists in `data/projects.ts`, and that is asserted at build time, so an entry cannot quietly fall out of the ledger. |
 
 ### Status is the field that must not flatter
 
