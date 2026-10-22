@@ -25,10 +25,28 @@ export const complaints = () => problems;
 // are cleared by page(), because they describe one drawing and not all of them.
 let segments = [];
 let labels = [];
+let boxes = [];
+let ends = [];
 const LABEL_CH = 6.1;
 // A 10.5px label's glyphs sit roughly from eight above its baseline to two below.
 const ASCENT = 8;
 const DESCENT = 2;
+
+function checkEnds(where) {
+  for (const point of ends) {
+    for (const box of boxes) {
+      const inside =
+        point.x > box.x + 1 && point.x < box.x + box.w - 1 &&
+        point.y > box.y + 1 && point.y < box.y + box.h - 1;
+      if (inside) {
+        problems.push(
+          `${where}: a connector starts or ends inside "${box.title}" at ${point.x},${point.y}`,
+        );
+        break;
+      }
+    }
+  }
+}
 
 function checkLabels(where) {
   for (const label of labels) {
@@ -47,6 +65,8 @@ function checkLabels(where) {
   }
   segments = [];
   labels = [];
+  boxes = [];
+  ends = [];
 }
 
 const esc = (s) =>
@@ -91,6 +111,8 @@ export function node({ x, y, w, title, lines = [], focal = false, dashed = false
   const dash = dashed ? ' stroke-dasharray="4,3"' : '';
   const titleFill = tone === 'muted' ? ' fill="var(--ink-2)"' : '';
 
+  boxes.push({ x, y, w, h, title });
+
   const body = lines
     .map((line, i) => `<text class="s" x="${x + PAD}" y="${y + 42 + i * 18}">${esc(line)}</text>`)
     .join('\n      ');
@@ -107,6 +129,7 @@ export function node({ x, y, w, title, lines = [], focal = false, dashed = false
  * two off-axis boxes reads as a mistake.
  */
 export function elbow(x1, y1, x2, y2, midX, r = 8) {
+  ends.push({ x: x1, y: y1 }, { x: x2, y: y2 });
   segments.push({ kind: 'h', y: y1, from: Math.min(x1, midX), to: Math.max(x1, midX) });
   if (Math.abs(y1 - y2) < 0.5) return `M${x1},${y1} H${x2}`;
   segments.push({ kind: 'h', y: y2, from: Math.min(midX, x2), to: Math.max(midX, x2) });
@@ -127,10 +150,18 @@ export function elbow(x1, y1, x2, y2, midX, r = 8) {
 /** A bridge over a crossing, for the less important of the two lines. */
 export const hop = (down = false) => `a 8,8 0 0,${down ? 0 : 1} 0,16`;
 
-export const arrow = (d, { dashed = false, accent = false } = {}) =>
-  `<path d="${d}" fill="none" stroke="var(--ink-2)" stroke-width="${dashed ? 1 : 1.2}"${
+export const arrow = (d, { dashed = false, accent = false } = {}) => {
+  // A plain vertical, which is where a start point hand-computed from a node's
+  // height goes wrong. Anything more elaborate is the author's to check.
+  const plain = /^M(-?[\d.]+),(-?[\d.]+) V(-?[\d.]+)$/.exec(d.trim());
+  if (plain) {
+    const x = Number(plain[1]);
+    ends.push({ x, y: Number(plain[2]) }, { x, y: Number(plain[3]) });
+  }
+  return `<path d="${d}" fill="none" stroke="var(--ink-2)" stroke-width="${dashed ? 1 : 1.2}"${
     dashed ? ' stroke-dasharray="4,3"' : ''
   } marker-end="url(#${accent ? 'arrow-a' : 'arrow'})"/>`;
+};
 
 export const edgeLabel = (x, y, text, anchor = 'start') => {
   const w = text.length * LABEL_CH;
@@ -141,6 +172,7 @@ export const edgeLabel = (x, y, text, anchor = 'start') => {
 
 /** The page the SVG is served in. One file, both themes. */
 export function page({ title, eyebrow, heading, caption, label, width, height, svg }) {
+  checkEnds(eyebrow);
   checkLabels(eyebrow);
   return `<!doctype html>
 <meta charset="utf-8">

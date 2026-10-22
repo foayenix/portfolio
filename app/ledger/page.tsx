@@ -1,9 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { LEDGER, LEDGER_COUNTS, LEDGER_KINDS, LEDGER_ORDER } from '@/data/ledger'
-import { COUNTS, WITHHELD, getProject } from '@/data/projects'
+import { COUNTS, getProject } from '@/data/projects'
 import StatusTag from '@/components/StatusTag'
-import WithheldTag from '@/components/WithheldTag'
 
 export const metadata: Metadata = {
   title: 'Ledger',
@@ -75,10 +74,10 @@ export default function LedgerPage() {
             <ul className="mt-4 border-t border-[var(--rule)]">
               {rows.map((row) => {
                 const project = row.slug ? getProject(row.slug) : undefined
-                // A repository is named here whatever it holds, because that is
-                // what a complete ledger is. It is only linked where opening it
-                // publishes nothing that belongs to anybody else.
-                const open = !row.private && !project?.withheld
+                // A repository is named here whatever it holds, because that
+                // is what a complete ledger is. It is only linked where opening
+                // it publishes nothing that belongs to anybody else.
+                const open = !row.private && row.kind !== 'uncatalogued'
 
                 return (
                   <li
@@ -102,7 +101,6 @@ export default function LedgerPage() {
                           private
                         </span>
                       )}
-                      {!row.private && project?.withheld && <WithheldTag />}
                     </div>
 
                     <div className="min-w-0">
@@ -119,7 +117,6 @@ export default function LedgerPage() {
                             {project.name}
                           </Link>
                           <StatusTag status={project.status} />
-                          {project.withheld && <WithheldTag />}
                         </p>
                       )}
                     </div>
@@ -139,10 +136,11 @@ export default function LedgerPage() {
             says what cannot be checked from outside and offers a walkthrough instead.
           </p>
           <p>
-            {COUNTS.withheld} public repositories are named and not linked either, which is a
-            different thing. {WITHHELD.blurb} They are invitations and an itinerary: real
-            names, a venue, a guest list, five dated days. Listing them is a record of what
-            I built. Linking them would hand you somebody else&rsquo;s evening.
+            The repositories under <b>Not written up</b> are named and not linked either,
+            which is a different thing. Six are invitations and an itinerary. They carry a
+            real name, a venue, a guest list, five dated days, and in one case a proposal.
+            Listing them records what I built. Linking one hands you somebody
+            else&rsquo;s evening.
           </p>
         </div>
       </section>

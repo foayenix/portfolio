@@ -1,0 +1,126 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plave — architecture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;620&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  /* The portfolio's own tokens, copied from app/globals.css. */
+  :root {
+    --paper: #e6e5df; --paper-hi: #f2f1ec; --ink: #12233d; --ink-2: #4e5c72;
+    --rule: #c6c5bb; --flo: #e0316b; --flo-deep: #c0184f;
+    --accent-tint: rgba(224, 49, 107, 0.09);
+    --zone: rgba(18, 35, 61, 0.025); --zone-rule: rgba(18, 35, 61, 0.12);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme='light']) { --paper: #0e1b2e; --paper-hi: #16273f; --ink: #e8e7e0; --ink-2: #93a2b8;
+      --rule: #27394f; --flo: #ff5c8a; --flo-deep: #ff7ba1;
+      --accent-tint: rgba(255, 92, 138, 0.12);
+      --zone: rgba(232, 231, 224, 0.03); --zone-rule: rgba(232, 231, 224, 0.12);
+      color-scheme: dark; } }
+  :root[data-theme='dark'] { --paper: #0e1b2e; --paper-hi: #16273f; --ink: #e8e7e0; --ink-2: #93a2b8;
+      --rule: #27394f; --flo: #ff5c8a; --flo-deep: #ff7ba1;
+      --accent-tint: rgba(255, 92, 138, 0.12);
+      --zone: rgba(232, 231, 224, 0.03); --zone-rule: rgba(232, 231, 224, 0.12);
+      color-scheme: dark; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--paper); }
+  body { font-family: 'Archivo', system-ui, sans-serif; color: var(--ink); padding: 18px 16px 22px; }
+  figure { margin: 0 auto; max-width: 1000px; }
+  svg { display: block; width: 100%; height: auto; }
+  .eyebrow { font-family: 'DM Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.04em;
+             text-transform: uppercase; color: var(--ink-2); margin: 0 0 6px; }
+  h1 { font-size: 19px; font-weight: 620; letter-spacing: -0.01em; margin: 0 0 14px; line-height: 1.3; }
+  figcaption { margin-top: 14px; max-width: 78ch; font-size: 13px; line-height: 1.62; color: var(--ink-2);
+               border-top: 1px solid var(--rule); padding-top: 10px; }
+  figcaption b { color: var(--ink); font-weight: 500; }
+  .n { font-size: 13px; font-weight: 620; fill: var(--ink); }
+  .s { font-family: 'DM Mono', ui-monospace, monospace; font-size: 10.5px; fill: var(--ink-2); }
+  .z { font-family: 'DM Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: 0.08em;
+       text-transform: uppercase; fill: var(--ink-2); }
+  .a { font-family: 'DM Mono', ui-monospace, monospace; font-size: 10px; fill: var(--ink-2); }
+</style>
+
+<script>
+  // The page is framed by the site, which cannot reach inside to set a theme,
+  // so the frame asks for one in the query string. Without it the page follows
+  // the reader's own system setting, which is the right answer on its own.
+  (function () {
+    try {
+      var want = new URLSearchParams(location.search).get('theme');
+      if (want === 'dark' || want === 'light') document.documentElement.setAttribute('data-theme', want);
+    } catch (e) {}
+  })();
+</script>
+
+<figure>
+  <p class="eyebrow">Plave</p>
+  <h1>The secret is kept in the database, one layer below anything the interface could get wrong.</h1>
+
+  <svg viewBox="0 0 960 572" role="img" aria-label="A bookmarklet reads the name, image and price off any shop page into a wishlist, where savings are logged against a target and a forecast says which month it lands. Friends reserve gifts without an account. A row-level security policy means the owner’s own query cannot return a reservation row, so the interface is never sent one and has nothing to hide.">
+    <defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M0,1 L9,5 L0,9 z" fill="var(--ink-2)"/>
+      </marker>
+      <marker id="arrow-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M0,1 L9,5 L0,9 z" fill="var(--flo-deep)"/>
+      </marker>
+    </defs>
+
+      <rect x="40" y="64" width="260" height="300" rx="8" fill="var(--zone)" stroke="var(--zone-rule)" stroke-width="0.8"/>
+      <rect x="52" y="58" width="97" height="12" fill="var(--paper)"/>
+      <text class="z" x="58" y="68">The list owner</text>
+
+      <rect x="40" y="404" width="260" height="140" rx="8" fill="var(--zone)" stroke="var(--zone-rule)" stroke-width="0.8"/>
+      <rect x="52" y="398" width="61" height="12" fill="var(--paper)"/>
+      <text class="z" x="58" y="408">A friend</text>
+
+      <rect x="544" y="64" width="376" height="420" rx="8" fill="var(--zone)" stroke="var(--zone-rule)" stroke-width="0.8"/>
+      <rect x="556" y="58" width="61" height="12" fill="var(--paper)"/>
+      <text class="z" x="562" y="68">Supabase</text>
+<path d="M276,122 H480 Q488,122 488,114 V112 Q488,104 496,104 H572" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M276,256 H444 Q452,256 452,248 V204 Q452,196 460,196 H572" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M276,464 H372 Q380,464 380,456 V412 Q380,404 388,404 H572" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M732,144 V182" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M732,272 V310" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow-a)"/>
+<path d="M572,346 H348 Q340,346 340,338 V326 Q340,318 332,318 H300" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<text class="a" x="306" y="96" text-anchor="start">name, image and price</text>
+<text class="a" x="306" y="188" text-anchor="start">what you have saved</text>
+<text class="a" x="306" y="396" text-anchor="start">reserves one</text>
+
+      <rect x="64" y="96" width="212" height="76" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="80" y="120">Save to Plave</text>
+      <text class="s" x="80" y="138">a bookmarklet. It reads any</text>
+      <text class="s" x="80" y="156">shop page you are on</text>
+
+      <rect x="64" y="200" width="212" height="76" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="80" y="224">The wishlist</text>
+      <text class="s" x="80" y="242">savings logged, a ring fills</text>
+      <text class="s" x="80" y="260">and the month you get there</text>
+
+      <rect x="64" y="296" width="212" height="58" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="80" y="320">What the owner sees</text>
+      <text class="s" x="80" y="338">the list. No reservations</text>
+
+      <rect x="64" y="436" width="212" height="58" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="80" y="460">The friend</text>
+      <text class="s" x="80" y="478">no account needed to reserve</text>
+
+      <rect x="572" y="84" width="320" height="58" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="588" y="108">Items</text>
+      <text class="s" x="588" y="126">name, image, price, target</text>
+
+      <rect x="572" y="182" width="320" height="58" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="588" y="206">Reservations</text>
+      <text class="s" x="588" y="224">who has claimed which gift</text>
+
+      <rect x="572" y="310" width="320" height="94" rx="6" fill="var(--accent-tint)" stroke="var(--flo-deep)" stroke-width="1.4"/>
+      <text class="n" x="588" y="334">Row-level security</text>
+      <text class="s" x="588" y="352">the owner’s own query cannot return a</text>
+      <text class="s" x="588" y="370">reservation row. The interface has nothing</text>
+      <text class="s" x="588" y="388">to leak, because it is never sent anything</text>
+  </svg>
+
+  <figcaption>The surprise is the whole product, and the obvious way to build it is to hide reservations in the interface. That works until one bug, one API route or one export undoes it. Here the policy sits in the database: the owner’s query <b>cannot return a reservation row at all</b>, so there is nothing for the interface to leak. It installs to a home screen, works offline, and registers as an Android share target, which is how a link gets into it in one tap.</figcaption>
+</figure>

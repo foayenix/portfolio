@@ -1,0 +1,136 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JÍBẸ́WÀ — architecture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;620&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  /* The portfolio's own tokens, copied from app/globals.css. */
+  :root {
+    --paper: #e6e5df; --paper-hi: #f2f1ec; --ink: #12233d; --ink-2: #4e5c72;
+    --rule: #c6c5bb; --flo: #e0316b; --flo-deep: #c0184f;
+    --accent-tint: rgba(224, 49, 107, 0.09);
+    --zone: rgba(18, 35, 61, 0.025); --zone-rule: rgba(18, 35, 61, 0.12);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme='light']) { --paper: #0e1b2e; --paper-hi: #16273f; --ink: #e8e7e0; --ink-2: #93a2b8;
+      --rule: #27394f; --flo: #ff5c8a; --flo-deep: #ff7ba1;
+      --accent-tint: rgba(255, 92, 138, 0.12);
+      --zone: rgba(232, 231, 224, 0.03); --zone-rule: rgba(232, 231, 224, 0.12);
+      color-scheme: dark; } }
+  :root[data-theme='dark'] { --paper: #0e1b2e; --paper-hi: #16273f; --ink: #e8e7e0; --ink-2: #93a2b8;
+      --rule: #27394f; --flo: #ff5c8a; --flo-deep: #ff7ba1;
+      --accent-tint: rgba(255, 92, 138, 0.12);
+      --zone: rgba(232, 231, 224, 0.03); --zone-rule: rgba(232, 231, 224, 0.12);
+      color-scheme: dark; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--paper); }
+  body { font-family: 'Archivo', system-ui, sans-serif; color: var(--ink); padding: 18px 16px 22px; }
+  figure { margin: 0 auto; max-width: 1000px; }
+  svg { display: block; width: 100%; height: auto; }
+  .eyebrow { font-family: 'DM Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.04em;
+             text-transform: uppercase; color: var(--ink-2); margin: 0 0 6px; }
+  h1 { font-size: 19px; font-weight: 620; letter-spacing: -0.01em; margin: 0 0 14px; line-height: 1.3; }
+  figcaption { margin-top: 14px; max-width: 78ch; font-size: 13px; line-height: 1.62; color: var(--ink-2);
+               border-top: 1px solid var(--rule); padding-top: 10px; }
+  figcaption b { color: var(--ink); font-weight: 500; }
+  .n { font-size: 13px; font-weight: 620; fill: var(--ink); }
+  .s { font-family: 'DM Mono', ui-monospace, monospace; font-size: 10.5px; fill: var(--ink-2); }
+  .z { font-family: 'DM Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: 0.08em;
+       text-transform: uppercase; fill: var(--ink-2); }
+  .a { font-family: 'DM Mono', ui-monospace, monospace; font-size: 10px; fill: var(--ink-2); }
+</style>
+
+<script>
+  // The page is framed by the site, which cannot reach inside to set a theme,
+  // so the frame asks for one in the query string. Without it the page follows
+  // the reader's own system setting, which is the right answer on its own.
+  (function () {
+    try {
+      var want = new URLSearchParams(location.search).get('theme');
+      if (want === 'dark' || want === 'light') document.documentElement.setAttribute('data-theme', want);
+    } catch (e) {}
+  })();
+</script>
+
+<figure>
+  <p class="eyebrow">JÍBẸ́WÀ</p>
+  <h1>A whole night runs in a minute, and the clock still works when the GPU is gone.</h1>
+
+  <svg viewBox="0 0 960 644" role="img" aria-label="One dial, turned, pressed and held, pushes and bends a generative world rather than scrolling a menu. Every theme draws on the 2D canvas first, and where WebGL2 exists it finishes the frame with HDR particles and a bloom chain. The night runs as a state machine through evening, wind-down, sleep, sunrise, alarm, snooze and dismiss. A time driver runs it at one, sixty or six hundred times speed, so a whole night can be watched in about a minute. Adding gl=0 forces the 2D renderer and the clock still works.">
+    <defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M0,1 L9,5 L0,9 z" fill="var(--ink-2)"/>
+      </marker>
+      <marker id="arrow-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M0,1 L9,5 L0,9 z" fill="var(--flo-deep)"/>
+      </marker>
+    </defs>
+
+      <rect x="40" y="64" width="260" height="212" rx="8" fill="var(--zone)" stroke="var(--zone-rule)" stroke-width="0.8"/>
+      <rect x="52" y="58" width="79" height="12" fill="var(--paper)"/>
+      <text class="z" x="58" y="68">One control</text>
+
+      <rect x="40" y="332" width="260" height="212" rx="8" fill="var(--zone)" stroke="var(--zone-rule)" stroke-width="0.8"/>
+      <rect x="52" y="326" width="91" height="12" fill="var(--paper)"/>
+      <text class="z" x="58" y="336">Two renderers</text>
+
+      <rect x="544" y="64" width="376" height="420" rx="8" fill="var(--zone)" stroke="var(--zone-rule)" stroke-width="0.8"/>
+      <rect x="556" y="58" width="189" height="12" fill="var(--paper)"/>
+      <text class="z" x="562" y="68">The night, as a state machine</text>
+<path d="M276,122 H492 Q500,122 500,114 V112 Q500,104 508,104 H572" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M276,404 H392 Q400,404 400,396 V298 Q400,290 408,290 H572" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M732,144 V182" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M732,258 V288" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M732,368 V406" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow-a)"/>
+<path d="M732,500 V528" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<text class="a" x="306" y="96" text-anchor="start">turn, press, hold</text>
+<text class="a" x="306" y="282" text-anchor="start">every frame</text>
+
+      <rect x="64" y="96" width="212" height="76" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="80" y="120">The dial</text>
+      <text class="s" x="80" y="138">it does not scroll a menu.</text>
+      <text class="s" x="80" y="156">It bends the world on screen</text>
+
+      <rect x="64" y="184" width="212" height="76" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="80" y="208">No build step</text>
+      <text class="s" x="80" y="226">software/index.html opens</text>
+      <text class="s" x="80" y="244">in a browser as it is</text>
+
+      <rect x="64" y="364" width="212" height="58" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="80" y="388">Canvas 2D · always</text>
+      <text class="s" x="80" y="406">every theme draws here first</text>
+
+      <rect x="64" y="452" width="212" height="76" rx="6" fill="none" stroke="var(--rule)" stroke-width="1" stroke-dasharray="4,3"/>
+      <text class="n" x="80" y="476">WebGL2 · if present</text>
+      <text class="s" x="80" y="494">HDR particles, then bloom:</text>
+      <text class="s" x="80" y="512">threshold, downsample, tent</text>
+
+      <rect x="572" y="84" width="320" height="58" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="588" y="108">Evening, and the wind-down</text>
+      <text class="s" x="588" y="126">the world dims with the hour</text>
+
+      <rect x="572" y="182" width="320" height="76" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="588" y="206">Sleep, then the sunrise</text>
+      <text class="s" x="588" y="224">the thirty minutes before the alarm are the</text>
+      <text class="s" x="588" y="242">part a clock is actually judged on</text>
+
+      <rect x="572" y="288" width="320" height="58" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="588" y="312">Alarm · snooze · dismiss</text>
+      <text class="s" x="588" y="330">and then good morning</text>
+
+      <rect x="572" y="406" width="320" height="94" rx="6" fill="var(--accent-tint)" stroke="var(--flo-deep)" stroke-width="1.4"/>
+      <text class="n" x="588" y="430">The time driver</text>
+      <text class="s" x="588" y="448">1×, 60× or 600×, and a jump to thirty minutes</text>
+      <text class="s" x="588" y="466">before the alarm. A night is testable in</text>
+      <text class="s" x="588" y="484">about a minute instead of overnight</text>
+
+      <rect x="572" y="528" width="320" height="76" rx="6" fill="var(--accent-tint)" stroke="var(--flo-deep)" stroke-width="1.4"/>
+      <text class="n" x="588" y="552">?gl=0 — the fallback you can look at</text>
+      <text class="s" x="588" y="570">the GPU path is an enhancement, and a clock</text>
+      <text class="s" x="588" y="588">that stops telling the time is not a clock</text>
+  </svg>
+
+  <figcaption>Both outlined boxes exist because of the same problem: a bedside clock is hard to work on. Its behaviour happens over eight hours, which nobody can iterate against, so the <b>time driver</b> runs the same clock at six hundred times speed and can jump to thirty minutes before the alarm. And the GPU path is an enhancement rather than a requirement, so <b>?gl=0</b> is a fallback you can look at rather than a claim: a clock that fails to show the time when a driver is missing is not a clock.</figcaption>
+</figure>

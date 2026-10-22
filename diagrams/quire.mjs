@@ -6,8 +6,8 @@ const svg = [
 
   arrow('M244,156 V200'),
   arrow('M244,278 V322', { accent: true }),
-  arrow(elbow(416, 236, 600, 112, 520)),
-  arrow(elbow(416, 368, 600, 206, 508)),
+  arrow(elbow(424, 236, 600, 112, 520)),
+  arrow(elbow(424, 368, 600, 206, 508)),
   // Nothing in this build reaches a network. The absent half is drawn absent.
   arrow(elbow(416, 404, 600, 360, 520), { dashed: true }),
 

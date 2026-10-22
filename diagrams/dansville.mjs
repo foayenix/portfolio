@@ -8,7 +8,7 @@ const svg = [
   arrow(elbow(276, 128, 572, 112, 436)),
   arrow(elbow(276, 232, 572, 214, 400)),
   arrow('M732,174 V214', { accent: true }),
-  arrow('M732,286 V326'),
+  arrow('M732,308 V326'),
   arrow('M732,398 V438'),
   arrow(elbow(276, 400, 572, 438, 360)),
   arrow(elbow(572, 356, 300, 468, 420), { dashed: true }),

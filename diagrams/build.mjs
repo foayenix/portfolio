@@ -7,7 +7,10 @@ import { complaints } from './_kit.mjs'
 
 const HERE = dirname(fileURLToPath(import.meta.url))
 const OUT = join(HERE, '..', 'public', 'diagrams')
-const NAMES = ['ybs', 'proper', 'quire', 'sanko', 'pank', 'dansville']
+const NAMES = [
+  'ybs', 'proper', 'quire', 'sanko', 'pank', 'dansville',
+  'pact', 'football-frenzy', 'plave', 'cork', 'jibewa', 'funding-radar', 'yemkem-school',
+]
 
 mkdirSync(OUT, { recursive: true })
 

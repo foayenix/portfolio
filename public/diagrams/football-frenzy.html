@@ -1,0 +1,119 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Football Frenzy — architecture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;620&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  /* The portfolio's own tokens, copied from app/globals.css. */
+  :root {
+    --paper: #e6e5df; --paper-hi: #f2f1ec; --ink: #12233d; --ink-2: #4e5c72;
+    --rule: #c6c5bb; --flo: #e0316b; --flo-deep: #c0184f;
+    --accent-tint: rgba(224, 49, 107, 0.09);
+    --zone: rgba(18, 35, 61, 0.025); --zone-rule: rgba(18, 35, 61, 0.12);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme='light']) { --paper: #0e1b2e; --paper-hi: #16273f; --ink: #e8e7e0; --ink-2: #93a2b8;
+      --rule: #27394f; --flo: #ff5c8a; --flo-deep: #ff7ba1;
+      --accent-tint: rgba(255, 92, 138, 0.12);
+      --zone: rgba(232, 231, 224, 0.03); --zone-rule: rgba(232, 231, 224, 0.12);
+      color-scheme: dark; } }
+  :root[data-theme='dark'] { --paper: #0e1b2e; --paper-hi: #16273f; --ink: #e8e7e0; --ink-2: #93a2b8;
+      --rule: #27394f; --flo: #ff5c8a; --flo-deep: #ff7ba1;
+      --accent-tint: rgba(255, 92, 138, 0.12);
+      --zone: rgba(232, 231, 224, 0.03); --zone-rule: rgba(232, 231, 224, 0.12);
+      color-scheme: dark; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--paper); }
+  body { font-family: 'Archivo', system-ui, sans-serif; color: var(--ink); padding: 18px 16px 22px; }
+  figure { margin: 0 auto; max-width: 1000px; }
+  svg { display: block; width: 100%; height: auto; }
+  .eyebrow { font-family: 'DM Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.04em;
+             text-transform: uppercase; color: var(--ink-2); margin: 0 0 6px; }
+  h1 { font-size: 19px; font-weight: 620; letter-spacing: -0.01em; margin: 0 0 14px; line-height: 1.3; }
+  figcaption { margin-top: 14px; max-width: 78ch; font-size: 13px; line-height: 1.62; color: var(--ink-2);
+               border-top: 1px solid var(--rule); padding-top: 10px; }
+  figcaption b { color: var(--ink); font-weight: 500; }
+  .n { font-size: 13px; font-weight: 620; fill: var(--ink); }
+  .s { font-family: 'DM Mono', ui-monospace, monospace; font-size: 10.5px; fill: var(--ink-2); }
+  .z { font-family: 'DM Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: 0.08em;
+       text-transform: uppercase; fill: var(--ink-2); }
+  .a { font-family: 'DM Mono', ui-monospace, monospace; font-size: 10px; fill: var(--ink-2); }
+</style>
+
+<script>
+  // The page is framed by the site, which cannot reach inside to set a theme,
+  // so the frame asks for one in the query string. Without it the page follows
+  // the reader's own system setting, which is the right answer on its own.
+  (function () {
+    try {
+      var want = new URLSearchParams(location.search).get('theme');
+      if (want === 'dark' || want === 'light') document.documentElement.setAttribute('data-theme', want);
+    } catch (e) {}
+  })();
+</script>
+
+<figure>
+  <p class="eyebrow">Football Frenzy</p>
+  <h1>Every match is a seed and a list of decisions, so the server can play it again and check.</h1>
+
+  <svg viewBox="0 0 960 552" role="img" aria-label="A world is kept by a cookie and a recovery code rather than an account. Matches run on canvas in the browser and produce a snapshot pair, a seed and a decision log. The server replays the match from an identical prefix, so a mid-match card play counts only if the replay produces it, and the client never decides. Worlds, squads, fixtures and the economy live in PostgreSQL. Friends join leagues and cups by share code.">
+    <defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M0,1 L9,5 L0,9 z" fill="var(--ink-2)"/>
+      </marker>
+      <marker id="arrow-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M0,1 L9,5 L0,9 z" fill="var(--flo-deep)"/>
+      </marker>
+    </defs>
+
+      <rect x="40" y="64" width="260" height="288" rx="8" fill="var(--zone)" stroke="var(--zone-rule)" stroke-width="0.8"/>
+      <rect x="52" y="58" width="97" height="12" fill="var(--paper)"/>
+      <text class="z" x="58" y="68">In the browser</text>
+
+      <rect x="544" y="64" width="376" height="432" rx="8" fill="var(--zone)" stroke="var(--zone-rule)" stroke-width="0.8"/>
+      <rect x="556" y="58" width="91" height="12" fill="var(--paper)"/>
+      <text class="z" x="562" y="68">On the server</text>
+<path d="M276,232 H496 Q504,232 504,224 V120 Q504,112 512,112 H572" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M732,192 V232" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow-a)"/>
+<path d="M732,328 V368" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M572,404 H372 Q364,404 364,396 V308 Q364,300 356,300 H300" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M170,172 V200" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<text class="a" x="306" y="224" text-anchor="start">snapshot, seed, decision log</text>
+<text class="a" x="316" y="292" text-anchor="start">the result, and whether the card was legal</text>
+<text class="a" x="186" y="184" text-anchor="start">a world, with no sign-up</text>
+
+      <rect x="64" y="96" width="212" height="76" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="80" y="120">A cookie, and a code</text>
+      <text class="s" x="80" y="138">no account. The recovery</text>
+      <text class="s" x="80" y="156">code is how a world is kept</text>
+
+      <rect x="64" y="200" width="212" height="76" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="80" y="224">The match, on canvas</text>
+      <text class="s" x="80" y="242">five-a-side, minutes long.</text>
+      <text class="s" x="80" y="260">Momentum cards mid-match</text>
+
+      <rect x="64" y="290" width="212" height="58" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="80" y="314">Leagues and cups</text>
+      <text class="s" x="80" y="332">friends join by share code</text>
+
+      <rect x="572" y="84" width="320" height="76" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="588" y="108">The decision log</text>
+      <text class="s" x="588" y="126">what the player did, and when, and the seed</text>
+      <text class="s" x="588" y="144">the match started from</text>
+
+      <rect x="572" y="232" width="320" height="94" rx="6" fill="var(--accent-tint)" stroke="var(--flo-deep)" stroke-width="1.4"/>
+      <text class="n" x="588" y="256">Re-simulation</text>
+      <text class="s" x="588" y="274">the server replays the match from the same</text>
+      <text class="s" x="588" y="292">prefix. A card play counts only if the replay</text>
+      <text class="s" x="588" y="310">produces it. The browser never decides</text>
+
+      <rect x="572" y="368" width="320" height="76" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="588" y="392">PostgreSQL</text>
+      <text class="s" x="588" y="410">worlds, squads, fixtures and the economy:</text>
+      <text class="s" x="588" y="428">wages, aging and retirement</text>
+  </svg>
+
+  <figcaption>The outlined box is why the game can have stakes. A match that only happens in the browser is a match the browser can lie about, so every match is stored as the thing it was made from — a seed and the decisions taken — and the server replays it from an identical prefix. <b>A card play is legal only if the replay produces it.</b> That also makes every match reviewable after the fact, which is the part that makes a league worth winning.</figcaption>
+</figure>

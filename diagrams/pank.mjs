@@ -4,10 +4,10 @@ const svg = [
   zone({ x: 40, y: 64, w: 260, h: 200, label: 'One owner · no sign-up page' }),
   zone({ x: 544, y: 64, w: 376, h: 428, label: 'One process · one instance' }),
 
-  arrow('M170,152 V200'),
+  arrow('M170,172 V200'),
   arrow(elbow(276, 232, 572, 112, 500)),
   arrow('M732,174 V214'),
-  arrow('M732,304 V344', { accent: true }),
+  arrow('M732,308 V344', { accent: true }),
   arrow('M732,434 V470'),
   arrow(elbow(572, 500, 300, 196, 528)),
 

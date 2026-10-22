@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { PROJECTS, STATUS } from '@/data/projects'
 import StatusTag from './StatusTag'
-import WithheldTag from './WithheldTag'
 
 /**
  * The index of everything, listed at once.
@@ -68,7 +67,6 @@ export default function Catalogue() {
                   </p>
                   <span className="mt-2.5 inline-block">
                     <StatusTag status={p.status} />
-                    {p.withheld && <WithheldTag />}
                   </span>
                 </div>
               </Link>
@@ -90,7 +88,6 @@ export default function Catalogue() {
 
             <div className="mt-3 flex flex-wrap items-center gap-1.5">
               <StatusTag status={active.status} />
-              {active.withheld && <WithheldTag />}
               {active.tags.map((t) => (
                 <span
                   key={t}

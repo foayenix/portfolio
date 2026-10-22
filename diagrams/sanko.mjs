@@ -4,7 +4,7 @@ const svg = [
   zone({ x: 40, y: 64, w: 260, h: 232, label: 'How a message arrives' }),
   zone({ x: 544, y: 64, w: 376, h: 448, label: 'The agent · Node 20 · Express 5' }),
 
-  arrow('M170,152 V200'),
+  arrow('M170,172 V200'),
   arrow(elbow(276, 244, 572, 122, 520)),
   arrow('M732,160 V182'),
   arrow('M732,266 V292', { accent: true }),

@@ -1,0 +1,128 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cork Podcast Studio — architecture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;620&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  /* The portfolio's own tokens, copied from app/globals.css. */
+  :root {
+    --paper: #e6e5df; --paper-hi: #f2f1ec; --ink: #12233d; --ink-2: #4e5c72;
+    --rule: #c6c5bb; --flo: #e0316b; --flo-deep: #c0184f;
+    --accent-tint: rgba(224, 49, 107, 0.09);
+    --zone: rgba(18, 35, 61, 0.025); --zone-rule: rgba(18, 35, 61, 0.12);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme='light']) { --paper: #0e1b2e; --paper-hi: #16273f; --ink: #e8e7e0; --ink-2: #93a2b8;
+      --rule: #27394f; --flo: #ff5c8a; --flo-deep: #ff7ba1;
+      --accent-tint: rgba(255, 92, 138, 0.12);
+      --zone: rgba(232, 231, 224, 0.03); --zone-rule: rgba(232, 231, 224, 0.12);
+      color-scheme: dark; } }
+  :root[data-theme='dark'] { --paper: #0e1b2e; --paper-hi: #16273f; --ink: #e8e7e0; --ink-2: #93a2b8;
+      --rule: #27394f; --flo: #ff5c8a; --flo-deep: #ff7ba1;
+      --accent-tint: rgba(255, 92, 138, 0.12);
+      --zone: rgba(232, 231, 224, 0.03); --zone-rule: rgba(232, 231, 224, 0.12);
+      color-scheme: dark; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--paper); }
+  body { font-family: 'Archivo', system-ui, sans-serif; color: var(--ink); padding: 18px 16px 22px; }
+  figure { margin: 0 auto; max-width: 1000px; }
+  svg { display: block; width: 100%; height: auto; }
+  .eyebrow { font-family: 'DM Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.04em;
+             text-transform: uppercase; color: var(--ink-2); margin: 0 0 6px; }
+  h1 { font-size: 19px; font-weight: 620; letter-spacing: -0.01em; margin: 0 0 14px; line-height: 1.3; }
+  figcaption { margin-top: 14px; max-width: 78ch; font-size: 13px; line-height: 1.62; color: var(--ink-2);
+               border-top: 1px solid var(--rule); padding-top: 10px; }
+  figcaption b { color: var(--ink); font-weight: 500; }
+  .n { font-size: 13px; font-weight: 620; fill: var(--ink); }
+  .s { font-family: 'DM Mono', ui-monospace, monospace; font-size: 10.5px; fill: var(--ink-2); }
+  .z { font-family: 'DM Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: 0.08em;
+       text-transform: uppercase; fill: var(--ink-2); }
+  .a { font-family: 'DM Mono', ui-monospace, monospace; font-size: 10px; fill: var(--ink-2); }
+</style>
+
+<script>
+  // The page is framed by the site, which cannot reach inside to set a theme,
+  // so the frame asks for one in the query string. Without it the page follows
+  // the reader's own system setting, which is the right answer on its own.
+  (function () {
+    try {
+      var want = new URLSearchParams(location.search).get('theme');
+      if (want === 'dark' || want === 'light') document.documentElement.setAttribute('data-theme', want);
+    } catch (e) {}
+  })();
+</script>
+
+<figure>
+  <p class="eyebrow">Cork Podcast Studio</p>
+  <h1>Two people reaching for the last slot of the day get one booking and one refusal.</h1>
+
+  <svg viewBox="0 0 960 596" role="img" aria-label="A customer asks what is free and books a slot. The reservation is atomic and idempotent, so a double tap or a retried request reserves once and two people racing for the last slot get one booking and one refusal. Booking creates a project with a preparation checklist, an owner and an activity entry, which staff move through preparation, recording, editing, review and delivery. A stage will not advance without its owner and its checklist, delivery needs an HTTPS link, and saving over a colleague’s newer edit is refused. The assistant is a deterministic router over a curated guide.">
+    <defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M0,1 L9,5 L0,9 z" fill="var(--ink-2)"/>
+      </marker>
+      <marker id="arrow-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M0,1 L9,5 L0,9 z" fill="var(--flo-deep)"/>
+      </marker>
+    </defs>
+
+      <rect x="40" y="64" width="260" height="212" rx="8" fill="var(--zone)" stroke="var(--zone-rule)" stroke-width="0.8"/>
+      <rect x="52" y="58" width="85" height="12" fill="var(--paper)"/>
+      <text class="z" x="58" y="68">The customer</text>
+
+      <rect x="40" y="332" width="260" height="152" rx="8" fill="var(--zone)" stroke="var(--zone-rule)" stroke-width="0.8"/>
+      <rect x="52" y="326" width="73" height="12" fill="var(--paper)"/>
+      <text class="z" x="58" y="336">The studio</text>
+
+      <rect x="544" y="64" width="376" height="456" rx="8" fill="var(--zone)" stroke="var(--zone-rule)" stroke-width="0.8"/>
+      <rect x="556" y="58" width="232" height="12" fill="var(--paper)"/>
+      <text class="z" x="562" y="68">Next.js · one codebase, two runtimes</text>
+<path d="M276,122 H480 Q488,122 488,114 V112 Q488,104 496,104 H572" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M276,232 H444 Q452,232 452,224 V222 Q452,214 460,214 H572" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M732,144 V182" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow-a)"/>
+<path d="M732,288 V326" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M732,420 V458" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M572,374 H380 Q372,374 372,382 V384 Q372,392 364,392 H300" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<text class="a" x="306" y="96" text-anchor="start">asks what is free</text>
+<text class="a" x="306" y="206" text-anchor="start">books a slot</text>
+<text class="a" x="306" y="468" text-anchor="start">moves it through the stages</text>
+
+      <rect x="64" y="96" width="212" height="58" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="80" y="120">Availability</text>
+      <text class="s" x="80" y="138">the studio’s real diary</text>
+
+      <rect x="64" y="200" width="212" height="94" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="80" y="224">The assistant</text>
+      <text class="s" x="80" y="242">a router over a set guide.</text>
+      <text class="s" x="80" y="260">Not a model, and it invents</text>
+      <text class="s" x="80" y="278">nothing it cannot source</text>
+
+      <rect x="64" y="364" width="212" height="76" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="80" y="388">Staff</text>
+      <text class="s" x="80" y="406">one project, several people,</text>
+      <text class="s" x="80" y="424">and no silent overwrites</text>
+
+      <rect x="572" y="84" width="320" height="58" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="588" y="108">Slot reservation</text>
+      <text class="s" x="588" y="126">atomic, and idempotent on a retry</text>
+
+      <rect x="572" y="182" width="320" height="94" rx="6" fill="var(--accent-tint)" stroke="var(--flo-deep)" stroke-width="1.4"/>
+      <text class="n" x="588" y="206">Two people, one last slot</text>
+      <text class="s" x="588" y="224">one booking and one refusal. A double tap</text>
+      <text class="s" x="588" y="242">or a retried request reserves once, which is</text>
+      <text class="s" x="588" y="260">the only behaviour a diary can afford</text>
+
+      <rect x="572" y="326" width="320" height="76" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="588" y="350">Project · five stages</text>
+      <text class="s" x="588" y="368">a stage will not advance without its owner</text>
+      <text class="s" x="588" y="386">and its checklist. Delivery needs a link</text>
+
+      <rect x="572" y="458" width="320" height="58" rx="6" fill="var(--accent-tint)" stroke="var(--flo-deep)" stroke-width="1.4"/>
+      <text class="n" x="588" y="482">Optimistic concurrency</text>
+      <text class="s" x="588" y="500">saving over a newer edit is refused</text>
+  </svg>
+
+  <figcaption>Both outlined boxes are about two people and one record. A booking that is not atomic sells the same hour twice, and a retried request that is not idempotent sells it twice to the same person. A project update without optimistic concurrency lets whoever saves last win, silently. Neither is visible in a demo and both are the difference between a workspace and a spreadsheet. The assistant is a <b>deterministic router</b>, not a model: a question it cannot source becomes a staff enquiry, and marking that enquiry reviewed sends nobody a reply, because nothing here can send one.</figcaption>
+</figure>

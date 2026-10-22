@@ -4,12 +4,12 @@ const svg = [
   zone({ x: 40, y: 64, w: 260, h: 260, label: 'On your own machine' }),
   zone({ x: 544, y: 64, w: 376, h: 480, label: 'Hosted · the optional half' }),
 
-  arrow('M170,156 V200'),
+  arrow('M170,190 V200'),
   arrow(elbow(276, 232, 572, 112, 500)),
   arrow(elbow(276, 256, 572, 206, 536)),
   arrow('M732,250 V292'),
-  arrow('M732,378 V420'),
-  arrow('M732,488 V516', { accent: true }),
+  arrow('M732,386 V420'),
+  arrow('M732,496 V516', { accent: true }),
   // The scanner is never run by a web request. The queue is the only way in.
   arrow(elbow(892, 206, 892, 250, 936), { dashed: true }),
 

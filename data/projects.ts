@@ -27,26 +27,6 @@ import type { IconName } from '@/components/Icon'
  */
 export type Status = 'live' | 'client' | 'built' | 'prototype' | 'experiment'
 
-/**
- * Why a finished build has no link, where the reason is somebody else.
- *
- * This is a separate axis from `status`, deliberately. Status says how far a
- * build got; these builds got all the way. What stops them being openable is
- * not the state of the code, it is that the page carries a real person’s name,
- * address or plans — an invitation, a guest list, an itinerary — and that is
- * theirs to release rather than mine.
- *
- * Where this is set, no `live` and no `source` is rendered, because a link to
- * the file is the publication. Withholding the deployment while linking the
- * repository that holds the same HTML would be a gesture rather than a
- * decision.
- */
-export const WITHHELD = {
-  label: 'Link withheld',
-  blurb:
-    'Finished, and deliberately not published. The page carries someone else’s name, address or plans, and releasing that is theirs rather than mine. The source is not linked either: a link to the file is the publication.',
-}
-
 export const STATUS: Record<Status, { label: string; blurb: string }> = {
   live: {
     label: 'Live',
@@ -151,11 +131,6 @@ export type Project = {
   caseStudy?: CaseStudy
   story?: Story
   diagram?: Diagram
-  /**
-   * Whose privacy costs this entry its link, in one line. Set this and no
-   * `live` and no `source` is rendered for the build, whatever they hold.
-   */
-  withheld?: string
   shots?: Shot[]
   stackNote?: string
   live?: string
@@ -228,6 +203,10 @@ export const PROJECTS: Project[] = [
       'The Agreement Spine runs through every screen, from Draft to Review, Signed, Active and Complete, so the state of an agreement is legible without reading a document. A counterparty change arrives as an explicit, attributable diff. An amendment is added while the signed version stays as it was. Agreement Check raises completeness and clarity warnings, and stops short of implying legal validity. A counterparty reviews, negotiates and signs from a private link with nothing installed.',
     stack: ['Next.js 16', 'React 19', 'TypeScript'],
     tags: ['Web'],
+    diagram: {
+      name: 'pact',
+      alt: 'An author writes an agreement in plain words and a counterparty reviews, negotiates and signs it from a private link with nothing installed. The agreement moves through draft, review, signed, active and complete, and every change in review arrives as a diff with a name on it. Agreement Check flags what is missing without claiming validity, and an amendment is a new version alongside the signed one rather than an edit of it.',
+    },
     story: {
       forWho: 'people who agree things in conversation',
       steps: [
@@ -479,6 +458,10 @@ export const PROJECTS: Project[] = [
     stackNote:
       'No build step and no framework: the software opens from software/index.html in a browser. The repository also carries the CAD drafts, hardware notes and a dated project archive that keeps superseded versions with their status and assumptions written down.',
     tags: ['Consumer', 'Design', 'Local-first'],
+    diagram: {
+      name: 'jibewa',
+      alt: 'One dial, turned, pressed and held, bends a generative world rather than scrolling a menu. Every theme draws on the 2D canvas first, and where WebGL2 exists it finishes the frame. The night runs as a state machine through evening, sleep, sunrise, alarm and dismiss, driven at one, sixty or six hundred times speed so a whole night can be watched in about a minute. Adding gl=0 forces the 2D renderer and the clock still works.',
+    },
     story: {
       forWho: 'waking up without a phone',
       before: 'A phone on the nightstand, which is the problem rather than the clock.',
@@ -609,6 +592,10 @@ export const PROJECTS: Project[] = [
     stackNote:
       'A 2025 build of the same idea took a different shape, a fantasy draft game on Express, Socket.IO and React. It is a separate codebase, and not an earlier commit of this one.',
     tags: ['Web', 'Game'],
+    diagram: {
+      name: 'football-frenzy',
+      alt: 'A world is kept by a cookie and a recovery code rather than an account. Matches run on canvas in the browser and produce a snapshot pair, a seed and a decision log. The server replays the match from an identical prefix, so a mid-match card play counts only if the replay produces it. Worlds, squads, fixtures and the economy live in PostgreSQL, and friends join leagues by share code.',
+    },
     story: {
       forWho: 'football management fans',
       steps: [
@@ -1071,6 +1058,10 @@ export const PROJECTS: Project[] = [
       'Friends reserve gifts and the list owner never learns which. A row-level security policy in the database is what keeps it that way, so the interface has nothing to leak. A Save to Plave bookmarklet scrapes name, image and price off any shop page. Installable, offline, and registered as an Android share target.',
     stack: ['React 18', 'Vite', 'React Router', 'Supabase', 'PWA'],
     tags: ['Web', 'Consumer', 'PWA'],
+    diagram: {
+      name: 'plave',
+      alt: 'A bookmarklet reads the name, image and price off any shop page into a wishlist, where savings are logged against a target. Friends reserve gifts without an account. A row-level security policy means the owner’s own query cannot return a reservation row, so the interface is never sent one and has nothing to leak.',
+    },
     story: {
       forWho: 'people saving up for things they want',
       steps: [
@@ -1206,31 +1197,6 @@ export const PROJECTS: Project[] = [
     source: 'https://github.com/foayenix/sana-abc3',
   },
   {
-    slug: 'five-days',
-    name: 'Five Days',
-    year: 2026,
-    status: 'built',
-    withheld:
-      'Five dated days: where someone is staying, what is booked and when. An itinerary is a record of where a person will be, which is the last thing to put at a public address.',
-    oneLiner:
-      'A private five-day itinerary page, compiled from a design canvas file instead of maintained as markup.',
-    signature:
-      'The canvas file is the source of truth and cannot be served, because it depends on a runtime that exists only inside the editor. A build script lifts its helmet into the head, its canvas markup into the body, and shims the one logic component to run in an ordinary browser. The plan is edited where it was designed, and the site is a build artefact. Query-string switches render the page as though it were any given date, so the whole thing can be checked without waiting for the calendar, and a missing photograph degrades to a gradient panel instead of a broken image. No framework and no dependencies.',
-    stack: ['Node', 'static HTML', 'Vercel'],
-    tags: ['Web', 'Tool'],
-    story: {
-      forWho: 'one private five-day trip',
-      steps: [
-        { icon: 'pen', title: 'Plan it as a design', text: 'The itinerary is laid out on a design canvas.' },
-        { icon: 'bolt', title: 'Turn it into a page', text: 'A script turns the design into an ordinary web page.' },
-        { icon: 'calendar', title: 'Check any day', text: 'Preview the page as it looks on any date of the trip.' },
-      ],
-      promises: [
-        { icon: 'shield', text: 'A missing photo shows a colour panel, not a broken image' },
-      ],
-    },
-  },
-  {
     slug: 'cork-podcast-studio',
     name: 'Cork Podcast Studio',
     year: 2026,
@@ -1245,6 +1211,10 @@ export const PROJECTS: Project[] = [
     stackNote:
       'One codebase, two runtimes: separate TypeScript configurations select Cloudflare D1 for the Sites build and PostgreSQL for the Next.js build, and neither database adapter is imported by the other runtime’s bundle. Each deployment therefore has its own records.',
     tags: ['Web', 'Client', 'Tool'],
+    diagram: {
+      name: 'cork',
+      alt: 'A customer books a slot through an atomic, idempotent reservation, so a double tap reserves once and two people racing for the last slot get one booking and one refusal. Booking creates a project with a checklist, an owner and an activity entry, which staff move through preparation, recording, editing, review and delivery. Saving over a colleague’s newer edit is refused, and the assistant is a deterministic router rather than a model.',
+    },
     story: {
       forWho: 'a podcast studio and its staff',
       steps: [
@@ -1272,6 +1242,10 @@ export const PROJECTS: Project[] = [
       'A front end on one host reading a database and a scheduled research watch that stay on another, which is the unusual part: it is a deliberate bridge rather than a migration, so the daily 08:00 research run and the authoritative records were never copied or duplicated. The backend credential is used server-side only and never reaches the browser, requests are restricted to three known endpoints at one fixed origin, redirects are refused and cross-origin writes rejected. Every page sits behind a signed, HttpOnly session cookie and every API route re-validates it independently, so a route is not protected merely because the page in front of it was. Weak or missing configuration blocks access and explains itself, rather than failing open.',
     stack: ['Next.js 16', 'React 19', 'TypeScript', 'Zod', 'Vercel'],
     tags: ['Web', 'Tool', 'Research'],
+    diagram: {
+      name: 'funding-radar',
+      alt: 'One person signs in with a password and no username. Every API route re-checks the signed session for itself rather than trusting the page in front of it. A server-side bridge holds the backend credential, which never reaches the browser, and speaks only to three known endpoints at one fixed origin with redirects refused. The register and the daily 08:00 research watch stay on the original deployment.',
+    },
     story: {
       forWho: 'one founder chasing grant funding',
       before: 'Opportunities, deadlines and half-written applications spread across tabs and notes.',
@@ -1300,6 +1274,10 @@ export const PROJECTS: Project[] = [
       'The hard part is not the website. It is a curriculum written to be defensible — 1,920 learning hours, 735 supervised clinical hours, externally examined, benchmarked against international curricula — carried through a master programme specification, module specifications at three levels, a clinical placement and internship handbook and a quality-assurance handbook. The positioning brief then forbids the two easy exits: it is not a weekend certificate mill and not a wellness brand, and the content rule is that the institution leads while the founder appears inside the heritage story rather than in front of it. What an award confers is stated on the page, which is the sentence most schools in this space leave out.',
     stack: ['HTML', 'design canvas', 'curriculum specification'],
     tags: ['Web', 'Education', 'Client', 'Design'],
+    diagram: {
+      name: 'yemkem-school',
+      alt: 'Three awards in a ladder: a certificate, the Diploma in African Herbal Medicine the school is built around, and a professional diploma with an open track of short courses. Each rests on 1,920 learning hours benchmarked against international curricula, 735 supervised clinical hours with their own placement handbook, and external examination described in a quality-assurance handbook.',
+    },
     story: {
       forWho: 'a herbal-medicine school and its students',
       steps: [
@@ -1361,29 +1339,6 @@ export const PROJECTS: Project[] = [
     source: 'https://github.com/foayenix/fixaroo',
   },
   {
-    slug: 'football-frenzy-draft',
-    name: 'Football Frenzy (draft game)',
-    year: 2025,
-    status: 'built',
-    statusNote:
-      'The 2025 build of the idea, kept because it is public and openable. The 2026 Football Frenzy above is a separate codebase, not a later commit of this one.',
-    oneLiner:
-      'A fast fantasy-football draft game: pick a squad of real Premier League players and play out simulated matches that finish in minutes rather than a season.',
-    signature:
-      'The whole design is built around session length. A fantasy league takes a season to resolve, so this resolves a match in minutes, with tactical boosts as the decision that carries the stakes a season normally supplies. Express and Socket.IO behind a React front end, so a draft happens live between players rather than by submitted forms.',
-    stack: ['Express', 'Socket.IO', 'React', 'JavaScript'],
-    tags: ['Web', 'Game'],
-    story: {
-      forWho: 'fantasy football players with no patience',
-      steps: [
-        { icon: 'users', title: 'Draft a squad', text: 'Real Premier League players, picked live against other players.' },
-        { icon: 'ball', title: 'Play the match', text: 'Simulated, and finished in minutes.' },
-        { icon: 'bolt', title: 'Spend a boost', text: 'Tactical boosts are where the risk sits.' },
-      ],
-    },
-    source: 'https://github.com/foayenix/tbx-ffzy',
-  },
-  {
     slug: 'desi-tailors',
     name: 'Desi Tailors',
     year: 2026,
@@ -1404,151 +1359,6 @@ export const PROJECTS: Project[] = [
       ],
     },
     source: 'https://github.com/foayenix/desi-tailors',
-  },
-  {
-    slug: 'becoming-her',
-    name: 'Becoming Her',
-    year: 2026,
-    status: 'built',
-    withheld:
-      'The page is built around one graduate’s name, her own words to her guests, and the menu for the evening. None of that is mine to put on a public address.',
-    oneLiner:
-      'A graduation party invitation and RSVP page, with the menu attached and a Caddy configuration to serve it.',
-    signature:
-      'An invitation is a page that has to work on the first try, on a phone, from a link in a message, for guests who will never visit it twice — so it carries its own menu as both images and a PDF and ships with the server configuration that puts it online. There is no framework and nothing to build.',
-    stack: ['HTML', 'CSS', 'Caddy'],
-    tags: ['Web', 'Events'],
-    story: {
-      forWho: 'one graduation, and its guests',
-      steps: [
-        { icon: 'mail', title: 'Open the invitation', text: 'From a link in a message, on a phone.' },
-        { icon: 'book', title: 'Read the menu', text: 'As images, or as a PDF.' },
-        { icon: 'check', title: 'RSVP', text: 'On the same page.' },
-      ],
-    },
-  },
-  {
-    slug: 'thirty',
-    name: 'Thirty',
-    year: 2026,
-    status: 'built',
-    withheld:
-      'The invitation carries the guest of honour’s full name, the date and the venue, set as the cover of a magazine. Publishing it would publish all three.',
-    oneLiner:
-      'A thirtieth-birthday invitation laid out as a fashion magazine: a cover, an issue number, a scrolling marquee and an RSVP.',
-    signature:
-      'The conceit is the whole build. An invitation to a milestone show is set as Vol. 30, No. 07, with a masthead, a running marquee and editorial typography, so the format carries the occasion instead of a headline announcing it. One HTML file and one script.',
-    stack: ['HTML', 'CSS', 'JavaScript'],
-    tags: ['Web', 'Events', 'Design'],
-    story: {
-      forWho: 'one thirtieth birthday, and its guests',
-      steps: [
-        { icon: 'book', title: 'It opens like a magazine', text: 'A cover, an issue number and a masthead.' },
-        { icon: 'calendar', title: 'The date and the place', text: 'Set like editorial pages.' },
-        { icon: 'check', title: 'RSVP', text: 'At the end of the issue.' },
-      ],
-    },
-  },
-  {
-    slug: 'twenty-one-not-twenty-six',
-    name: '21not26',
-    year: 2026,
-    status: 'built',
-    withheld:
-      'The page holds a weekend’s plan and the people it was written for. A link to it is a link to where they were going to be.',
-    oneLiner: 'A single-page invitation and itinerary for a birthday weekend.',
-    signature:
-      'One page holding a whole weekend: the invitation, the plan and the response, so a guest never has to find a second link. No framework and no build step.',
-    stack: ['HTML', 'CSS'],
-    tags: ['Web', 'Events'],
-    story: {
-      forWho: 'one birthday weekend, and its guests',
-      steps: [
-        { icon: 'mail', title: 'The invitation', text: 'On one page, on a phone.' },
-        { icon: 'calendar', title: 'The weekend’s plan', text: 'On the same page.' },
-      ],
-    },
-  },
-  {
-    slug: 'dans-birthday',
-    name: 'Dan’s 24th',
-    year: 2026,
-    status: 'built',
-    withheld:
-      'The page is one person’s name, their birthday and the restaurant. There is nothing in it that is mine to release.',
-    oneLiner: 'An RSVP page for a twenty-fourth birthday dinner.',
-    signature:
-      'The smallest thing in this catalogue, and it is here because the catalogue lists what was built rather than what flatters: one page, one guest list, one response.',
-    stack: ['HTML', 'CSS'],
-    tags: ['Web', 'Events'],
-    story: {
-      forWho: 'one birthday dinner, and its guests',
-      steps: [
-        { icon: 'mail', title: 'The invitation', text: 'One page.' },
-        { icon: 'check', title: 'RSVP', text: 'On it.' },
-      ],
-    },
-  },
-  {
-    slug: 'valentine',
-    name: 'Will You Be My Valentine',
-    year: 2026,
-    status: 'built',
-    withheld:
-      'Written for one person, on one day. It is listed because it was built, and it is not published because it was never addressed to anybody else.',
-    oneLiner: 'A one-page Valentine’s proposal built to be opened on a phone, once.',
-    signature:
-      'Built in an afternoon for an audience of one, which is the only requirement it had. It is listed because leaving it out would make this catalogue a curated highlight reel rather than a record.',
-    stack: ['React', 'TypeScript'],
-    tags: ['Web', 'Events'],
-    story: {
-      forWho: 'one person, on one day',
-      steps: [
-        { icon: 'heart', title: 'Open it on a phone', text: 'That is the whole thing.' },
-      ],
-    },
-  },
-  {
-    slug: 'cv-site',
-    name: 'cv-site',
-    year: 2026,
-    status: 'built',
-    statusNote:
-      'Superseded by the site you are reading. It is kept because this catalogue’s twenty oldest entries were written from it, so it is the source for part of what is on this page.',
-    oneLiner:
-      'The previous portfolio: twenty builds presented as an engineering instrument, in near-black with a single signal-amber accent.',
-    signature:
-      'One committed aesthetic rather than a neutral template — near-black canvas, one accent colour, a monospace face for every label and metadata field and a display face for headings. It is in the catalogue because it is the primary source for the earliest entries here, and because a portfolio that hides its own previous portfolio is doing the thing this one is built not to do.',
-    stack: ['Vite', 'React 19', 'TypeScript', 'Tailwind', 'Framer Motion'],
-    tags: ['Web', 'Design'],
-    story: {
-      forWho: 'anyone who asked what I had built, in 2026',
-      steps: [
-        { icon: 'archive', title: 'Twenty builds', text: 'Listed as an instrument panel rather than a gallery.' },
-        { icon: 'paper', title: 'It doubled as a CV', text: 'One page for both jobs.' },
-      ],
-    },
-    source: 'https://github.com/foayenix/cv-site',
-  },
-  {
-    slug: 'constellation',
-    name: 'Foayenix constellation',
-    year: 2026,
-    status: 'experiment',
-    oneLiner:
-      'A single-page portfolio whose landing screen is an interactive three-dimensional constellation.',
-    signature:
-      'An experiment in whether a portfolio can lead with an interactive object instead of a sentence. The answer, judged honestly, was no for this purpose — the constellation is the memorable part and the work is behind it, which is the wrong way round — and the site you are reading now leads with a sentence instead. It is listed because the negative result is the useful part.',
-    stack: ['Three.js', 'JavaScript', 'CSS'],
-    tags: ['Web', 'Design'],
-    story: {
-      forWho: 'an experiment in portfolio design',
-      steps: [
-        { icon: 'spark', title: 'A constellation you can turn', text: 'The landing screen is an interactive object.' },
-        { icon: 'archive', title: 'The work sits behind it', text: 'Which turned out to be the problem.' },
-      ],
-    },
-    source: 'https://github.com/foayenix/iweb',
   },
   {
     slug: 'portfolio',
@@ -1601,21 +1411,6 @@ export const COUNTS = {
   builds: PROJECTS.length,
   source: PROJECTS.filter((p) => p.source).length,
   live: PROJECTS.filter((p) => p.live).length,
-  withheld: PROJECTS.filter((p) => p.withheld).length,
-}
-
-/** Finished builds whose link is withheld because the page is somebody else’s. */
-export const WITHHELD_BUILDS = PROJECTS.filter((p) => p.withheld)
-
-// A withheld build must not carry a link, or the rule above is decoration.
-// Checked here so a `live` or `source` added later fails the build instead of
-// quietly publishing a guest list.
-for (const project of WITHHELD_BUILDS) {
-  if (project.live || project.source) {
-    throw new Error(
-      `data/projects.ts: "${project.slug}" is withheld and still carries a link`,
-    )
-  }
 }
 
 export function getProject(slug: string) {

@@ -8,12 +8,12 @@ const svg = [
   zone({ x: 40, y: 216, w: 260, h: 264, label: 'On the phone · no signal needed' }),
   zone({ x: 544, y: 64, w: 376, h: 416, label: 'Supabase · Postgres' }),
 
-  arrow('M170,152 V248'),
+  arrow('M170,154 V248'),
   arrow(elbow(276, 272, 572, 112, 492)),
   arrow(elbow(276, 296, 572, 208, 444)),
-  arrow('M732,260 V288'),
-  arrow('M732,356 V388'),
-  arrow(elbow(576, 424, 280, 320, 320)),
+  arrow('M732,266 V288'),
+  arrow('M732,364 V388'),
+  arrow(elbow(572, 424, 280, 320, 320)),
   // Queued, not sent. Bridged where it crosses the return path, because it is
   // the least important line on the page: nothing travels down it yet.
   arrow(`M576,236 H488 Q480,236 480,244 V416 ${hop(true)} V504`, { dashed: true }),

@@ -1,0 +1,130 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sanko Funding Radar — architecture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;620&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  /* The portfolio's own tokens, copied from app/globals.css. */
+  :root {
+    --paper: #e6e5df; --paper-hi: #f2f1ec; --ink: #12233d; --ink-2: #4e5c72;
+    --rule: #c6c5bb; --flo: #e0316b; --flo-deep: #c0184f;
+    --accent-tint: rgba(224, 49, 107, 0.09);
+    --zone: rgba(18, 35, 61, 0.025); --zone-rule: rgba(18, 35, 61, 0.12);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme='light']) { --paper: #0e1b2e; --paper-hi: #16273f; --ink: #e8e7e0; --ink-2: #93a2b8;
+      --rule: #27394f; --flo: #ff5c8a; --flo-deep: #ff7ba1;
+      --accent-tint: rgba(255, 92, 138, 0.12);
+      --zone: rgba(232, 231, 224, 0.03); --zone-rule: rgba(232, 231, 224, 0.12);
+      color-scheme: dark; } }
+  :root[data-theme='dark'] { --paper: #0e1b2e; --paper-hi: #16273f; --ink: #e8e7e0; --ink-2: #93a2b8;
+      --rule: #27394f; --flo: #ff5c8a; --flo-deep: #ff7ba1;
+      --accent-tint: rgba(255, 92, 138, 0.12);
+      --zone: rgba(232, 231, 224, 0.03); --zone-rule: rgba(232, 231, 224, 0.12);
+      color-scheme: dark; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--paper); }
+  body { font-family: 'Archivo', system-ui, sans-serif; color: var(--ink); padding: 18px 16px 22px; }
+  figure { margin: 0 auto; max-width: 1000px; }
+  svg { display: block; width: 100%; height: auto; }
+  .eyebrow { font-family: 'DM Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.04em;
+             text-transform: uppercase; color: var(--ink-2); margin: 0 0 6px; }
+  h1 { font-size: 19px; font-weight: 620; letter-spacing: -0.01em; margin: 0 0 14px; line-height: 1.3; }
+  figcaption { margin-top: 14px; max-width: 78ch; font-size: 13px; line-height: 1.62; color: var(--ink-2);
+               border-top: 1px solid var(--rule); padding-top: 10px; }
+  figcaption b { color: var(--ink); font-weight: 500; }
+  .n { font-size: 13px; font-weight: 620; fill: var(--ink); }
+  .s { font-family: 'DM Mono', ui-monospace, monospace; font-size: 10.5px; fill: var(--ink-2); }
+  .z { font-family: 'DM Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: 0.08em;
+       text-transform: uppercase; fill: var(--ink-2); }
+  .a { font-family: 'DM Mono', ui-monospace, monospace; font-size: 10px; fill: var(--ink-2); }
+</style>
+
+<script>
+  // The page is framed by the site, which cannot reach inside to set a theme,
+  // so the frame asks for one in the query string. Without it the page follows
+  // the reader's own system setting, which is the right answer on its own.
+  (function () {
+    try {
+      var want = new URLSearchParams(location.search).get('theme');
+      if (want === 'dark' || want === 'light') document.documentElement.setAttribute('data-theme', want);
+    } catch (e) {}
+  })();
+</script>
+
+<figure>
+  <p class="eyebrow">Sanko Funding Radar</p>
+  <h1>A new front end on one host, reading a database and a schedule that never moved off another.</h1>
+
+  <svg viewBox="0 0 960 516" role="img" aria-label="One person signs in with a password and no username. The session cookie is signed, HttpOnly and SameSite=Lax, and every API route re-checks it for itself rather than trusting that the page in front of it was protected. A server-side bridge holds the backend credential, which never reaches the browser, and speaks only to three known endpoints at one fixed origin with redirects refused and cross-origin writes rejected. The register and the daily 08:00 research watch stay on the original Sites deployment.">
+    <defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M0,1 L9,5 L0,9 z" fill="var(--ink-2)"/>
+      </marker>
+      <marker id="arrow-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M0,1 L9,5 L0,9 z" fill="var(--flo-deep)"/>
+      </marker>
+    </defs>
+
+      <rect x="40" y="64" width="260" height="200" rx="8" fill="var(--zone)" stroke="var(--zone-rule)" stroke-width="0.8"/>
+      <rect x="52" y="58" width="79" height="12" fill="var(--paper)"/>
+      <text class="z" x="58" y="68">The browser</text>
+
+      <rect x="352" y="64" width="256" height="380" rx="8" fill="var(--zone)" stroke="var(--zone-rule)" stroke-width="0.8"/>
+      <rect x="364" y="58" width="146" height="12" fill="var(--paper)"/>
+      <text class="z" x="370" y="68">Vercel · the interface</text>
+
+      <rect x="660" y="64" width="260" height="380" rx="8" fill="var(--zone)" stroke="var(--zone-rule)" stroke-width="0.8"/>
+      <rect x="672" y="58" width="195" height="12" fill="var(--paper)"/>
+      <text class="z" x="678" y="68">Sites · the data, where it was</text>
+<path d="M276,122 H322 Q330,122 330,114 V112 Q330,104 338,104 H376" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M480,144 V192" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M480,286 V326" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow-a)"/>
+<path d="M584,373 H628 Q636,373 636,365 V256 Q636,248 644,248 H684" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M790,178 V210" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M790,286 V320" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<text class="a" x="306" y="160" text-anchor="start">a password, no username</text>
+<text class="a" x="500" y="182" text-anchor="start">again, on every route</text>
+
+      <rect x="64" y="96" width="212" height="76" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="80" y="120">One person</text>
+      <text class="s" x="80" y="138">this is a funding pipeline,</text>
+      <text class="s" x="80" y="156">not a product</text>
+
+      <rect x="376" y="84" width="208" height="58" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="392" y="108">Signed session</text>
+      <text class="s" x="392" y="126">HttpOnly, SameSite=Lax</text>
+
+      <rect x="376" y="192" width="208" height="94" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="392" y="216">Every API route</text>
+      <text class="s" x="392" y="234">re-checks the session for</text>
+      <text class="s" x="392" y="252">itself. A route is not safe</text>
+      <text class="s" x="392" y="270">because its page was</text>
+
+      <rect x="376" y="326" width="208" height="94" rx="6" fill="var(--accent-tint)" stroke="var(--flo-deep)" stroke-width="1.4"/>
+      <text class="n" x="392" y="350">The bridge</text>
+      <text class="s" x="392" y="368">the backend credential is</text>
+      <text class="s" x="392" y="386">used server-side and never</text>
+      <text class="s" x="392" y="404">reaches the browser</text>
+
+      <rect x="684" y="84" width="212" height="94" rx="6" fill="var(--accent-tint)" stroke="var(--flo-deep)" stroke-width="1.4"/>
+      <text class="n" x="700" y="108">Three endpoints</text>
+      <text class="s" x="700" y="126">one fixed origin. Redirects</text>
+      <text class="s" x="700" y="144">refused, writes cross-origin</text>
+      <text class="s" x="700" y="162">rejected</text>
+
+      <rect x="684" y="210" width="212" height="76" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="700" y="234">The register</text>
+      <text class="s" x="700" y="252">opportunities, deadlines,</text>
+      <text class="s" x="700" y="270">notes, application stages</text>
+
+      <rect x="684" y="320" width="212" height="76" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="700" y="344">Daily at 08:00</text>
+      <text class="s" x="700" y="362">the research watch stays</text>
+      <text class="s" x="700" y="380">here. It was never moved</text>
+  </svg>
+
+  <figcaption>This is a bridge and not a migration, which is the unusual decision and the reason it is drawn as two hosts rather than one. The database and the daily research watch were never copied, so there is one authoritative register and one schedule rather than two that drift. The two outlined boxes are what makes that safe to do: the <b>credential stays on the server</b>, and the bridge will speak to <b>three endpoints at one origin</b> and nothing else, so a redirect cannot walk it somewhere new.</figcaption>
+</figure>

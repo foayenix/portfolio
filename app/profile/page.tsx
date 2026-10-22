@@ -1,9 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { SITE } from '@/data/site'
-import { COUNTS, PROJECTS, STATUS, WITHHELD, WITHHELD_BUILDS, type Status } from '@/data/projects'
+import { COUNTS, PROJECTS, STATUS, type Status } from '@/data/projects'
 import StatusTag from '@/components/StatusTag'
-import WithheldTag from '@/components/WithheldTag'
 
 export const metadata: Metadata = {
   title: 'Profile',
@@ -157,24 +156,6 @@ export default function ProfilePage() {
           })}
         </dl>
 
-        {/* The one rule that costs the catalogue something, stated where the
-            other labels are defined rather than left on the entries it
-            applies to, because it is a claim about how I work. */}
-        <div className="mt-10 grid gap-2 border-t border-[var(--rule)] pt-4 md:grid-cols-[12rem_1fr_4rem] md:items-baseline md:gap-6">
-          <dt>
-            <WithheldTag size="md" />
-          </dt>
-          <dd className="text-[0.9375rem] leading-[1.6] text-[var(--ink-2)]">
-            {WITHHELD.blurb} These are invitations, an RSVP page and a five-day itinerary:
-            each one carries a real person&rsquo;s name, and one of them carries where they
-            will be staying and when. They are finished, they are in the catalogue, and
-            they have no link and no source link, because a link to the file is the
-            publication. Ask and I will walk you through any of them.
-          </dd>
-          <dd className="mono text-[length:var(--text-micro)] text-[var(--ink-2)] md:text-right">
-            {WITHHELD_BUILDS.length} {WITHHELD_BUILDS.length === 1 ? 'build' : 'builds'}
-          </dd>
-        </div>
       </section>
 
       <section className="mx-auto max-w-[1440px] px-5 pt-16 md:px-10">
