@@ -1,0 +1,136 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dansville Accessories — architecture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;620&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  /* The portfolio's own tokens, copied from app/globals.css. */
+  :root {
+    --paper: #e6e5df; --paper-hi: #f2f1ec; --ink: #12233d; --ink-2: #4e5c72;
+    --rule: #c6c5bb; --flo: #e0316b; --flo-deep: #c0184f;
+    --accent-tint: rgba(224, 49, 107, 0.09);
+    --zone: rgba(18, 35, 61, 0.025); --zone-rule: rgba(18, 35, 61, 0.12);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme='light']) { --paper: #0e1b2e; --paper-hi: #16273f; --ink: #e8e7e0; --ink-2: #93a2b8;
+      --rule: #27394f; --flo: #ff5c8a; --flo-deep: #ff7ba1;
+      --accent-tint: rgba(255, 92, 138, 0.12);
+      --zone: rgba(232, 231, 224, 0.03); --zone-rule: rgba(232, 231, 224, 0.12);
+      color-scheme: dark; } }
+  :root[data-theme='dark'] { --paper: #0e1b2e; --paper-hi: #16273f; --ink: #e8e7e0; --ink-2: #93a2b8;
+      --rule: #27394f; --flo: #ff5c8a; --flo-deep: #ff7ba1;
+      --accent-tint: rgba(255, 92, 138, 0.12);
+      --zone: rgba(232, 231, 224, 0.03); --zone-rule: rgba(232, 231, 224, 0.12);
+      color-scheme: dark; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--paper); }
+  body { font-family: 'Archivo', system-ui, sans-serif; color: var(--ink); padding: 18px 16px 22px; }
+  figure { margin: 0 auto; max-width: 1000px; }
+  svg { display: block; width: 100%; height: auto; }
+  .eyebrow { font-family: 'DM Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.04em;
+             text-transform: uppercase; color: var(--ink-2); margin: 0 0 6px; }
+  h1 { font-size: 19px; font-weight: 620; letter-spacing: -0.01em; margin: 0 0 14px; line-height: 1.3; }
+  figcaption { margin-top: 14px; max-width: 78ch; font-size: 13px; line-height: 1.62; color: var(--ink-2);
+               border-top: 1px solid var(--rule); padding-top: 10px; }
+  figcaption b { color: var(--ink); font-weight: 500; }
+  .n { font-size: 13px; font-weight: 620; fill: var(--ink); }
+  .s { font-family: 'DM Mono', ui-monospace, monospace; font-size: 10.5px; fill: var(--ink-2); }
+  .z { font-family: 'DM Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: 0.08em;
+       text-transform: uppercase; fill: var(--ink-2); }
+  .a { font-family: 'DM Mono', ui-monospace, monospace; font-size: 10px; fill: var(--ink-2); }
+</style>
+
+<script>
+  // The page is framed by the site, which cannot reach inside to set a theme,
+  // so the frame asks for one in the query string. Without it the page follows
+  // the reader's own system setting, which is the right answer on its own.
+  (function () {
+    try {
+      var want = new URLSearchParams(location.search).get('theme');
+      if (want === 'dark' || want === 'light') document.documentElement.setAttribute('data-theme', want);
+    } catch (e) {}
+  })();
+</script>
+
+<figure>
+  <p class="eyebrow">Dansville Accessories</p>
+  <h1>The owner runs the shop from a phone, and a price is only ever decided on the server.</h1>
+
+  <svg viewBox="0 0 960 644" role="img" aria-label="The shop prices a bag through a serverless checkout route and hands off to Stripe Checkout, which holds the card details. A paid session becomes an order in the Stripe webhook, once, however many times it is delivered. Products, orders, discount codes, settings and an audit log live in Neon through Drizzle. The owner installs the admin to a phone home screen and signs in with an eight-digit code emailed to them, because a link would open in Safari and leave the installed app signed out. Refunds and disputes are deliberately not built.">
+    <defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M0,1 L9,5 L0,9 z" fill="var(--ink-2)"/>
+      </marker>
+      <marker id="arrow-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M0,1 L9,5 L0,9 z" fill="var(--flo-deep)"/>
+      </marker>
+    </defs>
+
+      <rect x="40" y="64" width="260" height="212" rx="8" fill="var(--zone)" stroke="var(--zone-rule)" stroke-width="0.8"/>
+      <rect x="52" y="58" width="61" height="12" fill="var(--paper)"/>
+      <text class="z" x="58" y="68">The shop</text>
+
+      <rect x="40" y="332" width="260" height="212" rx="8" fill="var(--zone)" stroke="var(--zone-rule)" stroke-width="0.8"/>
+      <rect x="52" y="326" width="116" height="12" fill="var(--paper)"/>
+      <text class="z" x="58" y="336">The owner’s phone</text>
+
+      <rect x="544" y="64" width="376" height="480" rx="8" fill="var(--zone)" stroke="var(--zone-rule)" stroke-width="0.8"/>
+      <rect x="556" y="58" width="128" height="12" fill="var(--paper)"/>
+      <text class="z" x="562" y="68">Serverless · Vercel</text>
+<path d="M276,128 H428 Q436,128 436,120 V120 Q436,112 444,112 H572" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M276,232 H392 Q400,232 400,224 V222 Q400,214 408,214 H572" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M732,174 V214" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow-a)"/>
+<path d="M732,286 V326" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M732,398 V438" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M276,400 H352 Q360,400 360,408 V430 Q360,438 368,438 H572" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M572,356 H428 Q420,356 420,364 V460 Q420,468 412,468 H300" fill="none" stroke="var(--ink-2)" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+<text class="a" x="300" y="122" text-anchor="start">bag → Checkout</text>
+<text class="a" x="300" y="208" text-anchor="start">paid session</text>
+<text class="a" x="300" y="394" text-anchor="start">an 8-digit code</text>
+<text class="a" x="316" y="486" text-anchor="start">order email</text>
+
+      <rect x="64" y="96" width="212" height="58" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="80" y="120">Shop · React 19</text>
+      <text class="s" x="80" y="138">catalogue, bag, codes</text>
+
+      <rect x="64" y="200" width="212" height="76" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="80" y="224">Stripe Checkout</text>
+      <text class="s" x="80" y="242">Stripe holds the card</text>
+      <text class="s" x="80" y="260">details, never this build</text>
+
+      <rect x="64" y="364" width="212" height="76" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="80" y="388">Admin on the home screen</text>
+      <text class="s" x="80" y="406">installs from the browser.</text>
+      <text class="s" x="80" y="424">No App Store, no cost</text>
+
+      <rect x="572" y="84" width="320" height="76" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="588" y="108">api/checkout</text>
+      <text class="s" x="588" y="126">prices the bag on the server, so a discount</text>
+      <text class="s" x="588" y="144">cannot be argued with from the browser</text>
+
+      <rect x="572" y="214" width="320" height="94" rx="6" fill="var(--accent-tint)" stroke="var(--flo-deep)" stroke-width="1.4"/>
+      <text class="n" x="588" y="238">api/stripe-webhook</text>
+      <text class="s" x="588" y="256">a paid session becomes an order here and</text>
+      <text class="s" x="588" y="274">nowhere else, once, however many times</text>
+      <text class="s" x="588" y="292">the webhook is delivered</text>
+
+      <rect x="572" y="326" width="320" height="58" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="588" y="350">Neon · Drizzle</text>
+      <text class="s" x="588" y="368">products, orders, codes, settings, audit log</text>
+
+      <rect x="572" y="438" width="320" height="94" rx="6" fill="var(--accent-tint)" stroke="var(--flo-deep)" stroke-width="1.4"/>
+      <text class="n" x="588" y="462">Code sign-in</text>
+      <text class="s" x="588" y="480">an emailed link opens in Safari, which would</text>
+      <text class="s" x="588" y="498">leave the installed app signed out — so the</text>
+      <text class="s" x="588" y="516">email carries a code the owner types instead</text>
+
+      <rect x="340" y="560" width="280" height="76" rx="6" fill="none" stroke="var(--rule)" stroke-width="1" stroke-dasharray="4,3"/>
+      <text class="n" x="356" y="584" fill="var(--ink-2)">Refunds and disputes</text>
+      <text class="s" x="356" y="602">deliberately not built. Stripe holds</text>
+      <text class="s" x="356" y="620">the money, the evidence and the dates</text>
+  </svg>
+
+  <figcaption>Two outlined boxes, two decisions. The webhook is the <b>only</b> place a paid session becomes an order, and it is idempotent, because Stripe will deliver the same event more than once and a shop that creates two orders for one payment is worse than one that creates none. And the admin signs in with a code rather than a link: on an iPhone the link opens in Safari, which keeps its own session, so the owner would tap it and find the installed app still signed out. Refunds stay in Stripe on purpose — a second place to issue one is a second place for the record to be wrong.</figcaption>
+</figure>

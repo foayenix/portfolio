@@ -1,0 +1,125 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proper — architecture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;620&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  /* The portfolio's own tokens, copied from app/globals.css. */
+  :root {
+    --paper: #e6e5df; --paper-hi: #f2f1ec; --ink: #12233d; --ink-2: #4e5c72;
+    --rule: #c6c5bb; --flo: #e0316b; --flo-deep: #c0184f;
+    --accent-tint: rgba(224, 49, 107, 0.09);
+    --zone: rgba(18, 35, 61, 0.025); --zone-rule: rgba(18, 35, 61, 0.12);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme='light']) { --paper: #0e1b2e; --paper-hi: #16273f; --ink: #e8e7e0; --ink-2: #93a2b8;
+      --rule: #27394f; --flo: #ff5c8a; --flo-deep: #ff7ba1;
+      --accent-tint: rgba(255, 92, 138, 0.12);
+      --zone: rgba(232, 231, 224, 0.03); --zone-rule: rgba(232, 231, 224, 0.12);
+      color-scheme: dark; } }
+  :root[data-theme='dark'] { --paper: #0e1b2e; --paper-hi: #16273f; --ink: #e8e7e0; --ink-2: #93a2b8;
+      --rule: #27394f; --flo: #ff5c8a; --flo-deep: #ff7ba1;
+      --accent-tint: rgba(255, 92, 138, 0.12);
+      --zone: rgba(232, 231, 224, 0.03); --zone-rule: rgba(232, 231, 224, 0.12);
+      color-scheme: dark; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--paper); }
+  body { font-family: 'Archivo', system-ui, sans-serif; color: var(--ink); padding: 18px 16px 22px; }
+  figure { margin: 0 auto; max-width: 1000px; }
+  svg { display: block; width: 100%; height: auto; }
+  .eyebrow { font-family: 'DM Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.04em;
+             text-transform: uppercase; color: var(--ink-2); margin: 0 0 6px; }
+  h1 { font-size: 19px; font-weight: 620; letter-spacing: -0.01em; margin: 0 0 14px; line-height: 1.3; }
+  figcaption { margin-top: 14px; max-width: 78ch; font-size: 13px; line-height: 1.62; color: var(--ink-2);
+               border-top: 1px solid var(--rule); padding-top: 10px; }
+  figcaption b { color: var(--ink); font-weight: 500; }
+  .n { font-size: 13px; font-weight: 620; fill: var(--ink); }
+  .s { font-family: 'DM Mono', ui-monospace, monospace; font-size: 10.5px; fill: var(--ink-2); }
+  .z { font-family: 'DM Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: 0.08em;
+       text-transform: uppercase; fill: var(--ink-2); }
+  .a { font-family: 'DM Mono', ui-monospace, monospace; font-size: 10px; fill: var(--ink-2); }
+</style>
+
+<script>
+  // The page is framed by the site, which cannot reach inside to set a theme,
+  // so the frame asks for one in the query string. Without it the page follows
+  // the reader's own system setting, which is the right answer on its own.
+  (function () {
+    try {
+      var want = new URLSearchParams(location.search).get('theme');
+      if (want === 'dark' || want === 'light') document.documentElement.setAttribute('data-theme', want);
+    } catch (e) {}
+  })();
+</script>
+
+<figure>
+  <p class="eyebrow">Proper</p>
+  <h1>The scanner never runs inside a web request, and the role that serves pages cannot publish a report.</h1>
+
+  <svg viewBox="0 0 960 616" role="img" aria-label="A local command-line scan reads a project offline and writes proper.json, which the local app loads. The optional hosted half signs in through a read-only GitHub App; the web application queues a scan at a pinned commit and never runs the scanner itself. A separate worker, holding its own database role, downloads a bounded source archive and publishes into PostgreSQL, where a private report is gated by an owner predicate and by row-level security.">
+    <defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M0,1 L9,5 L0,9 z" fill="var(--ink-2)"/>
+      </marker>
+      <marker id="arrow-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M0,1 L9,5 L0,9 z" fill="var(--flo-deep)"/>
+      </marker>
+    </defs>
+
+      <rect x="40" y="64" width="260" height="260" rx="8" fill="var(--zone)" stroke="var(--zone-rule)" stroke-width="0.8"/>
+      <rect x="52" y="58" width="128" height="12" fill="var(--paper)"/>
+      <text class="z" x="58" y="68">On your own machine</text>
+
+      <rect x="544" y="64" width="376" height="480" rx="8" fill="var(--zone)" stroke="var(--zone-rule)" stroke-width="0.8"/>
+      <rect x="556" y="58" width="171" height="12" fill="var(--paper)"/>
+      <text class="z" x="562" y="68">Hosted · the optional half</text>
+<path d="M170,156 V200" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M276,232 H492 Q500,232 500,224 V120 Q500,112 508,112 H572" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M276,256 H528 Q536,256 536,248 V214 Q536,206 544,206 H572" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M732,250 V292" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M732,378 V420" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow)"/>
+<path d="M732,488 V516" fill="none" stroke="var(--ink-2)" stroke-width="1.2" marker-end="url(#arrow-a)"/>
+<path d="M892,206 H928 Q936,206 936,214 V242 Q936,250 928,250 H892" fill="none" stroke="var(--ink-2)" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+<text class="a" x="186" y="184" text-anchor="start">writes proper.json</text>
+<text class="a" x="300" y="226" text-anchor="start">sign in · read-only app</text>
+<text class="a" x="300" y="250" text-anchor="start">queue a scan at a pinned commit</text>
+
+      <rect x="64" y="96" width="212" height="94" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="80" y="120">npm run scan</text>
+      <text class="s" x="80" y="138">reads files, config, imports</text>
+      <text class="s" x="80" y="156">and git history, offline.</text>
+      <text class="s" x="80" y="174">Installs and runs nothing.</text>
+
+      <rect x="64" y="200" width="212" height="76" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="80" y="224">proper.json → local app</text>
+      <text class="s" x="80" y="242">a public HTTP asset, so the</text>
+      <text class="s" x="80" y="260">hosted build excludes it</text>
+
+      <rect x="572" y="84" width="320" height="58" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="588" y="108">GitHub App · read-only</text>
+      <text class="s" x="588" y="126">credentials encrypted at rest</text>
+
+      <rect x="572" y="172" width="320" height="58" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="588" y="196">Web · Next.js</text>
+      <text class="s" x="588" y="214">never runs the scanner synchronously</text>
+
+      <rect x="572" y="292" width="320" height="94" rx="6" fill="var(--accent-tint)" stroke="var(--flo-deep)" stroke-width="1.4"/>
+      <text class="n" x="588" y="316">Queue</text>
+      <text class="s" x="588" y="334">atomic admission limits, leased jobs,</text>
+      <text class="s" x="588" y="352">retry limits and fencing tokens, so a</text>
+      <text class="s" x="588" y="370">stale worker cannot publish a result</text>
+
+      <rect x="572" y="420" width="320" height="76" rx="6" fill="var(--paper-hi)" stroke="var(--rule)" stroke-width="1"/>
+      <text class="n" x="588" y="444">Worker · its own database role</text>
+      <text class="s" x="588" y="462">downloads a bounded source archive.</text>
+      <text class="s" x="588" y="480">The web role cannot publish a report</text>
+
+      <rect x="572" y="516" width="320" height="58" rx="6" fill="var(--accent-tint)" stroke="var(--flo-deep)" stroke-width="1.4"/>
+      <text class="n" x="588" y="540">PostgreSQL · owner predicate and RLS</text>
+      <text class="s" x="588" y="558">a private report is gated twice, not once</text>
+  </svg>
+
+  <figcaption>The local scan is the product; the hosted half is optional and is drawn as the smaller claim it is. Two boundaries carry the design. The <b>queue</b> is the only way a scan starts, with leases and fencing tokens so a worker that woke up late cannot overwrite a newer result. And the role that serves web pages <b>cannot publish a report at all</b> — publishing belongs to the worker, which is a different database role, so a bug in a page handler is not a way to write one.</figcaption>
+</figure>

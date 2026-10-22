@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { WITHHELD, PROJECTS, STATUS, getProject, type CaseStudy } from '@/data/projects'
 import StatusTag from '@/components/StatusTag'
-import Figure from '@/components/Figure'
+import Diagram from '@/components/Diagram'
 import WithheldTag from '@/components/WithheldTag'
 import LivePreview from '@/components/LivePreview'
 import StoryVisual from '@/components/StoryVisual'
@@ -95,12 +95,12 @@ export default async function ProjectPage({ params }: Params) {
         </section>
       )}
 
-      {/* Show before tell: the mechanism first, as a machine you can work,
-          then the running build, then the build as a picture, and only then
-          the paragraphs. */}
-      {p.figure && (
-        <section aria-label={`${p.name}: the mechanism`} className="mx-auto max-w-[1440px] px-5 pt-10 md:px-10">
-          <Figure name={p.figure.name} alt={p.figure.alt} />
+      {/* Show before tell: the architecture first, because the first question
+          about a build nobody can open is what it is made of; then the running
+          build, then the build as a picture, and only then the paragraphs. */}
+      {p.diagram && (
+        <section aria-label={`${p.name}: the architecture`} className="mx-auto max-w-[1440px] px-5 pt-10 md:px-10">
+          <Diagram name={p.diagram.name} alt={p.diagram.alt} />
         </section>
       )}
       {p.live && <LivePreview name={p.name} url={p.live} />}
