@@ -5,6 +5,8 @@ import type { IconName } from '@/components/Icon'
 // Every claim here comes from foayenix/cv-site (the twenty oldest entries) or
 // from the repository itself (every later one), read on whichever branch
 // carries the newest work, which for several builds is not the default branch.
+// The one exception is `nazarites`, which has no repository and was written
+// from its deployed pages; its stackNote says so.
 // The wording has been edited since; the facts have not. `live` and `source`
 // are only set where the URL was checked and returned 200, last on 22 October
 // 2026 against every entry at once; a missing link means no link is rendered. A build whose code is private gets no `source`, and
@@ -1346,6 +1348,37 @@ export const PROJECTS: Project[] = [
       ],
     },
     source: 'https://github.com/foayenix/fixaroo',
+  },
+  {
+    slug: 'nazarites',
+    name: 'The Nazarites',
+    year: 2026,
+    status: 'live',
+    statusNote:
+      'Open, and the sign-up form is not wired to anything. It validates an email and then sends it nowhere, so every address typed into it is lost. The first event is in October and the form is the only way the page offers to hear about it.',
+    oneLiner:
+      'The public site for a student-led Christian community in the UK that runs gospel nights and gives a fixed share of what they make to charitable causes in Nigeria.',
+    signature:
+      'Three homepage directions were built first, as one review page: tabs across the top, each direction live inside a frame that is a size container rather than an iframe, with a desktop and phone toggle that resizes the frame and lets each homepage respond to it. A client could compare three real homepages at two widths without opening three tabs or trusting a screenshot. The one that was chosen is the site, and it is plain HTML with one stylesheet and one script, no framework and no build step. The giving promise is written as a number with its arithmetic beside it, so a reader can check it rather than take it: at least 25% of net profit, worked through on an example.',
+    stack: ['HTML', 'CSS', 'JavaScript'],
+    stackNote:
+      'No repository: this is the one entry on the site written from the deployed pages rather than from source, because there is nothing on GitHub to read. The review document is a second deployment, at nazarites-directions.vercel.app.',
+    tags: ['Web', 'Client', 'Events', 'Community'],
+    live: 'https://nazarites-site.vercel.app',
+    story: {
+      forWho: 'a student Christian community and its guests',
+      before: 'An event lives in a group chat, and anyone outside it has no way in.',
+      after: 'One page with the nights, the running order of each one, and four ways to take part.',
+      steps: [
+        { icon: 'calendar', title: 'See what is on', text: 'Each night with its date, who it is for, and what to wear.' },
+        { icon: 'clock', title: 'Read the whole evening', text: 'The running order hour by hour, from arrival to the closing set.' },
+        { icon: 'users', title: 'Find a way in', text: 'Volunteer, perform, partner or sponsor. Each one is its own route.' },
+        { icon: 'heart', title: 'See where the money goes', text: 'At least a quarter of net profit, with the sum worked through.' },
+      ],
+      promises: [
+        { icon: 'coin', text: 'The giving share is a number, not a sentiment' },
+      ],
+    },
   },
   {
     slug: 'desi-tailors',
