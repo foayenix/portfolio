@@ -29,12 +29,12 @@ const dmMono = DM_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL('https://felixayeni.vercel.app'),
   title: {
-    default: `${SITE.name} — ${SITE.role}`,
-    template: `%s — ${SITE.name}`,
+    default: `${SITE.name} · ${SITE.role}`,
+    template: `%s · ${SITE.name}`,
   },
   description: SITE.lede,
   openGraph: {
-    title: `${SITE.name} — ${SITE.role}`,
+    title: `${SITE.name} · ${SITE.role}`,
     description: SITE.lede,
     type: 'website',
   },

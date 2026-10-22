@@ -59,7 +59,7 @@ const svg = [
 ].join('\n')
 
 export default page({
-  title: 'Sanko Funding Radar — architecture',
+  title: 'Sanko Funding Radar · architecture',
   eyebrow: 'Sanko Funding Radar',
   heading: 'A new front end on one host, reading a database and a schedule that never moved off another.',
   width: 960,

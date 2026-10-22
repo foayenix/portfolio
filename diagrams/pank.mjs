@@ -64,7 +64,7 @@ const svg = [
 ].join('\n')
 
 export default page({
-  title: 'Pank — architecture',
+  title: 'Pank · architecture',
   eyebrow: 'Pank',
   heading: 'A model may read a payslip. Nothing a model reads becomes a figure until you confirm it.',
   width: 960,
@@ -73,5 +73,5 @@ export default page({
   label:
     'A single allowlisted owner signs in against a scrypt hash checked on every request; there is no sign-up page. One Next.js instance holds SQLite and the upload worker in the same process. An uploaded payslip is read by a model and shown beside the original for confirmation before any value counts. The forecast engine computes in integer pence on Europe/London dates, with no model producing an amount or a date. The database and the payslip originals live in DATA_DIR, outside the web root, and export, restore and delete all return to the owner. Moving money is not built.',
   caption:
-    'The split across the middle is the point. A model is allowed in exactly one place — reading an uploaded payslip — and what it read is shown beside the image before it counts for anything. Everything downstream is <b>integer pence on London calendar dates</b>, so a forecast does not slide by a day across a clock change or lose a penny to a rounded division. The app records what you do and <b>never moves money</b>, which is drawn here as the absent box it is.',
+    'The split across the middle is the point. A model is allowed in exactly one place, reading an uploaded payslip, and what it read is shown beside the image before it counts for anything. Everything downstream is <b>integer pence on London calendar dates</b>, so a forecast does not slide by a day across a clock change or lose a penny to a rounded division. The app records what you do and <b>never moves money</b>, which is drawn here as the absent box it is.',
 })

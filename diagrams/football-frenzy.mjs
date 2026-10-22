@@ -52,7 +52,7 @@ const svg = [
 ].join('\n')
 
 export default page({
-  title: 'Football Frenzy — architecture',
+  title: 'Football Frenzy · architecture',
   eyebrow: 'Football Frenzy',
   heading: 'Every match is a seed and a list of decisions, so the server can play it again and check.',
   width: 960,
@@ -61,5 +61,5 @@ export default page({
   label:
     'A world is kept by a cookie and a recovery code rather than an account. Matches run on canvas in the browser and produce a snapshot pair, a seed and a decision log. The server replays the match from an identical prefix, so a mid-match card play counts only if the replay produces it, and the client never decides. Worlds, squads, fixtures and the economy live in PostgreSQL. Friends join leagues and cups by share code.',
   caption:
-    'The outlined box is why the game can have stakes. A match that only happens in the browser is a match the browser can lie about, so every match is stored as the thing it was made from — a seed and the decisions taken — and the server replays it from an identical prefix. <b>A card play is legal only if the replay produces it.</b> That also makes every match reviewable after the fact, which is the part that makes a league worth winning.',
+    'The outlined box is why the game can have stakes. A match that only happens in the browser is a match the browser can lie about, so every match is stored as the thing it was made from, a seed and the decisions taken, and the server replays it from an identical prefix. <b>A card play is legal only if the replay produces it.</b> That also makes every match reviewable after the fact, which is the part that makes a league worth winning.',
 })

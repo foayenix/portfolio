@@ -58,7 +58,7 @@ const svg = [
     title: 'Code sign-in',
     lines: [
       'an emailed link opens in Safari, which would',
-      'leave the installed app signed out — so the',
+      'leave the installed app signed out, so the',
       'email carries a code the owner types instead',
     ],
     focal: true,
@@ -73,7 +73,7 @@ const svg = [
 ].join('\n')
 
 export default page({
-  title: 'Dansville Accessories — architecture',
+  title: 'Dansville Accessories · architecture',
   eyebrow: 'Dansville Accessories',
   heading: 'The owner runs the shop from a phone, and a price is only ever decided on the server.',
   width: 960,
@@ -82,5 +82,5 @@ export default page({
   label:
     'The shop prices a bag through a serverless checkout route and hands off to Stripe Checkout, which holds the card details. A paid session becomes an order in the Stripe webhook, once, however many times it is delivered. Products, orders, discount codes, settings and an audit log live in Neon through Drizzle. The owner installs the admin to a phone home screen and signs in with an eight-digit code emailed to them, because a link would open in Safari and leave the installed app signed out. Refunds and disputes are deliberately not built.',
   caption:
-    'Two outlined boxes, two decisions. The webhook is the <b>only</b> place a paid session becomes an order, and it is idempotent, because Stripe will deliver the same event more than once and a shop that creates two orders for one payment is worse than one that creates none. And the admin signs in with a code rather than a link: on an iPhone the link opens in Safari, which keeps its own session, so the owner would tap it and find the installed app still signed out. Refunds stay in Stripe on purpose — a second place to issue one is a second place for the record to be wrong.',
+    'Two outlined boxes, two decisions. The webhook is the <b>only</b> place a paid session becomes an order, and it is idempotent, because Stripe will deliver the same event more than once and a shop that creates two orders for one payment is worse than one that creates none. And the admin signs in with a code rather than a link: on an iPhone the link opens in Safari, which keeps its own session, so the owner would tap it and find the installed app still signed out. Refunds stay in Stripe on purpose. A second place to issue one is a second place for the record to be wrong.',
 })

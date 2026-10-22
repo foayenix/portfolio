@@ -1,7 +1,7 @@
 <!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Proper — architecture</title>
+<title>Proper · architecture</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;620&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
@@ -121,5 +121,5 @@
       <text class="s" x="588" y="558">a private report is gated twice, not once</text>
   </svg>
 
-  <figcaption>The local scan is the product; the hosted half is optional and is drawn as the smaller claim it is. Two boundaries carry the design. The <b>queue</b> is the only way a scan starts, with leases and fencing tokens so a worker that woke up late cannot overwrite a newer result. And the role that serves web pages <b>cannot publish a report at all</b> — publishing belongs to the worker, which is a different database role, so a bug in a page handler is not a way to write one.</figcaption>
+  <figcaption>The local scan is the product; the hosted half is optional and is drawn as the smaller claim it is. Two boundaries carry the design. The <b>queue</b> is the only way a scan starts, with leases and fencing tokens so a worker that woke up late cannot overwrite a newer result. And the role that serves web pages <b>cannot publish a report at all</b>. Publishing belongs to the worker, which is a different database role, so a bug in a page handler is not a way to write one.</figcaption>
 </figure>

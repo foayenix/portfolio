@@ -59,7 +59,7 @@ const svg = [
 ].join('\n')
 
 export default page({
-  title: 'Quire — architecture',
+  title: 'Quire · architecture',
   eyebrow: 'Quire',
   heading: 'Everything is on one machine, and the drag that makes a citation is the only way to make one.',
   width: 960,
@@ -68,5 +68,5 @@ export default page({
   label:
     'Sources, highlights and the draft sit on one canvas. A pdf.js reader produces highlights that are stable references into a source. Dragging a thread from a highlight onto a sentence resolves to that passage and becomes an inline footnote. The library is held in IndexedDB in the browser, with an optional local Ollama model beside it, and exports go out to .docx, LaTeX and PDF. Sync, sharing and collaboration are not built.',
   caption:
-    'The outlined box is the whole design: the gesture <b>is</b> the citation, so there is no separate step that can be skipped or got wrong, and the thread has to survive the source being dragged across the canvas and still come out correct in three formats that each model footnotes differently. Everything else follows from keeping the library in the browser — it opens with no login and works with the network off, and it costs sync entirely, which is drawn here rather than left for someone to discover.',
+    'The outlined box is the whole design: the gesture <b>is</b> the citation, so there is no separate step that can be skipped or got wrong, and the thread has to survive the source being dragged across the canvas and still come out correct in three formats that each model footnotes differently. Everything else follows from keeping the library in the browser. It opens with no login and works with the network off, and it costs sync entirely, which is drawn here rather than left for someone to discover.',
 })

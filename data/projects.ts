@@ -16,7 +16,7 @@ import type { IconName } from '@/components/Icon'
  * `live`       Deployed and open to anyone. The URL is on the page.
  * `client`     Built for a client rather than for release here.
  * `built`      Finished and runs, on a machine or a device. It has not been
- *              released — no public deployment, nothing on an App Store — and
+ *              released: no public deployment and nothing on an App Store, and
  *              there is no claim that anyone else is using it.
  * `prototype`  Screens and flows are built. It is not a product.
  * `experiment` Built to answer a question, not to ship.
@@ -171,7 +171,7 @@ export const PROJECTS: Project[] = [
     },
     caseStudy: {
       problem:
-        'Code now arrives faster than anyone can read it. Someone taking on an unfamiliar repository wants to know what it does, where the risk sits, and what the evidence is for each — and the tools that answer that quickly answer it by asking a model, which is the one kind of answer you cannot check.',
+        'Code now arrives faster than anyone can read it. Someone taking on an unfamiliar repository wants to know what it does, where the risk sits, and what the evidence is for each. The tools that answer quickly answer by asking a model, which is the one kind of answer you cannot check.',
       role:
         'Solo build: the deterministic scanner and its checks, the health score and the per-check breakdown underneath it, the import-graph extraction and the project map, and the boundary the optional local explanation layer sits behind.',
       hard:
@@ -185,7 +185,7 @@ export const PROJECTS: Project[] = [
         'Read the project map and check a solid line against an import that actually exists in the code.',
       ],
       limits:
-        'Comprehension is deliberately unscored: each area reads “No evidence yet” until you answer for it. The real gap is the source, which is not public, so the determinism has to be taken on a walkthrough rather than read.',
+        'Comprehension is deliberately unscored: each area reads “No evidence yet” until you answer for it. What is missing is the source. It is not public, so the determinism has to be taken on a walkthrough rather than read.',
     },
     diagram: {
       name: 'proper',
@@ -326,7 +326,7 @@ export const PROJECTS: Project[] = [
         'Read src/agent/tools.js for all twenty-two tools, and the executors beside it for the scoping predicate that makes an invented code fail.',
       ],
       limits:
-        'No practitioner is using it; the pilot is blocked on a Meta production number. The evaluation set has not reached the hundred practitioner-approved cases it needs before it makes a single model call. The plant lookup is 152 Nigerian entries, so anything outside it gets no botanical mapping. The simulator is password-protected, because it writes to the live database and spends credits, so the source is what an outside reader can actually check.',
+        'No practitioner is using it; the pilot is blocked on a Meta production number. The evaluation set has not reached the hundred practitioner-approved cases it needs before it makes a single model call. The plant lookup is 152 Nigerian entries, so anything outside it gets no botanical mapping. The simulator is password-protected, because it writes to the live database and spends credits, so the source is what an outside reader can check.',
     },
     diagram: {
       name: 'sanko',
@@ -371,13 +371,13 @@ export const PROJECTS: Project[] = [
     },
     caseStudy: {
       problem:
-        'A manufacturer sells through branches it cannot stand in. The records that matter — what sold, what arrived, what is on the shelf, what is in the till — are produced by the same people the records are there to check, on phones that spend part of the day with no signal.',
+        'A manufacturer sells through branches it cannot stand in. What sold, what arrived, what is on the shelf, what is in the till: the records that matter are produced by the same people the records exist to check, on phones that spend part of the day with no signal.',
       role:
         'Solo build: the schema and its eighteen migrations, the append-only enforcement and row-level read access, the rule engine in SQL with its offline TypeScript twin, the sync handlers, the phone app, and the test vectors both sides are held to.',
       hard:
         'A phone that cannot be trusted with the answer. Sending a branch its expected stock or cash makes every count a reconciliation, and a reconciliation can be made to agree. Withholding it breaks the design’s own comparison screens, which showed differences on the phone before the count was locked. The resolution puts the lock first: counts are declared, then the server returns the differences in one round trip for a read-only view, and offline the copy promises the differences later instead of inventing them. The phones are never sent stock-on-hand at all.',
       decision:
-        'SQL is the authority for every rule, and the TypeScript domain package is a copy used only for offline previews. The alternative — one shared rule module both sides import — would mean a single definition to maintain. It was rejected because the phone is the one place the rules cannot be enforced: a handset that can decide a rule can be made to decide it differently. The cost is two implementations of the same arithmetic, which is why the test vectors in tests/vectors are run against both the TypeScript and the SQL.',
+        'SQL is the authority for every rule, and the TypeScript domain package is a copy used only for offline previews. The alternative, one shared rule module both sides import, would mean a single definition to maintain. It was rejected because the phone is the one place the rules cannot be enforced: a handset that can decide a rule can be made to decide it differently. The cost is two implementations of the same arithmetic, which is why the test vectors in tests/vectors are run against both the TypeScript and the SQL.',
       verify: [
         'Run pnpm db:start and pnpm test: the domain tests, the rule tests against the local API with real user tokens, and the browser tests at 360 by 760.',
         'Read the append-only enforcement in supabase/migrations and try an UPDATE against a ledger row.',
@@ -399,7 +399,7 @@ export const PROJECTS: Project[] = [
     oneLiner:
       'A private money plan: income, payslips, bills, credit cards and debts turned into a dated forecast of what you can put towards a large purchase, when you could afford it, and how much you can pay yourself each week.',
     signature:
-      'Every amount is computed deterministically in integer pence on Europe/London calendar dates, and no model produces any figure or any date — the one place a model is used is reading an uploaded payslip, and what it extracts is shown beside the original for you to confirm before it counts. The app records what you do and never moves money: nothing on screen implies it can, so the Activity page is a checklist of payments to make yourself and a place to record that you made them. There is no bank connection and no sign-up; a single allowlisted owner is checked on every request against a scrypt hash, and document links are signed and expire in five minutes. Payoff estimates are labelled as estimates, and a stale balance is shown as stale rather than quietly used.',
+      'Every amount is computed in integer pence on Europe/London calendar dates, and no model produces any figure or any date. The one place a model is used is reading an uploaded payslip, and what it extracts is shown beside the original for you to confirm before it counts. The app records what you do and never moves money: nothing on screen implies it can, so the Activity page is a checklist of payments to make yourself and a place to record that you made them. There is no bank connection and no sign-up; a single allowlisted owner is checked on every request against a scrypt hash, and document links are signed and expire in five minutes. Payoff estimates are labelled as estimates, and a stale balance is shown as stale rather than quietly used.',
     stack: ['Next.js 16', 'React 19', 'TypeScript', 'SQLite', 'pdf.js', 'Zod', 'Vitest', 'Playwright'],
     stackNote:
       'better-sqlite3 and the upload worker live in one process, so it is deliberately a single-instance application rather than something that scales horizontally.',
@@ -453,7 +453,7 @@ export const PROJECTS: Project[] = [
     oneLiner:
       'The software for a bedside clock with a long bar display and one physical dial, where every theme is a generative world and the dial pushes, swirls and bends it rather than just scrolling a menu.',
     signature:
-      'Themes draw on the 2D canvas, and where WebGL2 exists the frame is finished on the GPU: particles accumulate additively in floating point so a dense cluster becomes a real light source instead of clipping to white, then a threshold, a thirteen-tap downsample chain and a tent-filter upsample put a scattering bloom over it — the bloom chain modern games use, running on a Pi. Nothing about that is load-bearing for the clock: ?gl=0 forces the 2D renderer and the clock still tells the time. A developer panel runs the night at sixty or six hundred times speed, so wind-down, sleep, sunrise, alarm, snooze and dismiss can be watched in about a minute instead of overnight, and the Demo plays the same night with captions in two minutes and puts the clock, alarm and settings back exactly as they were. The first start plays a welcome that says good morning in sixteen languages; on the Pi a boot splash carries its first point of light from power-on, so the device never shows a console.',
+      'Themes draw on the 2D canvas, and where WebGL2 exists the frame is finished on the GPU: particles accumulate additively in floating point so a dense cluster becomes a real light source instead of clipping to white, then a threshold, a thirteen-tap downsample chain and a tent-filter upsample put a scattering bloom over it. That is the bloom chain modern games use, running on a Pi. Nothing about that is load-bearing for the clock: ?gl=0 forces the 2D renderer and the clock still tells the time. A developer panel runs the night at sixty or six hundred times speed, so wind-down, sleep, sunrise, alarm, snooze and dismiss can be watched in about a minute instead of overnight, and the Demo plays the same night with captions in two minutes and puts the clock, alarm and settings back exactly as they were. The first start plays a welcome that says good morning in sixteen languages; on the Pi a boot splash carries its first point of light from power-on, so the device never shows a console.',
     stack: ['JavaScript', 'WebGL2', 'Canvas 2D', 'Raspberry Pi 5', 'CAD'],
     stackNote:
       'No build step and no framework: the software opens from software/index.html in a browser. The repository also carries the CAD drafts, hardware notes and a dated project archive that keeps superseded versions with their status and assumptions written down.',
@@ -483,7 +483,7 @@ export const PROJECTS: Project[] = [
       role:
         'Solo build: the renderers and the GPU path, the themes, the dial interaction model, the night cycle, the welcome and boot splash, and the archive that records what was superseded and why.',
       hard:
-        'Making a night testable. A clock’s behaviour happens over eight hours, which is not a thing anyone can iterate against. The developer panel drives the same clock at sixty and six hundred times speed and can jump to thirty minutes before the alarm, and the Demo replays the sequence with captions and then restores the previous clock, alarm and settings exactly — so a two-minute run is a real test of the night rather than a video of one.',
+        'Making a night testable. A clock’s behaviour happens over eight hours, which is not a thing anyone can iterate against. The developer panel drives the same clock at sixty and six hundred times speed and can jump to thirty minutes before the alarm, and the Demo replays the sequence with captions and then restores the previous clock, alarm and settings exactly, so a two-minute run is a real test of the night rather than a video of one.',
       decision:
         'The GPU path is an enhancement and never a requirement. Every theme draws correctly on the 2D canvas first, and WebGL2 only finishes the frame. The alternative was to build for the GPU and treat 2D as the broken case, which would have bought a better-looking floor. It was rejected because a bedside clock that fails to show the time when a driver is missing is not a clock. ?gl=0 makes the fallback a thing you can look at rather than a claim.',
       verify: [
@@ -506,7 +506,7 @@ export const PROJECTS: Project[] = [
     oneLiner:
       'A bracelet shop and the owner’s admin dashboard, built so the shop is run from a phone with no developer and no redeploy.',
     signature:
-      'The admin installs to the owner’s home screen as a phone app, and signs in with an eight-digit code from an email rather than a link — because on an iPhone an emailed link opens in Safari, which keeps its own session, and the home-screen app would still be signed out. A product is added by taking a photograph on the phone. Price, stock, collections, discount codes, delivery options, the free-delivery threshold and the announcement bar are all data, so a change reaches the live shop in about thirty seconds with nothing rebuilt and nobody deployed. Refunds and disputes are deliberately not in the dashboard: they stay in Stripe, where the audit trail and the liability already live.',
+      'The admin installs to the owner’s home screen as a phone app, and signs in with an eight-digit code from an email rather than a link, because on an iPhone an emailed link opens in Safari, which keeps its own session, and the home-screen app would still be signed out. A product is added by taking a photograph on the phone. Price, stock, collections, discount codes, delivery options, the free-delivery threshold and the announcement bar are all data, so a change reaches the live shop in about thirty seconds with nothing rebuilt and nobody deployed. Refunds and disputes are deliberately not in the dashboard: they stay in Stripe, where the audit trail and the liability already live.',
     stack: ['TypeScript', 'React 19', 'Drizzle', 'Neon', 'Stripe', 'Resend', 'Vercel'],
     tags: ['Web', 'Commerce', 'Client', 'PWA'],
     diagram: {
@@ -531,11 +531,11 @@ export const PROJECTS: Project[] = [
     },
     caseStudy: {
       problem:
-        'A small shop owner cannot have a developer between them and their own prices. Every ordinary act of running a shop — adding a bracelet, changing a price, switching a discount code off, raising the free-delivery threshold — has to be something they do themselves, on the phone they already have, without anything being rebuilt.',
+        'A small shop owner cannot have a developer between them and their own prices. Every ordinary act of running a shop, from adding a bracelet to switching a discount code off, has to be something they do themselves, on the phone they already have, without anything being rebuilt.',
       role:
         'Solo build: the shop, the bag and the Stripe checkout, the webhook that turns a paid session into an order, the admin dashboard and its sign-in, the image pipeline, the discount engine, the audit log, and the go-live runbook.',
       hard:
-        'Signing in on an iPhone. The obvious design emails a magic link, but a link opens in Safari and a home-screen app is a separate browsing context, so the owner taps the link, Safari signs in, and the app they installed is still logged out. The fix is to email an eight-digit code instead: the owner reads it from Safari or Mail and types it into whichever surface they are actually standing in. Sessions last thirty days so this is rare.',
+        'Signing in on an iPhone. The obvious design emails a magic link, but a link opens in Safari and a home-screen app is a separate browsing context, so the owner taps the link, Safari signs in, and the app they installed is still logged out. The fix is to email an eight-digit code instead: the owner reads it from Safari or Mail and types it into whichever surface they are standing in. Sessions last thirty days so this is rare.',
       decision:
         'Refunds and disputes are not in the dashboard. Building them would have been straightforward. They were left out because Stripe already holds the money, the evidence and the chargeback deadlines, and a second place to issue a refund is a second place for the record to be wrong. The cost is that the owner uses two apps, and the ADMIN guide says so plainly rather than hiding it.',
       verify: [
@@ -1271,7 +1271,7 @@ export const PROJECTS: Project[] = [
     oneLiner:
       'The programme specification and public pages for a Nigerian herbal-medicine school: nine curriculum documents down to module level, and nine designed pages that say honestly what each award does and does not confer.',
     signature:
-      'The hard part is not the website. It is a curriculum written to be defensible — 1,920 learning hours, 735 supervised clinical hours, externally examined, benchmarked against international curricula — carried through a master programme specification, module specifications at three levels, a clinical placement and internship handbook and a quality-assurance handbook. The positioning brief then forbids the two easy exits: it is not a weekend certificate mill and not a wellness brand, and the content rule is that the institution leads while the founder appears inside the heritage story rather than in front of it. What an award confers is stated on the page, which is the sentence most schools in this space leave out.',
+      'The hard part is not the website. It is a curriculum written to be defensible: 1,920 learning hours, 735 supervised clinical hours, externally examined and benchmarked against international curricula. It is carried through a master programme specification, module specifications at three levels, a clinical placement and internship handbook and a quality-assurance handbook. The positioning brief then forbids the two easy exits: it is not a weekend certificate mill and not a wellness brand, and the content rule is that the institution leads while the founder appears inside the heritage story rather than in front of it. What an award confers is stated on the page, which is the sentence most schools in this space leave out.',
     stack: ['HTML', 'design canvas', 'curriculum specification'],
     tags: ['Web', 'Education', 'Client', 'Design'],
     diagram: {
@@ -1322,7 +1322,7 @@ export const PROJECTS: Project[] = [
     oneLiner:
       'A clickable mobile prototype for a local trades marketplace, built as screens you can tap through rather than a description of them.',
     signature:
-      'It ships as a single standalone HTML file alongside the screen sources, so the prototype can be sent to someone and opened with nothing installed and no build step — which is the only property that matters for a prototype whose job is to be looked at. The screens are drawn inside an iOS frame so the thing being judged is the app and not the browser around it.',
+      'It ships as a single standalone HTML file alongside the screen sources, so the prototype can be sent to someone and opened with nothing installed and no build step, which is the only property that matters for a prototype whose job is to be looked at. The screens are drawn inside an iOS frame so the thing being judged is the app and not the browser around it.',
     stack: ['React', 'standalone HTML'],
     tags: ['Web', 'Design'],
     story: {
@@ -1368,7 +1368,7 @@ export const PROJECTS: Project[] = [
     oneLiner:
       'The catalogue you are reading, and the ledger behind it: every repository on the account, labelled for what it actually is.',
     signature:
-      'Every claim on this site is traceable to a repository or to the previous portfolio, and the one field that is never allowed to flatter is status: live, client work, built but unreleased, prototype and experiment are separate things, and no entry claims usage, revenue or a measured outcome, because none can be shown. A link is only rendered where the URL was checked. The ledger page then lists all seventy-four repositories on the account, including eight that are empty and three that hold other people’s code or a generator’s output — labelled as such, because a catalogue that quietly drops its own shells is not a record.',
+      'Every claim on this site is traceable to a repository or to the previous portfolio, and the one field that is never allowed to flatter is status: live, client work, built but unreleased, prototype and experiment are separate things, and no entry claims usage, revenue or a measured outcome, because none can be shown. A link is only rendered where the URL was checked. The ledger page then lists all seventy-four repositories on the account, including eight that are empty and three that hold other people’s code or a generator’s output, labelled as such, because a catalogue that quietly drops its own shells is not a record.',
     stack: ['Next.js 15', 'React 19', 'TypeScript', 'Tailwind v4'],
     tags: ['Web', 'Design'],
     story: {

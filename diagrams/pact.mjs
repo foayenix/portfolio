@@ -55,7 +55,7 @@ const svg = [
 ].join('\n')
 
 export default page({
-  title: 'Pact — architecture',
+  title: 'Pact · architecture',
   eyebrow: 'Pact',
   heading: 'An agreement has a state, and the signed version of it never changes.',
   width: 960,

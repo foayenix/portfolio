@@ -19,18 +19,17 @@ export default function Home() {
           <div>
             <p className="ui text-[length:var(--text-micro)] text-[var(--ink-2)]">{SITE.role}</p>
             <h1 className="display mt-4 text-[length:var(--text-h1)]">
-              The same decision,
+              I take the same decision,
               <br />
-              taken {inWords(PORTRAIT.decisions)} times.
+              {inWords(PORTRAIT.decisions)} times over.
             </h1>
           </div>
 
           <div className="lg:pt-2">
             <p className="text-[length:var(--text-lede)] leading-[1.5]">
-              Across {PORTRAIT.builds} builds and {PORTRAIT.technologies} named technologies &mdash;
-              web, iOS, Flutter, a Rust desktop app, a WhatsApp agent, a bedside clock &mdash; the
-              same decision keeps getting taken: the software declines to tell its user what they
-              would rather hear.
+              {PORTRAIT.builds} builds. {PORTRAIT.technologies} named technologies. Web, iOS, Flutter, a Rust
+              desktop app, a WhatsApp agent, a bedside clock. In every one of them, the software
+              declines to tell its user what they would rather hear.
             </p>
             <p className="mt-4 max-w-[46ch] leading-[1.6] text-[var(--ink-2)]">
               {SITE.lede}
@@ -76,9 +75,9 @@ export default function Home() {
             Where that shows up.
           </h2>
           <p className="max-w-[44ch] text-[0.9375rem] leading-[1.6] text-[var(--ink-2)]">
-            {PORTRAIT.decisions} builds with nothing else in common &mdash; a training log, a
-            backtester, a stock system, a bedside clock. Each line is a mechanism in that build,
-            not a theme read into it afterwards. Open any of them and check.
+            {PORTRAIT.decisions} builds with nothing else in common: a training log, a backtester, a
+            stock system, a bedside clock. Each line names a mechanism in that build rather than a
+            theme read into it afterwards. Open any of them and check.
           </p>
         </div>
 

@@ -44,7 +44,7 @@ const svg = [
   node({
     x: 572, y: 182, w: 320,
     title: 'Sleep, then the sunrise',
-    lines: ['the thirty minutes before the alarm are the', 'part a clock is actually judged on'],
+    lines: ['the thirty minutes before the alarm are the', 'part a clock is judged on'],
   }),
   node({
     x: 572, y: 288, w: 320,
@@ -63,14 +63,14 @@ const svg = [
   }),
   node({
     x: 572, y: 528, w: 320,
-    title: '?gl=0 — the fallback you can look at',
+    title: '?gl=0 · a fallback you can look at',
     lines: ['the GPU path is an enhancement, and a clock', 'that stops telling the time is not a clock'],
     focal: true,
   }),
 ].join('\n')
 
 export default page({
-  title: 'JÍBẸ́WÀ — architecture',
+  title: 'JÍBẸ́WÀ · architecture',
   eyebrow: 'JÍBẸ́WÀ',
   heading: 'A whole night runs in a minute, and the clock still works when the GPU is gone.',
   width: 960,

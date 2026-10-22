@@ -60,7 +60,7 @@ const svg = [
 ].join('\n')
 
 export default page({
-  title: 'Cork Podcast Studio — architecture',
+  title: 'Cork Podcast Studio · architecture',
   eyebrow: 'Cork Podcast Studio',
   heading: 'Two people reaching for the last slot of the day get one booking and one refusal.',
   width: 960,

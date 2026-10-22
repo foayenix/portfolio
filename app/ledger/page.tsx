@@ -15,7 +15,7 @@ export const metadata: Metadata = {
  * The catalogue is a selection, and a selection can flatter by omission. This
  * page is the defence against that: every repository, in one table, with the
  * empty ones and the imports named as such. It is deliberately plainer than
- * the catalogue — a register, read down a column, with no card and no image.
+ * the catalogue: a register, read down a column, with no card and no image.
  */
 export default function LedgerPage() {
   return (

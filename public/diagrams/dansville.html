@@ -1,7 +1,7 @@
 <!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dansville Accessories — architecture</title>
+<title>Dansville Accessories · architecture</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;620&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
@@ -123,7 +123,7 @@
       <rect x="572" y="438" width="320" height="94" rx="6" fill="var(--accent-tint)" stroke="var(--flo-deep)" stroke-width="1.4"/>
       <text class="n" x="588" y="462">Code sign-in</text>
       <text class="s" x="588" y="480">an emailed link opens in Safari, which would</text>
-      <text class="s" x="588" y="498">leave the installed app signed out — so the</text>
+      <text class="s" x="588" y="498">leave the installed app signed out, so the</text>
       <text class="s" x="588" y="516">email carries a code the owner types instead</text>
 
       <rect x="340" y="560" width="280" height="76" rx="6" fill="none" stroke="var(--rule)" stroke-width="1" stroke-dasharray="4,3"/>
@@ -132,5 +132,5 @@
       <text class="s" x="356" y="620">the money, the evidence and the dates</text>
   </svg>
 
-  <figcaption>Two outlined boxes, two decisions. The webhook is the <b>only</b> place a paid session becomes an order, and it is idempotent, because Stripe will deliver the same event more than once and a shop that creates two orders for one payment is worse than one that creates none. And the admin signs in with a code rather than a link: on an iPhone the link opens in Safari, which keeps its own session, so the owner would tap it and find the installed app still signed out. Refunds stay in Stripe on purpose — a second place to issue one is a second place for the record to be wrong.</figcaption>
+  <figcaption>Two outlined boxes, two decisions. The webhook is the <b>only</b> place a paid session becomes an order, and it is idempotent, because Stripe will deliver the same event more than once and a shop that creates two orders for one payment is worse than one that creates none. And the admin signs in with a code rather than a link: on an iPhone the link opens in Safari, which keeps its own session, so the owner would tap it and find the installed app still signed out. Refunds stay in Stripe on purpose. A second place to issue one is a second place for the record to be wrong.</figcaption>
 </figure>

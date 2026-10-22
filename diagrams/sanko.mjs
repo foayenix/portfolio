@@ -70,7 +70,7 @@ const svg = [
 ].join('\n')
 
 export default page({
-  title: 'Sanko — architecture',
+  title: 'Sanko · architecture',
   eyebrow: 'Sanko',
   heading: 'The scoping is a query predicate in the executor, because a prompt is a request and a predicate is not.',
   width: 960,
@@ -79,5 +79,5 @@ export default page({
   label:
     'A message arrives either from the WhatsApp Cloud API, where the pilot is blocked on a Meta production number, or from a browser simulator running the same agent loop. Intake turns text, a voice note or a photograph into the same content blocks using local Whisper and vision servers. A tool-calling loop with twenty-two tools runs over them, with Ollama by default and Anthropic as the alternative. Every executor resolves records by short code scoped to the calling practitioner, so an invented code returns not found rather than another practitioner’s patient. Records and media go to Supabase. The evaluation set makes no model call until a hundred cases carry a practitioner’s approval.',
   caption:
-    'The two outlined boxes are one mechanism and its consequence. The agent has no keywords and no fixed steps, so it can produce a plausible record code and ask for it — and the scoping that stops that is a <b>query predicate in the executor</b>, not an instruction in the prompt, because a prompt is a request and a predicate is not. The evaluation set is drawn dashed on purpose: it exists and it has not run, and it will not run until a hundred cases carry a practitioner’s approval.',
+    'The two outlined boxes are one mechanism and its consequence. The agent has no keywords and no fixed steps, so it can produce a plausible record code and ask for it. The scoping that stops that is a <b>query predicate in the executor</b>, not an instruction in the prompt, because a prompt is a request and a predicate is not. The evaluation set is drawn dashed on purpose: it exists and it has not run, and it will not run until a hundred cases carry a practitioner’s approval.',
 })

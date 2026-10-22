@@ -61,7 +61,7 @@ const svg = [
 ].join('\n')
 
 export default page({
-  title: 'Proper — architecture',
+  title: 'Proper · architecture',
   eyebrow: 'Proper',
   heading: 'The scanner never runs inside a web request, and the role that serves pages cannot publish a report.',
   width: 960,
@@ -70,5 +70,5 @@ export default page({
   label:
     'A local command-line scan reads a project offline and writes proper.json, which the local app loads. The optional hosted half signs in through a read-only GitHub App; the web application queues a scan at a pinned commit and never runs the scanner itself. A separate worker, holding its own database role, downloads a bounded source archive and publishes into PostgreSQL, where a private report is gated by an owner predicate and by row-level security.',
   caption:
-    'The local scan is the product; the hosted half is optional and is drawn as the smaller claim it is. Two boundaries carry the design. The <b>queue</b> is the only way a scan starts, with leases and fencing tokens so a worker that woke up late cannot overwrite a newer result. And the role that serves web pages <b>cannot publish a report at all</b> — publishing belongs to the worker, which is a different database role, so a bug in a page handler is not a way to write one.',
+    'The local scan is the product; the hosted half is optional and is drawn as the smaller claim it is. Two boundaries carry the design. The <b>queue</b> is the only way a scan starts, with leases and fencing tokens so a worker that woke up late cannot overwrite a newer result. And the role that serves web pages <b>cannot publish a report at all</b>. Publishing belongs to the worker, which is a different database role, so a bug in a page handler is not a way to write one.',
 })

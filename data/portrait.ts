@@ -7,7 +7,7 @@ import { PROJECTS } from './projects'
 // take or leave, and it sits above a catalogue perfectly capable of making the
 // argument itself. Everything in this file is either counted from
 // data/projects.ts at build time, or a restatement of something a specific
-// entry's own `signature` already establishes — and in that case it carries
+// entry's own `signature` already establishes, and in that case it carries
 // the slug, so the claim is one click from its evidence.
 //
 // Nothing here is hand-typed that could be counted. A number in the hero that
@@ -20,9 +20,9 @@ import { PROJECTS } from './projects'
  * These are not themes read into the work after the fact. Each is a concrete
  * mechanism described in that entry's `signature`: a guard, a predicate, a
  * blank left blank, a button not built. They are listed because the same
- * decision recurring across twelve unrelated builds — a training log, a
- * backtester, a stock system, a bedside clock — is a fact about how somebody
- * works, and a job title is not.
+ * decision recurring across twelve unrelated builds (a training log, a
+ * backtester, a stock system, a bedside clock) is a fact about how somebody
+ * works. A job title is not.
  */
 export type Decision = {
   /** The build it is taken in. Must exist in data/projects.ts. */

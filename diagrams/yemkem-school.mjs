@@ -53,7 +53,7 @@ const svg = [
 ].join('\n')
 
 export default page({
-  title: 'Yemkem School of Herbal Medicine — structure',
+  title: 'Yemkem School of Herbal Medicine · structure',
   eyebrow: 'Yemkem School of Herbal Medicine',
   heading: 'The hard part is a curriculum that survives being checked, not a website.',
   width: 960,

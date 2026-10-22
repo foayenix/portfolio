@@ -33,7 +33,7 @@ const svg = [
   node({
     x: 64, y: 372, w: 212,
     title: 'packages/domain',
-    lines: ['a TypeScript copy of the', 'rules, for offline previews', 'only — same test vectors'],
+    lines: ['a TypeScript copy of the', 'rules, for offline previews', 'only. Same test vectors'],
     dashed: true,
   }),
   node({
@@ -53,7 +53,7 @@ const svg = [
   }),
   node({
     x: 572, y: 288, w: 320,
-    title: 'Rules in SQL — the authority',
+    title: 'Rules in SQL · the authority',
     lines: ['differences computed only after the', 'declaration is locked'],
   }),
   node({
@@ -72,7 +72,7 @@ const svg = [
 ].join('\n')
 
 export default page({
-  title: 'Yemkem branch stock and sales — architecture',
+  title: 'Yemkem branch stock and sales · architecture',
   eyebrow: 'Yemkem branch stock and sales',
   heading: 'SQL is the authority. The phone holds a copy it is only allowed to preview with.',
   width: W,

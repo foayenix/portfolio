@@ -88,7 +88,7 @@ export const nodeH = (lines) => (lines.length === 0 ? 40 : 40 + 18 * lines.lengt
  * A component.
  *
  * `focal` is the accent treatment and is capped at two per diagram by the
- * build. `dashed` means optional, absent or not yet built — never a style
+ * build. `dashed` means optional, absent or not yet built, never a style
  * choice. `tone: 'muted'` greys the title for something that does not exist
  * yet.
  */

@@ -59,7 +59,7 @@ const svg = [
 ].join('\n')
 
 export default page({
-  title: 'Plave — architecture',
+  title: 'Plave · architecture',
   eyebrow: 'Plave',
   heading: 'The secret is kept in the database, one layer below anything the interface could get wrong.',
   width: 960,
