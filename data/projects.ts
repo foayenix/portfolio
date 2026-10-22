@@ -6,8 +6,8 @@ import type { IconName } from '@/components/Icon'
 // from the repository itself (every later one), read on whichever branch
 // carries the newest work, which for several builds is not the default branch.
 // The wording has been edited since; the facts have not. `live` and `source`
-// are only set where the URL was checked and returned 200; a missing link means
-// no link is rendered. A build whose code is private gets no `source`, and
+// are only set where the URL was checked and returned 200, last on 22 October
+// 2026 against every entry at once; a missing link means no link is rendered. A build whose code is private gets no `source`, and
 // never a link to a nearby public repository standing in for it.
 
 /**
@@ -39,7 +39,7 @@ export const STATUS: Record<Status, { label: string; blurb: string }> = {
   built: {
     label: 'Built, not released',
     blurb:
-      'Finished and running, on a machine or a device. It has not been released to anyone: there is nothing public to open, and nobody else is using it yet.',
+      'Finished and running, on a machine or a device. It has not been released: nobody else is using it, and where there is an address to open it leads to a sign-in rather than to the build.',
   },
   prototype: {
     label: 'Prototype',
@@ -142,10 +142,10 @@ export const PROJECTS: Project[] = [
     slug: 'proper',
     name: 'Proper',
     year: 2026,
-    status: 'built',
+    status: 'live',
     flagship: 2,
     statusNote:
-      'No public source and no deployment, so nothing claimed on this page can be checked from outside it. A walkthrough is the honest substitute, and it is offered below.',
+      'The hosted prototype is open and linked below. It is the GitHub-scanning build rather than the local one most of this page describes, and the source for either is private, so the determinism still has to be taken on a walkthrough.',
     featured: true,
     oneLiner:
       'A reader for software built with AI: point it at a repository and it returns project intelligence you can inspect, from a health score down to the individual checks behind it, the findings and their evidence, and a map of how the files connect.',
@@ -153,6 +153,7 @@ export const PROJECTS: Project[] = [
       'The scanner is deterministic and offline. It uses the Node standard library and nothing else, makes no network call, and never writes to the repository it reads. The optional local explanation layer sits on top of those facts and cannot change a finding or a score. On the project map a solid line was read from the import graph and a dashed one is only the scanner’s own grouping of file paths, so a line never looks more certain than the evidence behind it. Comprehension is left unscored: each area reads “No evidence yet” until you answer for it.',
     stack: ['Next.js 16', 'React 19', 'TypeScript', 'Node', 'Ollama'],
     tags: ['Web', 'Tool', 'AI', 'Local-first'],
+    live: 'https://proper-product-prototype.vercel.app',
     story: {
       forWho: 'anyone taking over someone else’s code',
       before: 'Code arrives faster than anyone can read it, and the quick answers come from an AI you cannot check.',
@@ -291,7 +292,7 @@ export const PROJECTS: Project[] = [
       'There are no keywords and no fixed conversation steps. An inbound message becomes content blocks and enters a tool-calling loop with twenty-two tools, and every executor resolves records by short code scoped to the calling practitioner, so a hallucinated FM-00042 comes back as “not found” and never as another practitioner’s patient. Conversation memory is replayed for 24 hours, so the agent picks up mid-thought across restarts and redeploys, and rapid-fire messages are debounced into a single turn. Local plant names map to botanical Latin through a 152-entry Nigerian lookup. The evaluation set makes no model call until at least a hundred cases carry a practitioner’s approval, and an admin review, a correction row or a synthetic paraphrase does not count. With the pilot blocked on a Meta production number, a simulator serves the same agent loop in a browser, every tool call and its result shown beside the reply, so you can see that a formulation reached the vault.',
     stack: ['Node.js 20', 'Express 5', 'WhatsApp Cloud API', 'Supabase', 'PostgreSQL', 'Ollama', 'Whisper', 'Claude'],
     stackNote:
-      'The agent replaced this build’s own six keyword-driven flows; before those, an MVP on Python, Flask, Twilio and Airtable. The model layer takes either backend: a local Ollama server running qwen2.5:32b is the default, and Anthropic is the alternative, so where a practitioner’s message goes is a configuration fact and not a claim this page can make for you. Three earlier repositories survive as lineage rather than as the build: foayenix/sanko (the Flask MVP), foayenix/sanko-mvpp (the Node keyword bot) and foayenix/sanko-web (the first public page).',
+      'The agent replaced this build’s own six keyword-driven flows; before those, an MVP on Python, Flask, Twilio and Airtable. The model layer takes either backend: a local Ollama server running qwen2.5:32b is the default, and Anthropic is the alternative, so where a practitioner’s message goes is a configuration fact and not a claim this page can make for you. Three earlier repositories survive as lineage rather than as the build: foayenix/sanko (the Flask MVP), foayenix/sanko-mvpp (the Node keyword bot) and foayenix/sanko-web (the first public page). The project’s own page is at sanko.africa; it is the pitch rather than the agent, so it is not linked above as something to open.',
     tags: ['WhatsApp', 'AI', 'Health', 'Social impact'],
     story: {
       forWho: 'African traditional-medicine practitioners',
@@ -502,13 +503,14 @@ export const PROJECTS: Project[] = [
     year: 2026,
     status: 'client',
     statusNote:
-      'Every part that lives in the codebase is finished. Going live needs the owner’s own Stripe and domain logins, which are theirs to enter, so the remaining steps are written as a runbook rather than done.',
+      'The shop is up on its own domain and linked below. Whether live payments are switched on is the owner’s Stripe account to answer and not something this page can check from outside.',
     oneLiner:
       'A bracelet shop and the owner’s admin dashboard, built so the shop is run from a phone with no developer and no redeploy.',
     signature:
       'The admin installs to the owner’s home screen as a phone app, and signs in with an eight-digit code from an email rather than a link, because on an iPhone an emailed link opens in Safari, which keeps its own session, and the home-screen app would still be signed out. A product is added by taking a photograph on the phone. Price, stock, collections, discount codes, delivery options, the free-delivery threshold and the announcement bar are all data, so a change reaches the live shop in about thirty seconds with nothing rebuilt and nobody deployed. Refunds and disputes are deliberately not in the dashboard: they stay in Stripe, where the audit trail and the liability already live.',
     stack: ['TypeScript', 'React 19', 'Drizzle', 'Neon', 'Stripe', 'Resend', 'Vercel'],
     tags: ['Web', 'Commerce', 'Client', 'PWA'],
+    live: 'https://dansville.co.uk',
     diagram: {
       name: 'dansville',
       alt: 'The shop prices a bag through a serverless checkout route and hands off to Stripe Checkout, which holds the card details. A paid session becomes an order in the Stripe webhook, once, however many times it is delivered. The owner installs the admin to a phone home screen and signs in with an eight-digit emailed code, because a link would open in Safari and leave the installed app signed out.',
@@ -580,9 +582,9 @@ export const PROJECTS: Project[] = [
     slug: 'football-frenzy',
     name: 'Football Frenzy',
     year: 2026,
-    status: 'built',
+    status: 'live',
     statusNote:
-      'No public source and no deployment. The engine claim below is the one worth checking, and checking it means a walkthrough rather than a link.',
+      'Open and linked below. The source is private, so the re-simulation claim below is still a walkthrough rather than something you can read.',
     featured: true,
     oneLiner:
       'A fast five-a-side football sim with leagues, cups, momentum cards, training, a transfer market, seasons, wages and aging.',
@@ -592,6 +594,7 @@ export const PROJECTS: Project[] = [
     stackNote:
       'A 2025 build of the same idea took a different shape, a fantasy draft game on Express, Socket.IO and React. It is a separate codebase, and not an earlier commit of this one.',
     tags: ['Web', 'Game'],
+    live: 'https://ff-101.vercel.app',
     diagram: {
       name: 'football-frenzy',
       alt: 'A world is kept by a cookie and a recovery code rather than an account. Matches run on canvas in the browser and produce a snapshot pair, a seed and a decision log. The server replays the match from an identical prefix, so a mid-match card play counts only if the replay produces it. Worlds, squads, fixtures and the economy live in PostgreSQL, and friends join leagues by share code.',
@@ -741,15 +744,16 @@ export const PROJECTS: Project[] = [
     slug: 'fathom',
     name: 'Fathom',
     year: 2026,
-    status: 'built',
+    status: 'live',
     statusNote:
-      'It runs against Supabase and the Messages API with my own keys. There is no hosted instance to open.',
+      'The hosted instance is open and linked below. It runs against Supabase and the Messages API with my own keys, so a reading you take from it is spending mine.',
     oneLiner:
       'A depth gauge for research comprehension: drop in a concept you do not fully grasp and it reads how deep you already are, sizes a session to close the gap, then tutors you through it.',
     signature:
       'The reading lands on a vertical gauge: Surface, Working, Deep, Fluent. The prompts are instructed to judge honestly and never to flatter, and each reading opens into a resumable Socratic session. Per-user row-level security, and a research map plotting every concept you have sounded. It is built to read as a scholarly instrument.',
     stack: ['Next.js', 'TypeScript', 'Tailwind', 'Supabase', 'Anthropic Messages API'],
     tags: ['Web', 'AI', 'Research'],
+    live: 'https://ifathom.vercel.app',
     story: {
       forWho: 'researchers facing a hard concept',
       steps: [
@@ -770,13 +774,14 @@ export const PROJECTS: Project[] = [
     year: 2026,
     status: 'client',
     statusNote:
-      'The source is public. There is no deployment of mine to link, so this page cannot prove the site is running.',
+      'The source is public and the site is open, so both halves of this entry can be checked. The deployment linked below is mine rather than the bar’s own.',
     oneLiner:
       'A wine bar’s public site and the owner’s admin backend in a single application, replacing an old static site.',
     signature:
       'The homepage’s What’s On renders live from the database, so the owner’s edits appear without a redeploy and without a developer. Self-hostable on Coolify alongside self-hosted bookings and analytics, with a single bcrypt login and signed-cookie sessions, and no third-party auth dependency.',
     stack: ['Next.js 15', 'React 19', 'TypeScript', 'Prisma', 'PostgreSQL'],
     tags: ['Web', 'Client'],
+    live: 'https://crescentmoonbar.vercel.app',
     story: {
       forWho: 'a wine bar and its owner',
       before: 'Every change to What’s On needed a developer and a redeploy.',
@@ -1049,15 +1054,16 @@ export const PROJECTS: Project[] = [
     slug: 'plave',
     name: 'Plave',
     year: 2025,
-    status: 'built',
+    status: 'live',
     statusNote:
-      'No public source and no deployment to link.',
+      'Open and linked below. The source is private, so the row-level security claim below has to be taken on the walkthrough rather than read.',
     oneLiner:
       'A wishlist planner that turns saved links into a plan: log savings, watch a progress ring fill, and get a forecast of the month each goal lands at your pace.',
     signature:
       'Friends reserve gifts and the list owner never learns which. A row-level security policy in the database is what keeps it that way, so the interface has nothing to leak. A Save to Plave bookmarklet scrapes name, image and price off any shop page. Installable, offline, and registered as an Android share target.',
     stack: ['React 18', 'Vite', 'React Router', 'Supabase', 'PWA'],
     tags: ['Web', 'Consumer', 'PWA'],
+    live: 'https://plave-nu.vercel.app',
     diagram: {
       name: 'plave',
       alt: 'A bookmarklet reads the name, image and price off any shop page into a wishlist, where savings are logged against a target. Friends reserve gifts without an account. A row-level security policy means the owner’s own query cannot return a reservation row, so the interface is never sent one and has nothing to leak.',
@@ -1211,6 +1217,7 @@ export const PROJECTS: Project[] = [
     stackNote:
       'One codebase, two runtimes: separate TypeScript configurations select Cloudflare D1 for the Sites build and PostgreSQL for the Next.js build, and neither database adapter is imported by the other runtime’s bundle. Each deployment therefore has its own records.',
     tags: ['Web', 'Client', 'Tool'],
+    live: 'https://ccppss.vercel.app',
     diagram: {
       name: 'cork',
       alt: 'A customer books a slot through an atomic, idempotent reservation, so a double tap reserves once and two people racing for the last slot get one booking and one refusal. Booking creates a project with a checklist, an owner and an activity entry, which staff move through preparation, recording, editing, review and delivery. Saving over a colleague’s newer edit is refused, and the assistant is a deterministic router rather than a model.',
@@ -1235,13 +1242,14 @@ export const PROJECTS: Project[] = [
     year: 2026,
     status: 'built',
     statusNote:
-      'Private and password-protected, and deliberately so: it is one person’s funding pipeline. There is nothing here to open.',
+      'Password-protected, and deliberately so: it is one person’s funding pipeline. The sign-in page is linked below, and that is as far as the link goes.',
     oneLiner:
       'A funding pipeline for Sanko: a source-checked register of grant opportunities with deadlines, eligibility, fit assessments, private notes and application stages, refreshed by a daily research watch.',
     signature:
       'A front end on one host reading a database and a scheduled research watch that stay on another, which is the unusual part: it is a deliberate bridge rather than a migration, so the daily 08:00 research run and the authoritative records were never copied or duplicated. The backend credential is used server-side only and never reaches the browser, requests are restricted to three known endpoints at one fixed origin, redirects are refused and cross-origin writes rejected. Every page sits behind a signed, HttpOnly session cookie and every API route re-validates it independently, so a route is not protected merely because the page in front of it was. Weak or missing configuration blocks access and explains itself, rather than failing open.',
     stack: ['Next.js 16', 'React 19', 'TypeScript', 'Zod', 'Vercel'],
     tags: ['Web', 'Tool', 'Research'],
+    live: 'https://sanko-funding-radar.vercel.app',
     diagram: {
       name: 'funding-radar',
       alt: 'One person signs in with a password and no username. Every API route re-checks the signed session for itself rather than trusting the page in front of it. A server-side bridge holds the backend credential, which never reaches the browser, and speaks only to three known endpoints at one fixed origin with redirects refused. The register and the daily 08:00 research watch stay on the original deployment.',
@@ -1267,13 +1275,14 @@ export const PROJECTS: Project[] = [
     year: 2026,
     status: 'client',
     statusNote:
-      'The curriculum documents and the page designs are written. Nothing is accredited, nothing is enrolled, and there is no deployed site: this is the specification and the design, not a running institution.',
+      'The pages are deployed and linked below. Nothing is accredited and nobody is enrolled: this is the specification and the design, not a running institution.',
     oneLiner:
       'The programme specification and public pages for a Nigerian herbal-medicine school: nine curriculum documents down to module level, and nine designed pages that say honestly what each award does and does not confer.',
     signature:
       'The hard part is not the website. It is a curriculum written to be defensible: 1,920 learning hours, 735 supervised clinical hours, externally examined and benchmarked against international curricula. It is carried through a master programme specification, module specifications at three levels, a clinical placement and internship handbook and a quality-assurance handbook. The positioning brief then forbids the two easy exits: it is not a weekend certificate mill and not a wellness brand, and the content rule is that the institution leads while the founder appears inside the heritage story rather than in front of it. What an award confers is stated on the page, which is the sentence most schools in this space leave out.',
     stack: ['HTML', 'design canvas', 'curriculum specification'],
     tags: ['Web', 'Education', 'Client', 'Design'],
+    live: 'https://yemkem-school.vercel.app',
     diagram: {
       name: 'yemkem-school',
       alt: 'Three awards in a ladder: a certificate, the Diploma in African Herbal Medicine the school is built around, and a professional diploma with an open track of short courses. Each rests on 1,920 learning hours benchmarked against international curricula, 735 supervised clinical hours with their own placement handbook, and external examination described in a quality-assurance handbook.',
@@ -1342,15 +1351,16 @@ export const PROJECTS: Project[] = [
     slug: 'desi-tailors',
     name: 'Desi Tailors',
     year: 2026,
-    status: 'built',
+    status: 'live',
     statusNote:
-      'A single page for a Barking tailor. There is no deployment of mine to link, so this page cannot show it running.',
+      'A single page for a Barking tailor, deployed and linked below. It is my deployment rather than the shop’s own domain.',
     oneLiner:
       'A one-page site for a bespoke South Asian tailoring shop in Barking.',
     signature:
       'One HTML file and nothing else: no framework, no build, no dependency that can age out from under a small shop. A business of this size should not inherit a toolchain it cannot maintain, and the entire site is a file anyone can open and edit.',
     stack: ['HTML', 'CSS'],
     tags: ['Web', 'Client'],
+    live: 'https://desi-tailors.vercel.app',
     story: {
       forWho: 'a bespoke tailoring shop',
       steps: [
@@ -1371,6 +1381,7 @@ export const PROJECTS: Project[] = [
       'Every claim on this site is traceable to a repository or to the previous portfolio, and the one field that is never allowed to flatter is status: live, client work, built but unreleased, prototype and experiment are separate things, and no entry claims usage, revenue or a measured outcome, because none can be shown. A link is only rendered where the URL was checked. The ledger page then lists all seventy-four repositories on the account, including eight that are empty and three that hold other people’s code or a generator’s output, labelled as such, because a catalogue that quietly drops its own shells is not a record.',
     stack: ['Next.js 15', 'React 19', 'TypeScript', 'Tailwind v4'],
     tags: ['Web', 'Design'],
+    live: 'https://foayenix.vercel.app',
     story: {
       forWho: 'anyone deciding whether to work with me',
       steps: [
