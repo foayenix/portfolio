@@ -276,7 +276,7 @@ export const PROJECTS: Project[] = [
       name: 'quire',
       alt: 'Sources, highlights and the draft on one canvas. A pdf.js reader produces highlights that are stable references into a source; dragging a thread from one onto a sentence becomes an inline footnote. The library is held in IndexedDB with an optional local Ollama model beside it, and exports go out to .docx, LaTeX and PDF. Sync, sharing and collaboration are not built.',
     },
-    live: 'https://quire-three.vercel.app',
+    live: 'https://myquire.vercel.app',
     source: 'https://github.com/foayenix/Quire',
   },
   {
@@ -291,7 +291,7 @@ export const PROJECTS: Project[] = [
     oneLiner:
       'A WhatsApp agent that lets African traditional-medicine practitioners document herbal formulations and track the patients they treat, by text, voice note or photograph, in English, Yorùbá, Igbo, Hausa or Pidgin.',
     signature:
-      'There are no keywords and no fixed conversation steps. An inbound message becomes content blocks and enters a tool-calling loop with twenty-two tools, and every executor resolves records by short code scoped to the calling practitioner, so a hallucinated FM-00042 comes back as “not found” and never as another practitioner’s patient. Conversation memory is replayed for 24 hours, so the agent picks up mid-thought across restarts and redeploys, and rapid-fire messages are debounced into a single turn. Local plant names map to botanical Latin through a 152-entry Nigerian lookup. The evaluation set makes no model call until at least a hundred cases carry a practitioner’s approval, and an admin review, a correction row or a synthetic paraphrase does not count. With the pilot blocked on a Meta production number, a simulator serves the same agent loop in a browser, every tool call and its result shown beside the reply, so you can see that a formulation reached the vault.',
+      'There are no keywords and no fixed conversation steps. An inbound message becomes content blocks and enters a tool-calling loop with twenty-two tools, and every executor resolves records by short code scoped to the calling practitioner, so a hallucinated FM-00042 comes back as “not found” and never as another practitioner’s patient. Conversation memory is replayed for 24 hours, so the agent picks up mid-thought across restarts and redeploys, and rapid-fire messages are debounced into a single turn. Local plant names map to botanical Latin through a resolver built from cited literature: its build report records 347 unique names and 226 taxa published from three sources, and 152 rows withheld because they came from the original unverified list. The 152 are not a smaller version of the 347; they are what was thrown out. The evaluation set makes no model call until at least a hundred cases carry a practitioner’s approval, and an admin review, a correction row or a synthetic paraphrase does not count. With the pilot blocked on a Meta production number, a simulator serves the same agent loop in a browser, every tool call and its result shown beside the reply, so you can see that a formulation reached the vault.',
     stack: ['Node.js 20', 'Express 5', 'WhatsApp Cloud API', 'Supabase', 'PostgreSQL', 'Ollama', 'Whisper', 'Claude'],
     stackNote:
       'The agent replaced this build’s own six keyword-driven flows; before those, an MVP on Python, Flask, Twilio and Airtable. The model layer takes either backend: a local Ollama server running qwen2.5:32b is the default, and Anthropic is the alternative, so where a practitioner’s message goes is a configuration fact and not a claim this page can make for you. Three earlier repositories survive as lineage rather than as the build: foayenix/sanko (the Flask MVP), foayenix/sanko-mvpp (the Node keyword bot) and foayenix/sanko-web (the first public page). The project’s own page is at sanko.africa; it is the pitch rather than the agent, so it is not linked above as something to open.',
@@ -309,7 +309,7 @@ export const PROJECTS: Project[] = [
       promises: [
         { icon: 'language', text: 'English, Yorùbá, Igbo, Hausa, Pidgin' },
         { icon: 'mic', text: 'Voice notes understood' },
-        { icon: 'globe', text: '152 local plant names translated' },
+        { icon: 'globe', text: '347 plant names, each traced to a published source' },
       ],
     },
     caseStudy: {
@@ -329,7 +329,7 @@ export const PROJECTS: Project[] = [
         'Read src/agent/tools.js for all twenty-two tools, and the executors beside it for the scoping predicate that makes an invented code fail.',
       ],
       limits:
-        'No practitioner is using it; the pilot is blocked on a Meta production number. The evaluation set has not reached the hundred practitioner-approved cases it needs before it makes a single model call. The plant lookup is 152 Nigerian entries, so anything outside it gets no botanical mapping. The simulator is password-protected, because it writes to the live database and spends credits, so the source is what an outside reader can check.',
+        'No practitioner is using it; the pilot is blocked on a Meta production number. The evaluation set has not reached the hundred practitioner-approved cases it needs before it makes a single model call. The resolver publishes 347 names against 226 taxa, so anything outside that gets no botanical mapping, and 42 more rows are held back with their taxonomy unresolved. Of the four languages it covers, Yorùbá carries 305 names and Igbo carries 4. The simulator is password-protected, because it writes to the live database and spends credits, so the source is what an outside reader can check.',
     },
     diagram: {
       name: 'sanko',
@@ -1298,6 +1298,36 @@ export const PROJECTS: Project[] = [
       ],
       promises: [
         { icon: 'blank', text: 'Claims no accreditation it does not have' },
+      ],
+    },
+  },
+  {
+    slug: 'sanko-africa',
+    name: 'sanko.africa',
+    year: 2026,
+    status: 'live',
+    oneLiner:
+      'Sanko’s public case: what documenting African traditional medicine properly would be worth, argued to practitioners, research teams and funders without claiming any of it has happened yet.',
+    signature:
+      'The centre of the page is a record that does not exist. One formulation, projected eight years forward: 1,043 treatment episodes, 82% reporting meaningful improvement, 12 days to improvement, 9 named practitioners. Directly under it, in the same panel, the line that makes the page worth reading — projected figures, not observed data, and documentation is not evidence of efficacy. The argument it leaves is the honest one: a record like that cannot be assembled retrospectively, so it exists only if someone started years earlier. Beside it sits the opposite scale, day one of that same record: a 34-second Yorùbá voice note, “ewe dongoyaro”, resolved to Azadirachta indica with the local name kept primary and the practitioner’s name on it. The plant-name count on the page is read from the live resolver rather than typed into the copy.',
+    stack: ['HTML', 'CSS', 'JavaScript', 'schema.org'],
+    stackNote:
+      'No framework: one stylesheet, a config and an app script, plus a small script whose only job is to fetch the current plant-name count so the page cannot drift from the data. Organization and WebSite structured data, area served Nigeria and West Africa.',
+    tags: ['Web', 'Health', 'Social impact', 'Design'],
+    live: 'https://sanko.africa',
+    story: {
+      forWho: 'practitioners, researchers and funders',
+      before: 'Generations of practice held in memory and in handwritten books, and almost none of it outliving the practitioner.',
+      after: 'A case for writing it down, with the arithmetic shown and the limits stated on the same screen.',
+      steps: [
+        { icon: 'mic', title: 'It starts with a voice note', text: 'In the practitioner’s own language, on WhatsApp. Nothing to install.' },
+        { icon: 'archive', title: 'It becomes a record', text: 'Plants, parts, preparation and doses, with the local name kept primary.' },
+        { icon: 'chat', title: 'The agent follows up', text: 'It asks the patient’s permission, then checks in on day three and day seven.' },
+        { icon: 'chart', title: 'Years later it is worth something', text: 'The hundredth entry against one formulation, every source still named.' },
+      ],
+      promises: [
+        { icon: 'blank', text: 'The headline figures are labelled projected, beside the figures' },
+        { icon: 'shield', text: 'Documented use is not a claim that anything works' },
       ],
     },
   },
